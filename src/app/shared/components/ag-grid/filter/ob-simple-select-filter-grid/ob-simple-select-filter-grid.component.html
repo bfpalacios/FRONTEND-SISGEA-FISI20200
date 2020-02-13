@@ -1,0 +1,4 @@
+<select class="form-control form-control-xs ag-grid-floating-filter" [(ngModel)]="idItemSeleccionado" (change)="onChange()" style="margin-top: 0px;">
+  <option value="*">TODOS</option>
+  <option *ngFor="let item of items; let i = index" [value]="item[idLabelOption]" [label]="getLabelOption(i)"></option>
+</select>

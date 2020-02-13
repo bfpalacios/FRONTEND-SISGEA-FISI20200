@@ -1,0 +1,49 @@
+<app-template-mantenimiento-detalle [type]="type" [form]="form" (onSubmit)="save()"
+  (onClickRegisterBtn)="onClickRegister()" #templateAsociacionRecurso>
+
+  <ng-container gridContent>
+    <app-pagelength [gridApi]="gridApi"></app-pagelength>
+    <ag-grid-angular
+      #agGrid
+      class="ag-theme-balham grid-crud-detail"
+      [gridOptions]="gridOptions"
+      style="width: 100% !important; height: 100% !important;">
+    </ag-grid-angular>
+  </ng-container>
+
+  <div [formGroup]="form" formContent>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Sistema</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" [value]="menu.descripcionSistema" [disabled]="true">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Menú</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" [value]="menu.descripcionMenu" [disabled]="true">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Recursos</label>
+      <div class="col-sm-9">
+        <ng-select #recursoSelect [items]="recursos" class="ng-select-custom" bindLabel="label" bindValue="idRecurso"
+          placeholder="Seleccionar un Recurso" [notFoundText]="'No hay datos encontrados.'" formControlName="idRecurso"
+          (change)="onChangeRecurso($event)">
+        </ng-select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Acciones permitidas</label>
+      <div class="col-sm-9">
+        <ng-select #accionSelect [items]="acciones" class="ng-select-custom" bindLabel="label" [multiple]="true"
+          bindValue="idAccion" placeholder="Seleccionar Acciones" [notFoundText]="'No hay datos encontrados.'"
+          formControlName="idsAccionesPermitidas">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+</app-template-mantenimiento-detalle>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarAsociacionRecurso()" #mdDelete>
+</app-confirm-modal>

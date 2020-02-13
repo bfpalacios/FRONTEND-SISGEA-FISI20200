@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-sm-4 col-md-4 col-lg-4 pull-left">
+    <div *ngIf="managePagination.loadingData">
+      <i class="fa fa-spinner fa-pulse fa-fw ob-cargando"></i> <span class="ob-cargando">Cargando datos, espere...</span>
+    </div>
+  </div>
+  <div class="col-sm-8 col-md-8 col-lg-8 pull-right">
+    <div class="ag-custom-pagination ag-unselectable">
+
+      <span class="ag-paging-row-summary-panel">
+        <span>Mostrando {{managePagination.indexFirstOfRows.toLocaleString()}}</span> - <span>{{managePagination.indexLastOfRows.toLocaleString()}}</span> de <span>{{managePagination.totalRows.toLocaleString()}} registros</span>
+      </span>
+
+      <span class="ag-paging-page-summary-panel">
+        <!--Siguiente -->
+        <button type="button" [disabled]="(managePagination.isFirstPage || managePagination.actualPage == 0) && !managePagination.loadingData" class="button-custom-pagination primero" (click)="btnFirstPage()" tooltip="Primera pág">
+          <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+        </button>
+        <!--Anterior -->
+        <button type="button" [disabled]="(managePagination.isFirstPage || managePagination.actualPage == 0) && !managePagination.loadingData" class="button-custom-pagination anterior" (click)="btnPreviousPage()" tooltip="Anterior pág">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </button>
+        Página <span ref="lbCurrent" class="ag-custom-actual-page"> {{managePagination.actualPage.toLocaleString()}} </span> de <span class="ag-custom-total-pages"> {{managePagination.totalPages.toLocaleString()}} </span>
+        <!--Siguiente -->
+        <button type="button" [disabled]="(managePagination.isLastPage || managePagination.actualPage == 0) && !managePagination.loadingData" class="button-custom-pagination siguiente" (click)="btnNextPage()" tooltip="Siguiente pág">
+          <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </button>
+        <!--Ultimo -->
+        <button type="button" [disabled]="(managePagination.isLastPage || managePagination.actualPage == 0) && !managePagination.loadingData" class="button-custom-pagination utilmo" (click)="btnLastPage()" tooltip="Última pág">
+          <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+</div>

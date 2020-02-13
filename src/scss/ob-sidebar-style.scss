@@ -1,0 +1,61 @@
+.nav-item a.active{
+  background-color: #20a8d87a !important;
+}
+
+.sidebar .nav-link {
+  font-size: 0.89em;
+}
+
+.nav-item.nav-dropdown.open{
+  background-color: rgba(5, 5, 5, 0.3);
+}
+
+/*Estilos para el arreglar el sidebar +7 por nivel
+  Nivel 1            -- margin-left: 5px
+    Nivel 2          -- margin-left: 12px
+      Nivel 3        -- margin-left: 19px
+        Nivel 4      -- margin-left: 26px
+          Nivel 5    -- margin-left: 33px
+*/
+
+.nivel-1{
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}
+
+.nivel-2{
+  margin-left: 12px !important;
+  margin-right: 5px !important;
+}
+
+.nivel-3{
+  margin-left: 19px !important;
+  margin-right: 5px !important;
+}
+
+.nivel-4{
+  margin-left: 26px !important;
+  margin-right: 5px !important;
+}
+
+.nivel-5{
+  margin-left: 33px !important;
+  margin-right: 5px !important;
+}
+/*Mejora UI*/
+.sidebar .nav-link .nav-icon {
+    color: #b8c7ce !important;
+}
+
+.sidebar .nav-link.active .nav-icon {
+    color: #fff !important;
+}
+
+.sidebar .nav-dropdown.open > .nav-dropdown-items {
+  max-height: 100% !important;
+}
+
+.sidebar .nav-link:not(.active):hover {
+    color: #fff;
+    background: #222d32 !important;
+}

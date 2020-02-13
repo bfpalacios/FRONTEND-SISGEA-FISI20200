@@ -1,0 +1,317 @@
+// Here you can add other styles
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import '~tree-ngx/style/ngx-tree.scss';
+@import 'ob-buttons-style';
+@import 'ob-sidebar-style';
+@import 'ob-tree-style';
+@import 'ob-toastr-style';
+@import 'ob-ng-select-style';
+@import 'ob-tab-pane-style';
+@import 'ob-wizard-style';
+@import 'ob-app-loader-style';
+@import 'ob-modal-help-style';
+
+ag-grid-angular {
+  width: 100%;
+  height: 100%;
+}
+
+/* enable basic browser text selection in grid cells */
+div.ag-root .ag-cell-focus {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+.ag-floating-filter-full-body input {
+  border: 1px solid #c9caca;
+  border-radius: 0.17rem;
+  padding-left: 5px;
+}
+
+.ag-floating-filter-full-body input:focus {
+  color: #5c6873;
+  background-color: #fff;
+  border-color: #8ad4ee !important;
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem rgba(32, 168, 216, 0.25) !important;
+}
+
+/* Style only for Google Chrome/Opera */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  ag-grid-angular {
+    width: 100%;
+    //height: 100%;
+    height: 470px; // Mario says: Carla puse esto porque no se veia a varios del equipo
+  }
+}
+
+/* Style only for Internet Explorer */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  ag-grid-angular {
+    width: 100%;
+    height: 470px;
+  }
+}
+
+/* Style only for Mozilla Firefox */
+@-moz-document url-prefix() {
+  ag-grid-angular {
+    width: 100%;
+    height: auto;
+  }
+  .ag-paging-page-summary-panel {
+    display: flex;
+  }
+  .ag-paging-page-summary-panel > span {
+    margin: 0 4px;
+  }
+}
+
+.ag-overlay {
+  .ag-overlay-panel {
+    .ag-overlay-wrapper {
+      display: flex; height: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.ag-header-cell-label {
+  justify-content: center;
+}
+
+/* Para las consultas */
+
+.well {
+    min-height: 20px;
+    padding: 19px 19px 0px 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.07);
+    -moz-box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.07);
+    box-shadow: inset 0px 0px 0px 1px rgba(0,0,0,0.07);
+}
+
+.well-legend {
+    display: block;
+    font-size: 14px;
+    width: auto;
+    padding: 2px 7px 2px 5px;
+    margin-bottom: -5px;
+    line-height: inherit;
+    color: #333;
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.modal-content{
+  background-color: #fff !important;
+}
+
+.modal-ancho{
+  max-width: 1000px !important;
+  width: 90%;
+}
+
+.titulo-label{
+  color: #78788c !important;
+  padding-right: 5px;
+}
+
+@media (min-width: 992px) {
+    .modal-procesos-detalle{
+      max-width: 80% !important;
+    }
+    .modal-consultas {
+      max-width: 90% !important;
+    }
+    .modal-mantenimientos {
+      max-width: 50% !important;
+    }
+    .modal-incluir-tabla-base {
+      max-width: 40% !important;
+    }
+    .modal-incluir-tabla {
+      max-width: 60% !important;
+    }
+    .modal-incluir-tabla-extendido {
+      max-width: 65% !important;
+    }
+    .modal-template-detalle {
+      max-width: 75% !important;
+    }
+    .modal-detalle-recursos {
+      max-width: 65% !important;
+    }
+    .modal-reglas-compensacion{
+      max-width: 80% !important;
+    }
+    .modal-eventos-transaccion{
+      max-width: 65% !important;
+    }
+    .modal-eventos-institucion{
+      max-width: 40% !important;
+    }
+    .ag-body-horizontal-scroll-viewport{
+      height: 17px !important;
+      max-height: 17px !important;
+      min-height: 17px !important;
+      padding-top: 20px !important;
+    }
+}
+
+
+
+/*COLOR TITULO EN MODAL*/
+.default-color-title{
+  color:#78788c;
+}
+
+.ag-row-level-0{
+  height: 32px !important;
+}
+
+.margenes-circulares-etiquetas{
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+/*Mejora UI parte 2*/
+.custom-sicf-danger{
+  background-color: #E04B4A !important;
+  color: #fff;
+}
+
+.custom-sicf-success{
+  background-color: #5CB85C !important;
+  color: #fff;
+}
+
+.custom-sicf-primary{
+  background-color: #428BCA !important;
+  color: #fff;
+}
+
+
+/* Cambios en tablas aggrid */
+.ag-theme-balham .ag-ltr .ag-cell {
+    border-right: 1px solid #BDC3C7 !important;
+}
+
+.ag-theme-balham .ag-header-row {
+    border: none !important;
+    background-color: #F1F4F9 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+   // height: 24px !important;
+}
+
+.ag-floating-filter-input {
+  text-transform:uppercase;
+}
+
+.form-control[readonly]{
+  background-color: #fff !important;
+}
+
+.ob-custom-label-form{
+  line-height: 17.1429px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  font-family: "Open Sans", sans-serif !important;
+  color: rgb(101, 109, 120) !important;
+  align-items: center;
+  display: flex;
+}
+
+/*
+  Estilos para el excel y grilla
+  deben estar sincronizados con shared/util/ag-grid.util.ts
+*/
+.ob-type-string-center{
+  text-align: center !important;
+}
+.ob-type-string-red{
+  color: red !important;
+}
+.ob-type-string-blue{
+  color: blue !important;
+}
+.ob-type-number{
+  text-align: right !important;
+}
+.ob-type-number-negative{
+  text-align: right !important;
+  color: red !important;
+}
+.ob-type-fecha{
+  text-align: center !important;
+}
+.ob-type-boolean{
+  text-align: center !important;
+}
+.ob-type-date{
+  text-align: center !important;
+}
+.ob-type-datetime{
+  text-align: center !important;
+}
+
+//Cabecera de colores ag-grid
+.ob-header-aggrid-color-blue{
+  background-color: #A6CBDD !important;
+}
+.ob-header-aggrid-color-green{
+  background-color: #9BEA84 !important;
+}
+.ob-header-aggrid-color-red{
+  background-color: #FDC3C3 !important;
+}
+.ob-header-aggrid-color-yellow{
+  background-color: #F9F4A0 !important;
+}
+
+.ob-body-aggrid-color-label-gray{
+  background-color: #F0F3F5 !important;
+  color: #000;
+}
+
+.ob-fondo-general-sicf{
+  opacity: 0.60 !important;
+  height: 600px !important;
+  //background-image: url('assets/img/brand/fondo.jpg') !important;
+}
+
+.icon-yellow {
+  color: yellow;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+}
+
+/*
+  Mario: Estilos para scroll en X en las grillas
+*/
+.ag-body-horizontal-scroll-viewport{
+  height: 17px !important;
+  max-height: 17px !important;
+  min-height: 17px !important;
+  padding-top: 20px !important;
+}
+
+/*
+  On redirect
+*/
+.redirect{
+  cursor: pointer;
+}

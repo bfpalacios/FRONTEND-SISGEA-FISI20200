@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="float-left">
+                  <span style="font-size: 1.25em">Generar reportes</span>
+              </div>
+              <div class="float-right">
+                <ng-content select="[botonesContent]"></ng-content>
+              </div>
+            </div>
+            <div class="card-body">
+              <ng-content select="[generarReporteContent]"></ng-content>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="animated fadeIn">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <div class="float-left">
+                  <span style="font-size: 1.25em">Visualización de reporte</span>
+              </div>
+              <div class="float-right">
+                <ng-content select="[botonesVisualizarContent]"></ng-content>
+              </div>
+            </div>
+            <div class="card-body">
+              <ng-content select="[visualizarReporteContent]"></ng-content>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

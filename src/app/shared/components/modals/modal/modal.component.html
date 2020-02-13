@@ -1,0 +1,26 @@
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" (onHide)="onHideModal()" (onShow)="onShowModal()" (onShown)="onShownModal()" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog" [ngClass]="class" role="document" #mdDialog>
+    <div class="modal-content" #mdContent>
+      <div class="modal-header">
+        <h4 class="modal-title" [ngClass]="classTitle">{{title}}</h4>
+        <div class="pull-right" *ngIf="btnsHeader">
+          <!--<button tooltip="Cerrar" type="button" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+          <button [tooltip]="tooltipFullscreen" type="button" class="close" (click)="onClickMaximize()">
+            <span aria-hidden="true" [innerHTML]="htmlFullscreen | safe:'html'"></span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+      <div class="modal-footer" *ngIf="btns">
+        <button type="button" class="btn" [ngClass]="[classCloseBtn ? classCloseBtn : 'btn-secondary']"
+          (click)="myModal.hide()">{{closeLabel}}</button>
+        <ng-content select="[modalBtn]"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

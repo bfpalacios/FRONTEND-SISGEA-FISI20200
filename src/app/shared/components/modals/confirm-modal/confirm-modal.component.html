@@ -1,0 +1,10 @@
+<app-modal [title]="options.title"
+[class]="options.modalClass"
+[classTitle]="options.classTitle"
+[closeLabel]="options.buttons.cancel.text" #md>
+    <div [innerHtml]="options.htmlMsg | safe: 'html'">
+    </div>
+  <button type="button" [disabled]="options.buttons.ok.disabled" class="btn"
+    [ngClass]="[options.buttons.ok.class ? options.buttons.ok.class : 'btn-danger']" (click)="ok()"
+    modalBtn>{{options.buttons.ok.text}} </button>
+</app-modal>

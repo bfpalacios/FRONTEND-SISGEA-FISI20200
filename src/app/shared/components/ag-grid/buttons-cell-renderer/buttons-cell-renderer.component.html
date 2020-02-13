@@ -1,0 +1,55 @@
+<div class="text-center">
+  <ng-container *ngIf="params.edit">
+    <ng-container *ngIf="params.edit.visibleFn ? params.edit.visibleFn(params): params.edit.visible">
+        <button type="button" class="btn" [tooltip]="params.edit.tooltip ? params.edit.tooltip: 'Editar'" container="body"
+        placement="bottom" [ngClass]="params.edit.buttonClass ? params.edit.buttonClass : 'btn btn-xs btn-primary'"
+        (click)="onClickEdit()">
+        <i class="fa" [ngClass]="params.edit.icon ? params.edit.icon : 'fa-pencil-square'"></i>
+      </button>&nbsp;
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="params.delete">
+    <ng-container *ngIf="params.delete.visibleFn ? params.delete.visibleFn(params): params.delete.visible">
+        <button type="button" class="btn" [tooltip]="params.delete.tooltip ? params.delete.tooltip:'Eliminar'"
+        container="body" placement="bottom"
+        [ngClass]="params.delete.buttonClass ? params.delete.buttonClass: 'btn btn-xs btn-danger'"
+        (click)="onClickDelete()">
+        <i class="fa" [ngClass]="params.delete.icon ? params.delete.icon: 'fa-trash'"></i>
+      </button>&nbsp;
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="params.details && params.details.length > 0">
+    <ng-container *ngFor="let detail of params.details; let i = index;">
+      <ng-container *ngIf="detail.visibleFn ? detail.visibleFn(params) : detail.visible">
+        <button type="button" class="btn"
+          [tooltip]="detail.tooltipFn ? detail.tooltipFn(params): detail.tooltip? detail.tooltip:'Detalle'"
+          container="body" placement="bottom"
+          [disabled]="detail.btnDisabledFn ? detail.btnDisabledFn(params) : detail.btnDisabled"
+          [ngClass]="detail.buttonClass ? detail.buttonClass: 'btn btn-xs btn-success'" (click)="onClickDetail(i)">
+          <i class="fa" [ngClass]="detail.iconFn ? detail.iconFn(params): detail.icon ? detail.icon : 'fa-plus'"></i>
+          <ng-container *ngIf="detail.text || detail.textFn">
+            {{detail.textFn ? detail.textFn(params) : detail.text}}
+          </ng-container>
+        </button>&nbsp;
+      </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="params.detailOrder && params.detailOrder.visible">
+        <button *ngIf="!params.detailOrder.dataFn(params)" type="button" class="btn" [tooltip]="'Sin Orden'" container="body"
+          placement="bottom" [disabled]="params.detailOrder.btnDisabled" class="btn btn-xs btn-secondary"
+          (click)="onClick(1)"><i class="fa" class="fa fa-exchange"></i> {{params.detailOrder.text}}
+        </button>
+
+        <button *ngIf="params.detailOrder.dataFn(params) === 1" type="button" class="'btn" [tooltip]="'Ascendente'" container="body"
+          placement="bottom" [disabled]="params.detailOrder.btnDisabled" class="btn btn-xs btn-primary"
+          (click)="onClick(-1)">
+          <i class="fa" class="fa fa-sort-asc"></i> {{params.detailOrder.text}}
+        </button>
+
+        <button *ngIf="params.detailOrder.dataFn(params) === -1" type="button" class="btn" [tooltip]="'Descendente'" container="body"
+          placement="bottom" [disabled]="params.detailOrder.btnDisabled" class="btn btn-xs btn-danger"
+          (click)="onClick(null)">
+          <i class="fa" class="fa fa-sort-desc"></i> {{params.detailOrder.text}}
+        </button>
+  </ng-container>
+</div>

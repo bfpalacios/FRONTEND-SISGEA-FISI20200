@@ -1,0 +1,17 @@
+<div class="btn-group" role="group" *ngIf="helpText">
+  <button class="btn" tooltip="Ayuda" (click)="clickVerAyuda()">
+    <i class="fa fa-question-circle" aria-hidden="true"></i>
+  </button>
+</div>
+
+<app-modal #md [class]="classModal" [title]="title" [btnsHeader]="false" [closeLabel]="'Cerrar'" [classCloseBtn]="'btn-secondary ob-none-breadcrumb'" *ngIf="helpText">
+  <div *ngIf="helpText.isTextOnly">
+    <div class="form-group">
+      <label class="ob-custom-label-form"><b>Función</b></label>
+      <label> {{helpText.textoFuncion}} </label>
+
+      <label class="ob-custom-label-form"><b>Restricciones</b></label>
+      <label> {{helpText.textoRestricciones}} </label>
+    </div>
+  </div>
+</app-modal>

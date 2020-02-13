@@ -1,0 +1,83 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()" #templateParametroSeguridad>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Identificador</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="idParametroSeguridad" onlynumbers>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Descripción</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="descripcionParamSeg" uppercase description>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Tipo Autenticación</label>
+      <div class="col-sm-10">
+        <ng-select #tiposAutenticacionSelect [items]="tiposAutenticacion" class="ng-select-custom" bindLabel="label"
+          bindValue="idTipoAutenticacion" placeholder="Seleccionar un Tipo Autenticación"
+          [notFoundText]="'No hay datos encontrados.'" formControlName="idTipoAutenticacion"
+          (change)="onChangeTipoAutenticacion($event)">
+        </ng-select>
+
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+  </div>
+  <fieldset class="well">
+    <legend class="well-legend">Politicas Contraseña</legend>
+    <div [formGroup]="form">
+      <div class="form-group row">
+        <label for="inp-autenticacion-local" class="col-form-label col-sm-3">Activar Política Contraseña</label>
+        <div class="col-sm-9">
+          <div class="form-check">
+            <ui-switch formControlName="activoPoliticaContrasenia"></ui-switch>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4 col-md-4 col-lg-4"> <label class="letra">Mínimo Longitud</label>
+          <input type="number" class="form-control" formControlName="minimoLongitudContrasenia" uppercase onlynumbers />
+          <bfv-messages></bfv-messages>
+        </div>
+        <div class="form-group col-sm-4 col-md-4 col-lg-4"> <label class="letra">Mínimo Digitos</label>
+          <input type="number" class="form-control" formControlName="minimoDigitosContrasenia" uppercase onlynumbers />
+          <bfv-messages></bfv-messages>
+        </div>
+        <div class="form-group col-sm-4 col-md-4 col-lg-4"> <label class="letra">Mínimo Letras</label>
+          <input type="number" class="form-control" formControlName="minimoLetrasContrasenia" onlynumbers />
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-4 col-md-4"> <label class="letra">Mínimo Minúsculas</label>
+          <input type="number" class="form-control" formControlName="minimoMinusculasContrasenia" uppercase
+            onlynumbers />
+          <bfv-messages></bfv-messages>
+        </div>
+        <div class="form-group col-sm-4 col-md-4 col-lg-4"> <label class="letra">Mínimo Carac. Espec.</label>
+          <input type="number" class="form-control" formControlName="minimoCarEspecContrasenia" uppercase
+            onlynumbers />
+          <bfv-messages></bfv-messages>
+        </div>
+        <div class="form-group col-sm-4 col-md-4 col-lg-4"> <label class="letra">Mínimo Mayúsculas</label>
+          <input type="number" class="form-control" formControlName="minimoMayusculasContrasenia" uppercase
+            onlynumbers />
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarParametroSeguridad()" #mdDelete>
+</app-confirm-modal>

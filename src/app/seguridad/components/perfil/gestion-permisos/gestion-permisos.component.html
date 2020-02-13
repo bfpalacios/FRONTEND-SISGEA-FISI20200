@@ -1,0 +1,32 @@
+<app-modal title="Asignación de permisos" class="modal-template-detalle" [btns]="true" closeLabel="Cancelar"
+  (onHide)="onHide()"
+  #mdPermisos>
+  <div class="row">
+    <div class="col-sm-4">
+      <fieldset class="well">
+        <legend class="well-legend default-color-title">PERFIL: {{perfil.descripcionPerfil}}</legend>
+        <app-ob-tree [filter]="true" [defKeys]="defKeysTree" (onSelected)="selectItem($event)" #menuArbol></app-ob-tree>
+      </fieldset>
+    </div>
+    <div class="col-sm-8">
+      <div *ngIf="menuSeleccionado" class="default-color-title mb-2">OPCIÓN: {{menuSeleccionado.descripcionMenu}}</div>
+      <div *ngIf="categoriasRecursos.length > 0; else noCategorias">
+        <app-tab-pane [listaTab]="tabs" (onSelectTab)="onSelectTab($event)">
+        </app-tab-pane>
+        <div id="grillaContent" class="mt-2">
+          <ui-switch [checked]="checkAll" [disabled]="!permisoRegistro" (change)="onChangeCheckAll($event)"></ui-switch> <label>Seleccionar todo</label>
+          <ag-grid-angular class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+        </div>
+      </div>
+      <ng-template #noCategorias>
+        <div class="mt-2">
+          No hay categorias de recursos para mostrar.
+        </div>
+      </ng-template>
+    </div>
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  </div>
+  <button *ngIf="permisoRegistro" [disabled]="disableBtnAsignar" (click)="onClickAsignar()" class="btn btn-primary" modalBtn>Asignar</button>
+  <button *ngIf="permisoRegistro" [disabled]="disableBtnAsignar" (click)="onClickAsignarCerrar()" class="btn btn-primary" modalBtn>Asignar y cerrar</button>
+
+</app-modal>

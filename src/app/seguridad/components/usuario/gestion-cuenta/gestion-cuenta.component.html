@@ -1,0 +1,87 @@
+<app-template-mantenimiento-detalle [type]="type" [form]="form" (onSubmit)="save()"
+  (onClickRegisterBtn)="onClickRegister()" #templateUsuarioPerfil>
+
+  <ng-container gridContent>
+    <app-pagelength [gridApi]="gridApi"></app-pagelength>
+    <ag-grid-angular #agGrid class="ag-theme-balham grid-crud-detail" [gridOptions]="gridOptions">
+    </ag-grid-angular>
+  </ng-container>
+
+  <div [formGroup]="form" formContent>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Usuario</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" formControlName="username">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Sistema</label>
+      <div class="col-sm-9">
+        <ng-select [items]="sistemas" class="ng-select-custom" bindLabel="descripcionSistema" bindValue="idSistema"
+          placeholder="Seleccionar sistema" [notFoundText]="'No hay datos encontrados.'" formControlName="idSistema"
+          (change)="onChangeSistema($event)">
+          <ng-template ng-option-tmp let-item="item">
+            {{item.idSistema}} - {{item.descripcionSistema}}
+          </ng-template>
+          <ng-template ng-label-tmp let-item="item">
+            {{item.idSistema}} - {{item.descripcionSistema}}
+          </ng-template>
+        </ng-select>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Perfil</label>
+      <div class="col-sm-9">
+        <ng-select [items]="perfiles" class="ng-select-custom" bindLabel="descripcionPerfil" bindValue="idPerfil"
+          placeholder="Seleccionar Perfil" [notFoundText]="'No hay datos encontrados.'" formControlName="idPerfil"
+          (change)="onChangePerfil($event)"
+          #perfilSelect>
+          <ng-template ng-option-tmp let-item="item">
+            {{item.idPerfil}} - {{item.descripcionPerfil}}
+          </ng-template>
+          <ng-template ng-label-tmp let-item="item">
+            {{item.idPerfil}} - {{item.descripcionPerfil}}
+          </ng-template>
+        </ng-select>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Contraseña</label>
+      <div class="col-sm-9">
+        <input type="password" class="form-control" formControlName="contrasenia">
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Confirmación de contraseña</label>
+      <div class="col-sm-9">
+        <input type="password" class="form-control" formControlName="confirmaContrasenia">
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-form-label col-sm-3">Activo</label>
+        <div class="col-sm-9">
+          <div class="form-check">
+            <ui-switch formControlName="activo"></ui-switch>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+      </div>
+    <div class="form-group row">
+        <label class="col-form-label col-sm-3">Visualiza PAN</label>
+        <div class="col-sm-9">
+          <div class="form-check">
+            <ui-switch formControlName="visualizaPAN"></ui-switch>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+      </div>
+  </div>
+
+</app-template-mantenimiento-detalle>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarUsuarioPerfil()" #mdDelete>
+</app-confirm-modal>

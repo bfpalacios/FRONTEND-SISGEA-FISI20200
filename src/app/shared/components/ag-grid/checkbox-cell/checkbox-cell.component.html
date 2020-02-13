@@ -1,0 +1,4 @@
+<div *ngIf="params.visibleFn ? params.visibleFn(params) : params.visible" class="text-center">
+  <ui-switch [disabled]="params.disabled" [checked]="params.checkedFn ? params.checkedFn(params) :params.value === 'true' || params.value === true" 
+  (change)="onChange($event)"></ui-switch>
+</div>

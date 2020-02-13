@@ -1,0 +1,108 @@
+<app-template-mantenimiento [type]="type" [detailType]="detailType" (clickRegisterBtn)="showMdRegister()" #templateMenu>
+  <div class="row ml-2">
+    <div class="col-sm-6">
+      <div class="row form-group">
+        <label>Sistema</label>
+        <div class="col-sm-10">
+          <ng-select #sistemaSelect [items]="sistemas" class="ng-select-custom" bindLabel="label" bindValue="idSistema"
+            [notFoundText]="'No hay datos encontrados.'" [(ngModel)]="currSistema"
+            (change)="onChangeSistemaSelect($event)" [clearable]="false">
+          </ng-select>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="pull-right">
+        <button class="btn btn-success" (click)="onClickVerArbol()"><i class="fa fa-eye"></i>&nbsp;Visualizar árbol</button>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-sm-12">
+      <app-pagelength [gridApi]="gridApi"></app-pagelength>
+      <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+    </div>
+  </div>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">Identificador</label>
+          <div class="col-sm-9">
+            <input type="number" class="form-control" formControlName="idMenu">
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">Descripción</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="descripcionMenu" description>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">Sistema</label>
+          <div class="col-sm-9">
+            <ng-select #sistemaFormSelect [items]="sistemas" class="ng-select-custom" bindLabel="label"
+              bindValue="idSistema" [notFoundText]="'No hay datos encontrados.'" formControlName="idSistema"
+              placeholder="Seleccione un Sistema" (change)="onChangeSistemaSelectForm($event)">
+            </ng-select>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">Tipo Menú</label>
+          <div class="col-sm-9">
+            <ng-select #tipoMenuSelect [items]="tiposMenu" class="ng-select-custom" bindLabel="label"
+              bindValue="idTipoMenu" [notFoundText]="'No hay datos encontrados.'" formControlName="idTipoMenu"
+              placeholder="Seleccione un Tipo Menú" (change)="onChangeTipoMenu($event)">
+            </ng-select>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">Icono</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="icono">
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">URL</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" formControlName="url">
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-sm-3">Menú Padre</label>
+          <div class="col-sm-9">
+            <ng-select #menuPadreSelect [items]="menusPadreFiltrado" class="ng-select-custom"
+              bindLabel="descripcionMenu" bindValue="idMenu" [notFoundText]="'No hay datos encontrados.'"
+              formControlName="idMenuPadre" placeholder="Seleccione un Menú">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.idMenu}} - {{item.descripcionMenu}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.idMenu}} - {{item.descripcionMenu}}
+              </ng-template>
+            </ng-select>
+            <bfv-messages></bfv-messages>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarMenu()" #mdDelete>
+</app-confirm-modal>
+
+<app-vista-arbol #mdvistaArbol></app-vista-arbol>
+
+<app-asociacion-recursos [type]="detailType" #mdAsociacionRecurso></app-asociacion-recursos>

@@ -1,0 +1,14 @@
+<div class="ml-2 form-group wrap">
+  <label>Mostrar</label>
+  <div class="col-xs-3 px-1">
+      <select class="form-control form-control-sm"
+        name="pageSize"
+        [(ngModel)]="pageSize"
+        (change)="onPageSizeChanged()">
+      <ng-container *ngFor="let len of lengths; let i = index;">
+        <option [value]="len">{{len}}</option>
+      </ng-container>
+    </select>
+  </div>
+  <label>entradas</label>
+</div>

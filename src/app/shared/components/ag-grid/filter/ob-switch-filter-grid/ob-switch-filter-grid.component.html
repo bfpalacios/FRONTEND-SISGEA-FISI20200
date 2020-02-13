@@ -1,0 +1,14 @@
+<div class="switch-field ag-grid-floating-filter" #filter>
+  <label [ngClass]="{'op-yes-selected': opcionSeleccionada === yesOption}">
+    <input type="radio" [name]="radioName" [(ngModel)]="opcionSeleccionada" [value]="yesOption" class="yes"
+      (change)="onChange()" />
+    Sí</label>
+  <label [ngClass]="{'op-all-selected': opcionSeleccionada === '*'}">
+    <input type="radio" [name]="radioName" [(ngModel)]="opcionSeleccionada" value="*" class="undefined"
+      (change)="onChange()" checked />
+    Todos</label>
+  <label [ngClass]="{'op-no-selected': opcionSeleccionada === noOption}">
+    <input type="radio" [name]="radioName" [(ngModel)]="opcionSeleccionada" [value]="noOption" class="no"
+      (change)="onChange()" />
+    No</label>
+</div>

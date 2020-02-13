@@ -1,0 +1,9 @@
+<div *ngIf="isVisible">
+  <alert [type]="options.type" [dismissible]="options.dismissible ? options.dismissible : true"
+  (onClosed)="hide($event)" [dismissOnTimeout]="timeToDismiss">
+    <div *ngIf="options.htmlMsg" [innerHtml]="options.htmlMsg | safe: 'html'"></div>
+    <ng-container *ngIf="options.msg">
+      {{options.msg}}
+    </ng-container>
+  </alert>      
+</div>

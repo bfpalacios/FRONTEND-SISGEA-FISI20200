@@ -1,0 +1,115 @@
+<app-template-mantenimiento [type]="type" (clickProcesarBtn)="abrirModalRegistrar()" [loading]="loading" #template>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular
+    #agGrid
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions"
+  ></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" [form]="form" #mdSave>
+  <div class="row col-12">
+    <div class="col-8">
+      <div class="col-12">
+        <fieldset class="well" style="background-color: #F5F5F5">
+        <legend class="well-legend"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Filtros </legend>
+
+          <div [formGroup]="formHorario">
+            <div class="row">
+              <label class="col-sm-2 ob-custom-label-form">Pabellon</label>
+              <div class="form-group col-sm-4">
+                <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom" bindLabel="label" bindValue="idPabellon"
+                  placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+                  formControlName="pabellon">
+                </ng-select>
+              </div>
+              <label class="col-sm-2 ob-custom-label-form">Tipo Espacio</label>
+              <div class="form-group col-sm-4">
+                <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom" bindLabel="label" bindValue="idPabellon"
+                  placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+                  formControlName="tipoEspacio">
+                </ng-select>
+              </div>
+            </div>
+            <div class="row">
+              <label class="col-sm-2 ob-custom-label-form">Fecha</label>
+              <div class="form-group col-sm-4">
+                <div class="input-group">
+                  <input stype="text" class="form-control" placeholder="" #drpFechaProceso="bsDaterangepicker"
+                    [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue', adaptivePosition: true }"
+                    bsDaterangepicker formControlName="fecha" />
+                  <div class="input-group-append">
+                    <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-12 text-center">
+                <button type="submit" class="btn btn-primary" [disabled]="buscando">
+                  <i class="fa" [ngClass]="{'fa-spinner fa-pulse fa-fw': buscando  , 'fa-search': !buscando}"></i> Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </fieldset>
+      </div>
+      <div class="col-12">
+        <ag-grid-angular
+          #agGrid
+          class="ag-theme-balham"
+          [gridOptions]="gridOptionsHorario"
+        ></ag-grid-angular>
+      </div>
+    </div>
+    <div class="col-4">
+      <div [formGroup]="form">
+        <fieldset class="well" style="background-color: #F5F5F5">
+          <legend class="well-legend"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Agregar solicitud </legend>
+          <div class="form-group row">
+            <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Tipo</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+              <ng-select #pabellonSelect [items]="tipoSolicitante" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet"
+                placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                formControlName="tipoSolicitud" (change)="onChangeTipoSolicitante($event)">
+              </ng-select>
+              <bfv-messages></bfv-messages>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Solicitante</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+              <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
+                placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                formControlName="solicitante">
+                <ng-template ng-option-tmp let-item="item">
+              {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}}
+                </ng-template>
+                <ng-template ng-label-tmp let-item="item">
+              {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}}
+                </ng-template>
+              </ng-select>
+              <bfv-messages></bfv-messages>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Motivo</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+              <textarea  rows="5" class="form-control" formControlName="motivo"></textarea>
+              <bfv-messages></bfv-messages>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-12 text-center">
+              <button type="submit" class="btn btn-success" [disabled]="prestando" (click)="clickSolicitar()">
+                <i class="fa" [ngClass]="{'fa-spinner fa-pulse fa-fw': prestando  , 'fa-check': !prestando}"></i> Agregar solicitud
+              </button>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+
+</app-form-modal>

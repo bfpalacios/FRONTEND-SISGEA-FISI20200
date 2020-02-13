@@ -1,0 +1,28 @@
+.centered-content {
+  margin: auto;
+  text-align: center;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+aw-wizard.custom-global-css-wizard {
+  aw-wizard-navigation-bar.horizontal ul.steps-indicator li {
+    &.current {
+      .step-indicator {
+        border-color: #428BCA  !important;
+        background-color: #428BCA !important;
+        color: white;
+      }
+    }
+  }
+/*  aw-wizard-step {
+    .centered-content {
+      background-color: #eeeeee;
+    }
+  }*/
+  aw-wizard-navigation-bar.horizontal ul.steps-indicator li.editing .step-indicator {
+    border-color: #428BCA  !important;
+        background-color: #428BCA !important;
+        color: white;
+  }
+}

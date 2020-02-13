@@ -1,0 +1,31 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()"
+(clickExportBtn)="onClickExport()" #templateOrigen>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular
+    #agGrid
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions"
+  ></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+      <div class="form-group row">
+        <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Código</label>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <input type="number" class="form-control" formControlName="idOrigen">
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Descripción</label>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+            <input type="text" class="form-control" formControlName="descripcionOrigen" uppercase description>
+            <bfv-messages></bfv-messages>
+        </div>
+      </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarOrigen()" #mdDelete>
+ </app-confirm-modal>

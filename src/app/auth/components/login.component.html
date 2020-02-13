@@ -1,0 +1,52 @@
+<div class="app-body">
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <app-alert #alert></app-alert>
+                <form [formGroup]="loginFormGroup" (validSubmit)="onLogin()">
+                  <h1 class="text-center" style="padding-bottom: 20px;">
+                    <img src="assets/img/sisgea_logo.png" style="width: 100%;">
+                  </h1>
+                  <div class="form-group row" [customErrorMessages]="customErrorMessagesUsername">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-user"></i></span>
+                      </div>
+                      <input type="text" class="form-control" formControlName="username" placeholder="Usuario" autoFocus uppercase>
+                    </div>
+                  </div>
+                  <div class="form-group row" [customErrorMessages]="customErrorMessagesPassword">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-lock"></i></span>
+                      </div>
+                      <input type="password" class="form-control" formControlName="contrasenia"
+                        placeholder="Contraseña">
+                    </div>
+                  </div>
+                  <!--div class="form-group row" [customErrorMessages]="customErrorMessagesSistema">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="icon-puzzle"></i></span>
+                      </div>
+                      <ng-select [items]="sistemas" bindLabel="descripcionSistema" class="ng-select-custom"
+                        bindValue="idSistema" formControlName="idSistema" [notFoundText]="'No hay datos encontrados.'">
+                      </ng-select>
+                    </div>
+                  </div-->
+                  <div class="row">
+                    <button type="submit" [disabled]="loading" class="btn btn-block btn-primary">Iniciar sesión</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

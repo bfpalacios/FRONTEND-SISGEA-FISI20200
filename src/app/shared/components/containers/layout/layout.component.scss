@@ -1,0 +1,52 @@
+#txtSidebarSearch {
+  background-color: #374850;
+  color: white;
+  border: none;
+  box-shadow: none;
+  margin: 10px 10px;
+  padding-right: 12px;
+  border-radius: 3px;
+  margin-right: 0px;
+}
+
+.ob-custom-search-sidebar{
+  background-color: #222d32 !important;
+}
+
+.ob-custom-btn-search{
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: #666;
+  background-color: #374850;
+  border: none;
+  border-radius: 3px;
+}
+
+.ob-custom-span-search{
+  background-color: #374850;
+  border: none;
+  border-radius: 3px;
+}
+
+#txtSidebarSearch::placeholder{
+  color: rgb(230, 230, 230) !important;
+}
+#txtSidebarSearch:-ms-input-placeholder {
+  color: rgb(230, 230, 230) !important;
+}
+#txtSidebarSearch::-ms-input-placeholder {
+  color: rgb(230, 230, 230) !important;
+}
+
+.ob-custom-label-user{
+  color: #23282c !important;
+}
+
+.ob-custom-label-user:focus{
+  color: #73818f !important;
+}
+
+.ob-custom-li{
+  list-style: none !important;
+}

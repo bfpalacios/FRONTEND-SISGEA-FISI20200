@@ -1,0 +1,12 @@
+<span *ngIf="showText">{{text}}</span>
+<ng-container [ngSwitch]="params.type">
+  <ng-container *ngSwitchCase="'img'">
+    <img *ngFor="let time of times" [src]="params.src">
+  </ng-container>
+  <ng-container *ngSwitchCase="'icon'">
+    <i *ngFor="let time of times" [ngClass]="params.class"></i>
+  </ng-container>  
+  <ng-container *ngSwitchDefault>
+    <span *ngFor="let time of times">{{text}}</span>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,6 @@
+<ul class="nav nav-tabs">
+  <li *ngFor="let item of listaTab; let i = index;" class="nav-item">
+    <a *ngIf="i == 0" id="{{item.tituloId}}" [attr.data-index]="i" class="nav-link activo" (click)="changeTab(item)" #link>{{item.tituloTabPane}}</a>
+    <a *ngIf="i != 0" id="{{item.tituloId}}" [attr.data-index]="i" class="nav-link" (click)="changeTab(item)" #link>{{item.tituloTabPane}}</a>
+  </li>
+</ul>

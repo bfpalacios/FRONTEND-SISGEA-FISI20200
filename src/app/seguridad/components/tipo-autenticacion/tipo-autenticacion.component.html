@@ -1,0 +1,77 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()" #templateTipoAutenticacion>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="form-group row">
+      <label for="inp-id-tipo-autenticacion" class="col-form-label col-sm-3">Id</label>
+      <div class="col-sm-9">
+        <input id="inp-id-tipo-autenticacion" type="text" class="form-control" formControlName="idTipoAutenticacion"
+               onlynumbers/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-descripcion-tipo-autenticacion" class="col-form-label col-sm-3">Descripción</label>
+      <div class="col-sm-9">
+        <input id="inp-descripcion-tipo-autenticacion" type="text" class="form-control"
+               formControlName="descripcionTipoAutenticacion" uppercase description/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-servicio-autenticacion" class="col-form-label col-sm-3">Servicio Autenticación</label>
+      <div class="col-sm-9">
+        <input id="inp-servicio-autenticacion" type="text" class="form-control"
+               formControlName="servicioAutenticacion" onlytext/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-autenticacion-local" class="col-form-label col-sm-3">Autenticación local</label>
+      <div class="col-sm-9">
+        <div class="form-check">
+            <ui-switch formControlName="autenticacionLocal"></ui-switch>
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-ldap-url" class="col-form-label col-sm-3">URL</label>
+      <div class="col-sm-9">
+        <input id="inp-ldap-url" type="text" class="form-control" formControlName="ldapURL"
+               [disableControl]="esAutenticacionLocal()"/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-ldap-dominio" class="col-form-label col-sm-3">Dominio</label>
+      <div class="col-sm-9">
+        <input id="inp-ldap-dominio" type="text" class="form-control" formControlName="ldapDominio"
+               [disableControl]="esAutenticacionLocal()"/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-ldap-nivel-seguridad" class="col-form-label col-sm-3">Nivel Seguridad</label>
+      <div class="col-sm-9">
+        <input id="inp-ldap-nivel-seguridad" type="text" class="form-control" formControlName="ldapNivelSeguridad"
+               [disableControl]="esAutenticacionLocal()"/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-ldap-clase-factory" class="col-form-label col-sm-3">Clase Factory</label>
+      <div class="col-sm-9">
+        <input id="inp-ldap-clase-factory" type="text" class="form-control" formControlName="ldapClaseFactory"
+               [disableControl]="esAutenticacionLocal()"/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarTipoAutenticacion()" #mdDelete>
+</app-confirm-modal>

@@ -1,0 +1,63 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()"
+(clickExportBtn)="onClickExport()" #templateEspacioAcademico>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular
+    #agGrid
+    class="ag-theme-balham"
+    [gridOptions]="gridOptions"
+  ></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Código</label>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <input type="number" class="form-control" formControlName="idEspacioAcademico">
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Descripción</label>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <input type="text" class="form-control" formControlName="descripcionEspacioAcademico" uppercase>
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 ob-custom-label-form">Tipo Espacio</label>
+        <div class="form-group col-sm-10">
+          <ng-select #cardTypeSelect [items]="tipoEspacio" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet" placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'" [multiple]="false"
+            formControlName="tipoEspacio" >
+          </ng-select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Aforo</label>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <input type="number" class="form-control" formControlName="aforo">
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Pabellón</label>
+      <div class="col-sm-10 col-md-10 col-lg-10">
+        <input type="number" class="form-control" formControlName="pabellon">
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Asignable</label>
+      <div class="col-sm-4 col-md-4 col-lg-4 text-left">
+        <div class="form-check">
+          <ui-switch formControlName="asignable"></ui-switch>
+          <bfv-messages></bfv-messages>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarEspacioAcademico()" #mdDelete>
+ </app-confirm-modal>

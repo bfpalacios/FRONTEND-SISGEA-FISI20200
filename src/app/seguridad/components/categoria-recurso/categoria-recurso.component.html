@@ -1,0 +1,36 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()" #templateCategoriaRecurso>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Identificador</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="idCategoriaRecurso" uppercase onlynumber>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Descripción</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="descripcionCategoriaRecurso" uppercase description>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Acciones Permitidas</label>
+      <div class="col-sm-10">
+        <ng-select #accionSelect [multiple]="true" [items]="acciones" class="ng-select-custom" bindLabel="label"
+          bindValue="idAccion" placeholder="Seleccionar un Tipo de Acción Permitida"
+          [notFoundText]="'No hay datos encontrados.'" formControlName="idsAccionesPermitidas">
+        </ng-select>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarCategoriaRecurso()" #mdDelete>
+</app-confirm-modal>

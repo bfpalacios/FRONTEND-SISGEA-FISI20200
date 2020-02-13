@@ -1,0 +1,10 @@
+<app-modal title="Visualización de menú" class="modal-lg" [btns]="true" closeLabel="Cerrar" #md>
+  <div class="row">
+    <div class="col-sm-12">
+      <fieldset class="well">
+        <legend class="well-legend default-color-title">SISTEMA: {{sistema ? sistema.descripcionSistema: ''}}</legend>
+        <app-ob-tree [filter]="true" [defKeys]="defKeysTree" #menuArbol></app-ob-tree>
+      </fieldset>
+    </div>
+  </div>
+</app-modal>

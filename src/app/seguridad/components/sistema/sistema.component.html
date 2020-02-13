@@ -1,0 +1,55 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()" #templateSistema>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Identificador</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" formControlName="idSistema" onlynumbers>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Descripción</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="descripcionSistema" uppercase description>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Código Audiencia</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" formControlName="codigoAudiencia" uppercase>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Tiempo expiración token</label>
+      <div class="col-sm-10">
+        <input [value]="form.get('tiempoExpiracionToken').value | date:'HH:mm'" class="form-control"
+          [popover]="popTemplate" [outsideClick]="true" placement="bottom" readonly/>
+        <ng-template #popTemplate>
+          <timepicker formControlName="tiempoExpiracionToken" [showMeridian]="false" [hourStep]="1" [minuteStep]="1"
+            [min]="minDate"></timepicker>
+        </ng-template>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-2">Parámetro Seguridad</label>
+      <div class="col-sm-10">
+        <ng-select #accionSelect [items]="parametrosSeguridad" class="ng-select-custom" bindLabel="label"
+          bindValue="idParametroSeguridad" placeholder="Seleccione un Parámetro de Seguridad"
+          [notFoundText]="'No hay datos encontrados.'" formControlName="idParametroSeguridad">
+        </ng-select>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarSistema()" #mdDelete>
+</app-confirm-modal>

@@ -1,0 +1,742 @@
+<app-template-consulta [type]="type" [form]="form" (clickSearchBtn)="onClickSearchBtn()" #templateCompensacion>
+
+  <div filtrosContent>
+
+    <fieldset class="well">
+      <legend class="well-legend"> <i class="fa fa-search" aria-hidden="true"></i> Filtros</legend>
+      <div [formGroup]="form">
+        <div class="row">
+          <label class="col-sm-1 ob-custom-label-form">Fecha Proceso</label>
+          <div class="form-group col-sm-3">
+            <div class="input-group">
+              <input stype="text" class="form-control" placeholder="" #drpFechaProceso="bsDaterangepicker"
+                [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue', adaptivePosition: true }"
+                bsDaterangepicker formControlName="fechaProceso" />
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
+              </div>
+            </div>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Fecha Transaccion</label>
+          <div class="form-group col-sm-3">
+            <div class="input-group">
+              <input stype="text" class="form-control" placeholder="" #drpFechaTransaccion="bsDaterangepicker"
+                [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue', adaptivePosition: true }"
+                bsDaterangepicker formControlName="fechaTransaccion" />
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="drpFechaTransaccion.toggle()"><i
+                    class="icon-calendar"></i></span>
+              </div>
+            </div>
+          </div>
+
+          <label class="col-sm-1 ob-custom-label-form">Membresía</label>
+          <div class="form-group col-sm-3">
+            <ng-select #membresiaSelect [items]="membresias" class="ng-select-custom" bindLabel="label"
+              bindValue="idMembresia" placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+              (change)="onChangeMembresiaSelect($event)" formControlName="membresias">
+            </ng-select>
+          </div>
+
+
+        </div>
+        <div class="row">
+          <label class="col-sm-1 ob-custom-label-form">Servicio</label>
+          <div class="form-group col-sm-3">
+            <ng-select #servicioSelect [items]="serviciosFiltrado" class="ng-select-custom" bindLabel="label"
+              bindValue="idServicio" placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'" [multiple]="true"
+              formControlName="servicios">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.descripcionMembresia}} {{item.idServicio}} - {{item.descripcionServicio}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.descripcionMembresia}} {{item.idServicio}} - {{item.descripcionServicio}}
+              </ng-template>
+            </ng-select>
+            <bfv-messages></bfv-messages>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Origen</label>
+          <div class="form-group col-sm-3">
+            <ng-select #origenSelect [items]="origenes" class="ng-select-custom" bindLabel="label" bindValue="idOrigen"
+              placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+              formControlName="origenes">
+            </ng-select>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Canal</label>
+          <div class="form-group col-sm-3">
+            <ng-select #canalSelect [items]="canales" class="ng-select-custom" bindLabel="label" bindValue="idCanal"
+              placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+              formControlName="canales">
+            </ng-select>
+          </div>
+
+        </div>
+        <div class="row">
+          <label class="col-sm-1 ob-custom-label-form">Clase Transacción</label>
+          <div class="form-group col-sm-3">
+            <ng-select #claseTransaccionSelect [items]="clasesTransaccion" class="ng-select-custom" bindLabel="label"
+              bindValue="idClaseTransaccion" placeholder="TODOS" [multiple]="true"
+              (change)="onChangeClaseTransaccionSelect($event)" [notFoundText]="'No hay datos encontrados.'"
+              formControlName="clasesTransaccion">
+            </ng-select>
+            <bfv-messages></bfv-messages>
+          </div>
+
+          <label class="col-sm-1 ob-custom-label-form">Código Transacción</label>
+          <div class="form-group col-sm-3">
+            <ng-select #codigoTransaccionSelect [items]="codigosTransaccionFiltrado" class="ng-select-custom"
+              bindLabel="label" bindValue="idCodigoTransaccion" placeholder="TODOS" [multiple]="true"
+              [notFoundText]="'No hay datos encontrados.'" formControlName="codigosTransaccion">
+              <ng-template ng-option-tmp let-item="item">
+            {{item.idCodigoTransaccion}} -
+                {{item.descripcionCodigoTransaccion}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+            {{item.idCodigoTransaccion}} -
+                {{item.descripcionCodigoTransaccion}}
+              </ng-template>
+            </ng-select>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Código Respuesta</label>
+          <div class="form-group col-sm-3">
+            <ng-select #codigoRespuestaSelect [items]="codigosRptaSwitch" class="ng-select-custom" bindLabel="label"
+              bindValue="idCodigoRespuestaSwitch" placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+              [multiple]="true" formControlName="codigosRespuesta">
+            </ng-select>
+          </div>
+
+          <!--<label class="col-sm-1 ob-custom-label-form">Rol</label>
+          <div class="form-group col-sm-3">
+            <ng-select #rolTransaccionSelect [items]="rolesTransaccion" class="ng-select-custom" bindLabel="label" bindValue="idRol" placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'" formControlName="roles">
+            </ng-select>
+            <bfv-messages></bfv-messages>
+          </div>-->
+        </div>
+        <div class="row">
+          <label class="col-sm-1 ob-custom-label-form">Moneda Compensacion</label>
+          <div class="form-group col-sm-3">
+            <ng-select #monedaSelect [items]="monedasCompensacion" class="ng-select-custom" bindLabel="label"
+              bindValue="idMoneda" placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+              formControlName="monedasCompensacion">
+            </ng-select>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Emisor</label>
+          <div class="form-group col-sm-3">
+            <ng-select #institucionSelect [items]="instituciones" class="ng-select-custom" bindLabel="label"
+              bindValue="idInstitucion" placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+              [multiple]="true" formControlName="instituciones" (change)="onChangeInstitucionSelect($event)">
+            </ng-select>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">BIN</label>
+          <div class="form-group col-sm-3">
+            <ng-select #binSelect [items]="binesFiltrado" class="ng-select-custom" bindLabel="descripcionBin"
+              bindValue="idBIN" placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'" [multiple]="true"
+              formControlName="bines">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.descripcionCortaInstitucion}} {{item.idBIN}} - {{item.descripcionBIN}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.descripcionCortaInstitucion}} {{item.idBIN}} - {{item.descripcionBIN}}
+              </ng-template>
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-sm-1 ob-custom-label-form">Receptor</label>
+          <div class="form-group col-sm-3">
+            <ng-select #institucionReceptoraSelect [items]="institucionesReceptoras" class="ng-select-custom"
+              bindLabel="label" bindValue="idInstitucion" placeholder="TODOS"
+              [notFoundText]="'No hay datos encontrados.'" [multiple]="true" formControlName="institucionesReceptoras">
+            </ng-select>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Número Tarjeta</label>
+          <div class="form-group col-sm-3">
+            <input type="text" class="form-control" formControlName="numeroTarjeta" onlynumbers>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Trace</label>
+          <div class="form-group col-sm-3">
+            <input type="text" class="form-control" formControlName="numeroTrace" pattern="[0-9]+">
+          </div>
+
+
+        </div>
+        <div class="row">
+          <label class="col-sm-1 ob-custom-label-form">Secuencia</label>
+          <div class="form-group col-sm-3">
+            <input type="text" class="form-control" formControlName="idSecuencia" onlynumbers>
+          </div>
+          <label class="col-sm-1 ob-custom-label-form">Origen Archivo</label>
+          <div class="form-group col-sm-3">
+            <ng-select #origenesArchivoSelect [items]="origenesArchivos" class="ng-select-custom" bindLabel="label" bindValue="idOrigenArchivo" placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
+              formControlName="origenesArchivo">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-lg-12 text-center">
+            <button type="submit" class="btn btn-primary" [disabled]="buscando">
+              <i class="fa" [ngClass]="{'fa-spinner fa-pulse fa-fw': buscando  , 'fa-search': !buscando}"></i> Buscar
+            </button>
+            <button type="button" *ngIf="false" class="btn btn-success" (click)="exportar()">
+              <i class="fa fa-download"></i> Exportar
+            </button>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <div resultadoContent>
+    <app-pagelength class="hidden" [gridApi]="gridApi" [managePagination]="managePagination" [paginationServer]="true"
+      (fnPageSizeChanged)="onPageLenghtChanged()">
+    </app-pagelength>
+    <ag-grid-angular #agGrid class="ag-theme-balham" (filterChanged)="onFilter()" (sortChanged)="onSorter()"
+      [gridOptions]="gridOptions">
+    </ag-grid-angular>
+    <app-pie-paginacion [managePagination]="managePagination" (clickBtnFirstPage)="onPageChanged(1)"
+      (clickBtnPreviousPage)="onPageChanged(managePagination.actualPage - 1)"
+      (clickBtnNextPage)="onPageChanged(managePagination.actualPage + 1)"
+      (clickBtnLastPage)="onPageChanged(managePagination.totalPages)">
+    </app-pie-paginacion>
+  </div>
+
+</app-template-consulta>
+
+<div resultadoContent>
+  <app-consulta-modal [type]="type" #mdComisCompensacion>
+    <div modalDetalleContent>
+      <app-pagelength [gridApi]="gridApi2" class="hidden"></app-pagelength>
+      <ag-grid-angular #agGrid class="ag-theme-balham" style="width: 100%; height: 300px;" [gridOptions]="gridOptions2">
+      </ag-grid-angular>
+    </div>
+  </app-consulta-modal>
+</div>
+
+<app-consulta-modal [type]="type" #mdCompensacion>
+  <div modalDetalleContent *ngIf="compensacionDetalle">
+
+    <div class="row" style="padding-bottom: 5px;">
+      <div class="col-6">
+        <label class="titulo-label" style="padding-left: 15px;"><b> Secuencia : </b></label>
+        <label style="padding-left: 15px;"> {{compensacionDetalle.idSecuencia}} </label>
+        <label class="titulo-label" style="padding-left: 15px;"><b> Fecha Proceso: </b></label>
+        <label style="padding-left: 15px;"> {{compensacionDetalle.fechaProceso}} </label>
+      </div>
+      <div class="col-6">
+        <div class="pull-right">
+          <button (click)="onClickAnterior()" type="button" class="btn btn-success"
+            [disabled]="managePagination.isFirstPage && managePagination.actualRow === 1">
+            <i class="fa" aria-hidden="true"
+              [ngClass]="{'fa-spinner fa-pulse fa-fw': buscandoPagina , 'fa-angle-left': !buscandoPagina}"></i>
+            Anterior
+          </button>
+          <button (click)="onClickSiguiente()" type="button" class="btn btn-success"
+            [disabled]="managePagination.isLastPage && managePagination.actualRow === managePagination.totalRows">
+            Siguiente
+            <i class="fa" aria-hidden="true"
+              [ngClass]="{'fa-spinner fa-pulse fa-fw': buscandoPagina , 'fa-angle-right': !buscandoPagina}"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="padding-left: 15px; padding-right: 15px;  margin-bottom: 15px;">
+      <div id="divCompensacionDetalleTransaccional" *ngIf="listaTab[0].divVisible" class="col-12">
+        <div class="row" style="padding-bottom: 5px;">
+          <div class="col-12">
+            <fieldset class="well" style="background-color: #F5F5F5">
+              <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Identificación Transacción
+              </legend>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Membresía</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idMembresia}} -
+                    {{compensacionDetalle.descMembresia}}</label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">Servicio</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idServicio}} - {{compensacionDetalle.descServicio}}
+                  </label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">Origen</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idOrigen}} - {{compensacionDetalle.descOrigen}}
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Clase Transacción</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idClaseTransaccion}} -
+                    {{compensacionDetalle.descClaseTransaccion}} </label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">Código Transacción</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idCodigoTransaccion}} -
+                    {{compensacionDetalle.descCodigoTransaccion}} </label>
+                </div>
+                <!--<label class="col-sm-1 ob-custom-label-form">Rol</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idRol}} - {{compensacionDetalle.descRol}} </label>
+                </div>-->
+                <label class="col-sm-1 ob-custom-label-form">Canal</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idCanal}} - {{compensacionDetalle.descCanal}}
+                  </label>
+                </div>
+              </div>
+
+            </fieldset>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <fieldset class="well" style="background-color: #F5F5F5">
+              <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Datos Transaccionales
+              </legend>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Valor Compensación</label>
+                <div class="form-group col-sm-2">
+                  <label class="form-control"> {{compensacionDetalle.idMonedaCompensacion}} -
+                    {{compensacionDetalle.descMonedaCompensacion}} </label>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.valorCompensacionFormatoMoneda}} </label>
+                </div>
+
+                <label class="col-sm-1 ob-custom-label-form">Fecha Transacción</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.fechaTransaccion}},
+                    {{compensacionDetalle.horaTransaccion}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Valor Transacción</label>
+                <div class="form-group col-sm-2">
+                  <label class="form-control"> {{compensacionDetalle.idMonedaTransaccion}} -
+                    {{compensacionDetalle.descMonedaTransaccion}} </label>
+                </div>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.valorTransaccionFormatoMoneda}} </label>
+                </div>
+
+                <label class="col-sm-1 ob-custom-label-form">Fecha Incoming</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.fechaIncoming}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Fecha Switch</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.fechaSwitch}} </label>
+                </div>
+
+                <label class="col-sm-1 ob-custom-label-form">Fecha Proceso</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.fechaProceso}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Fecha Afectación</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.fechaAfectacion}} </label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">Fecha Interface</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.fechaInterface}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Indicador Compensación</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control">
+                    {{compensacionDetalle.indicadorCompensacion}}-{{compensacionDetalle.descIndicadorCompensacion}}
+                  </label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">Response Code</label>
+                <div class="form-group col-sm-5">
+                  <label class="form-control"> {{compensacionDetalle.codigoRespuesta}} -
+                    {{compensacionDetalle.descCodigoRespuesta}} </label>
+                </div>
+              </div>
+              <div class="row">
+                <label class="col-sm-1 ob-custom-label-form">Institución</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idInstitucionEmisora}} -
+                    {{compensacionDetalle.descInstitucionEmisora}} </label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">Institución</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.idInstitucionReceptora}} -
+                    {{compensacionDetalle.descInstitucionReceptora}} </label>
+                </div>
+                <label class="col-sm-1 ob-custom-label-form">BIN</label>
+                <div class="form-group col-sm-3">
+                  <label class="form-control"> {{compensacionDetalle.bin}} - {{compensacionDetalle.descBin}}</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Origen Archivo</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.origenArchivo}} - {{compensacionDetalle.descOrigenArchivo}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Trace</label>
+                    <div class="form-group col-sm-2">
+                      <label class="form-control"> {{compensacionDetalle.numeroTrace}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Indicador Autorización</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.indAutorizacion}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Código Autorización</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.codigoAutorizacion}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Código Uso</label>
+                    <div class="form-group col-sm-2">
+                      <label class="form-control"> {{compensacionDetalle.codigoUso}}-{{compensacionDetalle.descCodigoUso}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Código Transacción Original</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.idTransaccionOriginal}} -
+                        {{compensacionDetalle.descTransaccionOriginal}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Processing Code</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.codigoProcesamiento}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Ind Txn Recurrente</label>
+                    <div class="form-group col-sm-2">
+                      <label class="form-control"> {{compensacionDetalle.indTxnRecurrente}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Ind Moneda Internacional</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.indMonedaInter}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Cobro Tipo C</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.transaccionTipoC}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Condición Especial</label>
+                    <div class="form-group col-sm-2">
+                      <label class="form-control"> {{compensacionDetalle.indCondicionEspecial}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Código Facturación</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.idFacturacion}} -
+                        {{compensacionDetalle.descFacturacion}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Artículo</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.codigoArticulo}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Atributo Reembolso</label>
+                    <div class="form-group col-sm-2">
+                      <label class="form-control"> {{compensacionDetalle.atributoReembolso}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Aplica Cuota ISA</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.aplicaCuotaIsa}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Aplica PCAS</label>
+                    <div class="form-group col-sm-6">
+                      <label class="form-control"> {{compensacionDetalle.indicadorPcas}}-{{compensacionDetalle.descIndicadorPcas}} </label>
+                    </div>
+
+                    <label class="col-sm-1 ob-custom-label-form">Código Relacionador</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.codigoRelacionador}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Número Cuotas</label>
+                    <div class="form-group col-sm-2">
+                      <label class="form-control"> {{compensacionDetalle.numeroCuotas}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Región Emisor</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.idRegionEmisor}} -
+                        {{compensacionDetalle.descRegionEmisor}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">País Emisor</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.idPaisEmisor}} -
+                        {{compensacionDetalle.descPaisReceptor}} </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">BIN Receptor</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.binReceptor}} -
+                        {{compensacionDetalle.descBinReceptor}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Región Receptor</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.idRegionReceptor}} -
+                        {{compensacionDetalle.descRegionReceptor}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">País Receptor</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.idPaisReceptor}} -
+                        {{compensacionDetalle.descPaisReceptor}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Glosa Regularización</label>
+                    <div class="form-group col-sm-12">
+                      <label class="form-control"> {{compensacionDetalle.glosaRegularizacion}} </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-6">
+                <fieldset class="well" style="background-color: #F5F5F5">
+                  <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Tarjetahabiente</legend>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Número Tarjeta</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.numeroTarjeta}} </label>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Número Cuenta</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.numeroCuenta}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Cuenta FROM</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.cuentaId1Switch}}</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Cuenta TO</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.cuentaId2Switch}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Tipo Cuenta ATM</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.seleccionCuentaAtm}} </label>
+                    </div>
+                    <label class="col-sm-2 ob-custom-label-form">Comisión Thb</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.comisionTHBFormatoMoneda}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">PCT</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.codigoPct}} </label>
+                    </div>
+                    <label class="col-sm-2 ob-custom-label-form">Plan Crédito</label>
+                    <div class="form-group col-sm-4">
+                      <label class="form-control"> {{compensacionDetalle.codigoPlanCredito}} </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-6">
+                <fieldset class="well" style="background-color: #F5F5F5">
+                  <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Características
+                    Transacción</legend>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Id Terminal</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.idTerminal}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Flag Compensación</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.flagCompensacion}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Terminal POS</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.terminalPos}} -
+                        {{compensacionDetalle.descTerminalPos}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+
+                    <label class="col-sm-2 ob-custom-label-form">Método Id Thb</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.metodoIdThb}} -
+                        {{compensacionDetalle.descMetodoIdThb}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Modo Entrada</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.modoEntradaPos}} -
+                        {{compensacionDetalle.descModoEntradaPos}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Condition Code</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.posConditionCode}} </label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <label class="col-sm-2 ob-custom-label-form">Correo - Teléfono</label>
+                    <div class="form-group col-sm-10">
+                      <label class="form-control"> {{compensacionDetalle.indCorreoTelefono}}-
+                        {{compensacionDetalle.descIndCorreoTelefono}}</label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+
+            <div class="row" style="padding-bottom: 5px;">
+              <div class="col-12">
+                <fieldset class="well" style="background-color: #F5F5F5">
+                  <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Datos del Adquirente
+                  </legend>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Nombre Adquirente</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.nombreAdquirente}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">País</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.paisAdquirente}} -
+                        {{compensacionDetalle.descPaisAdquirente}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Estado</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.estadoAdquirente}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Ciudad</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.ciudadAdquirente}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Referencia Intercambio</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.referenciaIntercambio}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Referencia TC</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.referenciaTc}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Código Establecimiento Local</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.idEstablecimientoLocal}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Porcentaje comisión (%)</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.porcentajeEstabLocal}} </label>
+                    </div>
+                  </div>
+                  <div class="row">
+
+                    <label class="col-sm-1 ob-custom-label-form">Giro Negocio</label>
+                    <div class="form-group col-sm-7">
+                      <label class="form-control"> {{compensacionDetalle.giroNegocio}} -
+                        {{compensacionDetalle.descGiroNegocio}} </label>
+                    </div>
+                  </div>
+
+                </fieldset>
+              </div>
+            </div>
+
+            <div class="row" style="padding-bottom: 5px;">
+              <div class="col-12">
+                <fieldset class="well" style="background-color: #F5F5F5">
+                  <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Compensación</legend>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Fondo Cargo</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.fondosCargo}} -
+                        {{compensacionDetalle.instFondosCargo}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Fondo Abono</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.fondosAbono}} -
+                        {{compensacionDetalle.instFondosAbono}} </label>
+                    </div>
+                    <label class="col-sm-1 ob-custom-label-form">Nivel Compensación</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.indicadorCompensacion}} </label>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <fieldset class="well" style="background-color: #F5F5F5">
+                      <legend class="well-legend"> <i class="fa fa-podcast" aria-hidden="true"></i> Datos Switch
+                      </legend>
+                      <div class="row">
+                        <label class="col-sm-1 ob-custom-label-form"> Requesting Institution</label>
+                        <div class="form-group col-sm-3">
+                          <label class="form-control"> {{compensacionDetalle.binEmisorSwitch}} -
+                            {{compensacionDetalle.descBinEmisorSwitch}} </label>
+                        </div>
+                        <label class="col-sm-1 ob-custom-label-form">Adcquiring Institution</label>
+                        <div class="form-group col-sm-3">
+                          <label class="form-control"> {{compensacionDetalle.binAdquirenteSwitch}} -
+                            {{compensacionDetalle.descBinAdquirenteSwitch}} </label>
+                        </div>
+                        <label class="col-sm-1 ob-custom-label-form">BIN Respuesta</label>
+                        <div class="form-group col-sm-3">
+                          <label class="form-control"> {{compensacionDetalle.binRespuestaSwitch}} -
+                            {{compensacionDetalle.descBinRespuestaSwitch}} </label>
+                        </div>
+                      </div>
+
+                    </fieldset>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-1 ob-custom-label-form">Compensación Fondo</label>
+                    <div class="form-group col-sm-3">
+                      <label class="form-control"> {{compensacionDetalle.compensadoFondos}} </label>
+                    </div>
+
+
+                  </div>
+                </fieldset>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</app-consulta-modal>

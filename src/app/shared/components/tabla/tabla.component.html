@@ -1,0 +1,25 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th *ngFor="let item of tabla.listaCabecera;">{{item}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let x of tabla.listaFilas;">
+
+      <td *ngFor="let item of x.fila;">
+        <label *ngIf="item.label">{{item.text}}</label>
+        <button *ngIf="item.btn" type="button" [ngClass]="item.btnClass" (click)="item.eventClickBtn($event)">
+          <i [ngClass]="item.iClass"></i> {{item.text}}
+        </button>
+        <input *ngIf="item.check" type="checkbox" value="{{item.valueCheckBox}}" [(ngModel)]="item.checked" (change)="onChangeCheckBoxTable(item)" checked="{{item.checked}}">
+      </td>
+
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td *ngFor="let item of tabla.listaPie;">{{item}}</td>
+    </tr>
+  </tfoot>
+</table>

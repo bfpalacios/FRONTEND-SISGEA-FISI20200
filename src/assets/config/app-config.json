@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://167.172.237.186:8080",
+  "apiContextPath": "/sisgea/api",
+  "secContextPath": "/uba-security/api",
+  "batchContextPath": "/sisgea-batch/api",
+  "agGridLicense": "Evaluation_License-_Not_For_Production_Valid_Until_2_October_2019__MTU2OTk3MDgwMDAwMA==bfd57e5d72aa085e9818f6af9b509211"
+}

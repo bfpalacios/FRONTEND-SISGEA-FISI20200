@@ -1,0 +1,28 @@
+<div class="row mb-3" *ngIf="btns">
+  <div class="col-sm-8">
+    <button class="btn btn-info" tooltip="Agregar" (click)="clickBtnAdd()" [disabled]="!selected">
+      <i class="fa fa-plus"></i>
+    </button>
+    <button class="btn btn-success" tooltip="Editar" (click)="clickBtnEdit()" [disabled]="!selected">
+      <i class="fa fa-pencil"></i>
+    </button>
+    <button class="btn btn-danger" tooltip="Eliminar" (click)="clickBtnDelete()" [disabled]="!isRemovable()">
+      <i class="fa fa-close"></i>
+    </button>
+  </div>
+</div>
+<div class="row mb-2" *ngIf="filter">
+  <div class="col-sm-12">
+    <input type="text" [(ngModel)]="textFilterValue" class="form-control" placeholder="Buscar">
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-sm-12">
+    <perfect-scrollbar #perfectScrollTree>
+      <div class="tree-ngx-container">
+        <tree-ngx [nodeItems]="nodeItems" [filter]="textFilterValue" [callbacks]="treeCallbacks" #treeRef> </tree-ngx>
+      </div>
+    </perfect-scrollbar>
+
+  </div>
+</div>

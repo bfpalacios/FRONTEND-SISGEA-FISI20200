@@ -1,0 +1,30 @@
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog modal-consultas" [ngClass]="class" role="document"  #mdDialog>
+    <div class="modal-content" style="background-color:#f2f2f2;" #mdContent>
+      <div class="modal-header">
+        <h4 class="modal-title" *ngIf="type.otherTitle" style="color:#78788c;"> {{type.otherTitle}}</h4>
+        <h4 class="modal-title" *ngIf="!type.otherTitle" style="color:#78788c;"> Detalle {{type.name}}</h4>
+        <div class="pull-right">
+          <button *ngIf="false" tooltip="Cerrar" type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <button [tooltip]="tooltipFullscreen" type="button" class="close" (click)="onClickMaximize()">
+            <span aria-hidden="true" [innerHTML]="htmlFullscreen | safe:'html'"></span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+
+          <ng-content select="[modalDetalleContent]"></ng-content>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn"
+        [ngClass]="[options.buttons.cancel.class ? options.buttons.cancel.class : 'btn-primary']"
+        (click)="hide()">{{options.buttons.cancel.text}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

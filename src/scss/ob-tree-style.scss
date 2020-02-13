@@ -1,0 +1,18 @@
+.tree-ngx-container {
+  height: 400px;
+}
+
+.node-name {
+  padding: 5px 0px 5px 10px;
+  font-size: 0.89em;
+  &.markSelected {
+    padding: 5px 5px 5px 7px;
+    border-left: none;
+    background-color: #beebff;
+  }
+  &:not(.markSelected) .active:hover {
+    border-bottom: 1px solid black;
+  }
+}
+
+ 

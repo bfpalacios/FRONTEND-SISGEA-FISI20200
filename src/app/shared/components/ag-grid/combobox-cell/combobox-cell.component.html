@@ -1,0 +1,20 @@
+<div *ngIf="(params.visibleFn ? params.visibleFn(params) : params.visible)" class="text-center">
+    <select (change)="onChange($event.target.value)" required class="ng-select-custom form-control" >
+        <option  value="">{{params.placeholder}}</option>
+        <option  *ngFor="let item of (params.listItemsFn?params.listItemsFn(params):params.listItems)" 
+        [value]="item[params.value]" [selected]="item[params.value]==(params.itemSelectedFn?params.itemSelectedFn(params):params.itemSelected)">{{ item[params.label] }}</option>
+    </select>
+</div>  
+<style>
+select:invalid {
+  color: gray;
+}
+
+select option:first-child {
+  color: gray;
+}
+
+select:invalid option:not(:first-child) {
+  color: black;
+}
+</style>

@@ -1,0 +1,35 @@
+<app-template-mantenimiento [type]="type" [detailType]="detailType" (clickRegisterBtn)="showMdRegister()" #templateUsuario>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="form-group row">
+      <label for="inp-username" class="col-form-label col-sm-2">Username</label>
+      <div class="col-sm-10">
+        <input id="inp-username" type="text" class="form-control" formControlName="username" uppercase/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-nombres" class="col-form-label col-sm-2">Nombres</label>
+      <div class="col-sm-10">
+        <input id="inp-nombres" type="text" class="form-control" formControlName="nombres" uppercase/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inp-apellidos" class="col-form-label col-sm-2">Apellidos</label>
+      <div class="col-sm-10">
+        <input id="inp-apellidos" type="text" class="form-control" formControlName="apellidos" uppercase/>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarUsuario()" #mdDelete>
+</app-confirm-modal>
+
+<gestion-cuenta [type]="detailType" #gestionCuenta></gestion-cuenta>
