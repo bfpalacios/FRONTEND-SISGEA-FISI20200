@@ -29,7 +29,7 @@ export class SolicitudEspaciosService extends HttpService {
   }
 
   actualizar(solicitudEspacio: SolicitudEspacio): Observable<any>  {
-    console.log("ESTOY ACTUALIZANDO")
+  
     return super.put(solicitudEspacio,solicitudEspacio.idSolicitud);
   }
 

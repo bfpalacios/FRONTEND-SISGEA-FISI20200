@@ -52,6 +52,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   espacios: any[] = [];
   solicitantesFiltrado: any[] = [];
   estadoSolicitud: any[] = [];
+  estadoAsistencia: any[] = [];
 
   constructor(
     private solicitudEspaciosFacade: SolicitudEspaciosFacade,
@@ -81,7 +82,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'horaFin': new FormControl('', [Validators.required]),
       'horaInicio': new FormControl('', [Validators.required]),
       'estadoSolicitud':new FormControl('', ),
-      'idSolicitud':new FormControl('', )
+      'idSolicitud':new FormControl('', ),
+      'estadoAsistencia':new FormControl('', ),
+      'fechaRegistro':new FormControl('', ),
     });
     this.formHorario = new FormGroup({
       'idsEspacioAcademico': new FormControl([], [Validators.required]),
@@ -157,6 +160,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.estadoSolicitud).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.estadoSolicitud = data;
     });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.estadoAsistencia).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.estadoAsistencia = data;
+    });
   }
 
   onClickBuscarHorarioEspacio(){
@@ -214,9 +220,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   showMdUpdate(params) {
   let data: SolicitudEspacio = params.node.data;
-console.log(data);
   this.mdFormOpts = this.mdUpdateOpts;
   enableControls(this.form, false, 'idSolicitud');
+  enableControls(this.form, false, 'fechaRegistro');
   this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 save() {
@@ -227,15 +233,18 @@ save() {
       this.solicitudEspaciosFacade.actualizar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         (data) => {
           this.mdUpdate.hide();
+          this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+            updateGrid(this.gridOptions, data, this.gridColumnApi);
+            this.toastr.success('Realizado con exito','Prestamo de espacios');
+          });
             },
 
         (err) => {
 
-                  //this.prestando = false;
                   this.toastr.error('Ocurrio un problema en el prestamo del espacio','Prestamo de espacios');
               },
         () =>{
-                //  this.prestando = false;
+
               }
 
 
