@@ -32,6 +32,10 @@ const routes: Routes = [
         loadChildren: './components/programacion-academica/programacion-academica.module#ProgramacionAcademicaModule'
       },
       {
+        path: 'multitab',
+        loadChildren: './components/multitab-cab/multitab-cab.module#MultitabCabModule'
+      },
+      {
         path: 'origen',
         loadChildren: './components/origen/origen.module#OrigenModule'
       }
