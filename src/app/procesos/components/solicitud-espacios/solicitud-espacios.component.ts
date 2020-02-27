@@ -225,6 +225,10 @@ save() {
       this.solicitudEspaciosFacade.actualizar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         (data) => {
           this.mdUpdate.hide();
+          this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+            updateGrid(this.gridOptions, data, this.gridColumnApi);
+            this.toastr.success('Realizado con exito','Prestamo de espacios');
+          });
             },
 
         (err) => {
