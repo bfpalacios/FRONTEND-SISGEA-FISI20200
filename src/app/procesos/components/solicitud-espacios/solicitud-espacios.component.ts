@@ -152,7 +152,18 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       this.espacios = data;
     });
   }
-
+  
+  onClickBuscarHorarioEspacio(){
+    this.buscando = true;
+    let criterio = this.formHorario.getRawValue();
+    this.solicitudEspaciosFacade.buscarEspaciosHorarios(criterio).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (data) => {
+        this.buscando = false;
+        console.log(data);
+      }
+    );
+  }
+  
   onChangeTipoSolicitante(item){
     if(item==undefined || item==null){
       this.solicitantes = [];

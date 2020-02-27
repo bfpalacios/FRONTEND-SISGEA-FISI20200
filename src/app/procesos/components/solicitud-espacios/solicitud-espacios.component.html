@@ -16,18 +16,17 @@
 
           <div [formGroup]="formHorario">
             <div class="row">
-              <label class="col-sm-2 ob-custom-label-form">Pabellon</label>
+              <label class="col-sm-2 ob-custom-label-form">Espacios</label>
               <div class="form-group col-sm-4">
-                <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom" bindLabel="label" bindValue="idPabellon"
-                  placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
-                  formControlName="pabellon">
-                </ng-select>
-              </div>
-              <label class="col-sm-2 ob-custom-label-form">Tipo Espacio</label>
-              <div class="form-group col-sm-4">
-                <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom" bindLabel="label" bindValue="idPabellon"
-                  placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'"
-                  formControlName="tipoEspacio">
+                <ng-select #pabellonSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
+                    placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                    formControlName="idsEspacioAcademico">
+                <ng-template ng-option-tmp let-item="item">
+                    {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+                </ng-template>
+                <ng-template ng-label-tmp let-item="item">
+                    {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+                </ng-template>
                 </ng-select>
               </div>
             </div>
@@ -46,7 +45,7 @@
             </div>
             <div class="row">
               <div class="form-group col-lg-12 text-center">
-                <button type="submit" class="btn btn-primary" [disabled]="buscando">
+                <button type="submit" class="btn btn-primary" [disabled]="buscando" (click)="onClickBuscarHorarioEspacio()">
                   <i class="fa" [ngClass]="{'fa-spinner fa-pulse fa-fw': buscando  , 'fa-search': !buscando}"></i> Buscar
                 </button>
               </div>

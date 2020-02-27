@@ -109,6 +109,7 @@ export class HorarioComponent implements OnInit, AfterViewInit, OnDestroy, After
       this.toasterService.success(MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS);
       this.configCarga.loading = false;
       this.md.hide();
+      console.log(data);
       this.facade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
         updateGrid(this.gridOptions,data,this.gridColumnApi,true,true);
       });

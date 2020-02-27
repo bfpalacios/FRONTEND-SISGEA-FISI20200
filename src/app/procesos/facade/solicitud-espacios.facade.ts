@@ -28,6 +28,9 @@ export class SolicitudEspaciosFacade {
     return this.espacioAcademicoService.buscarTodos();
   }
 
+  buscarEspaciosHorarios(criterio: any): Observable<any>{
+    return this.espacioAcademicoService.buscarEspacioHorario(criterio);
+  }
 
   initData(){
     this.store.dispatch(new GetAllSolicitudEspacios());
