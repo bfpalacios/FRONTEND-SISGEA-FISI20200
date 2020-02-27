@@ -7,6 +7,8 @@ import { SolicitudEspaciosFacade } from '../../facade';
 import { ObGridModule } from '../../../shared/ob-grid.module';
 import { ObDatepickerModule } from '../../../shared/ob-datepicker.module';
 import { MultitabDetFacade, MultitabCabFacade } from '../../../mantenimiento/facade';
+import { ObTimePickerModule } from '../../../shared/ob-timepicker.module';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [SolicitudEspaciosComponent],
@@ -15,7 +17,9 @@ import { MultitabDetFacade, MultitabCabFacade } from '../../../mantenimiento/fac
     SharedModule,
     ObGridModule,
     ObDatepickerModule,
-    SolicitudEspaciosRoutingModule
+    SolicitudEspaciosRoutingModule,
+    ObTimePickerModule,
+    PopoverModule.forRoot(),
   ],
   providers: [
     SolicitudEspaciosFacade,

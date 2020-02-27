@@ -82,7 +82,7 @@
             <div class="col-sm-10 col-md-10 col-lg-10">
               <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
                 placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
-                formControlName="solicitante">
+                formControlName="idSolicitante">
                 <ng-template ng-option-tmp let-item="item">
               {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}}
                 </ng-template>
@@ -97,6 +97,50 @@
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Motivo</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
               <textarea  rows="5" class="form-control" formControlName="motivo"></textarea>
+              <bfv-messages></bfv-messages>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Espacio</label>
+            <div class="col-sm-10 col-md-10 col-lg-10">
+              <ng-select #pabellonSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
+                placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                formControlName="idEspacioAcademico">
+                <ng-template ng-option-tmp let-item="item">
+              {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+                </ng-template>
+                <ng-template ng-label-tmp let-item="item">
+              {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+                </ng-template>
+              </ng-select>
+              <bfv-messages></bfv-messages>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-sm-2 ob-custom-label-form">Fecha Reserva</label>
+            <div class="form-group col-sm-10 col-lg-10">
+              <div class="input-group">
+                  <input type="text" class="form-control mb-3" placeholder=""
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                    bsDatepicker formControlName="fechaReserva" />
+                  <bfv-messages></bfv-messages>
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Inicio</label>
+            <div class="form-group col-sm-10 col-md-10 col-lg-10">
+              <input class="form-control" formControlName="horaInicio">
+              <bfv-messages></bfv-messages>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Fin</label>
+            <div class="form-group col-sm-10 col-md-10 col-lg-10">
+              <input class="form-control" formControlName="horaFin">
               <bfv-messages></bfv-messages>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { FormModalComponent, ConfirmModalComponent, TemplateMantenimientoComponent, MdFormOpts, MdConfirmOpts, ButtonsCellRendererComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS, getContextMenuItemsMantenimiento, addLabelToObjsArr, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS, getContextMenuItemsMantenimiento, addLabelToObjsArr, getFormattedDate, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
@@ -49,6 +49,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   tipoSolicitante: any[] = [];
   solicitantes: any[] = [];
+  espacios: any[] = [];
   solicitantesFiltrado: any[] = [];
 
   constructor(
@@ -70,9 +71,13 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.mdUpdateOpts.modalClass = 'modal-reglas-compensacion';
     this.mdRegisterOpts.buttons.ok.hidden = true;
     this.form = new FormGroup({
-      'tipoSolicitud': new FormControl('', [Validators.required ,Validators.min(0), Validators.min(0), Validators.max(99)]),
-      'solicitante': new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      'motivo': new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      'tipoSolicitud': new FormControl('', [Validators.required]),
+      'idSolicitante': new FormControl('', [Validators.required]),
+      'motivo': new FormControl('', [Validators.required, Validators.maxLength(200)]),
+      'idEspacioAcademico': new FormControl('', [Validators.required]),
+      'fechaReserva': new FormControl('', [Validators.required]),
+      'horaFin': new FormControl('', [Validators.required]),
+      'horaInicio': new FormControl('', [Validators.required]),
     });
     this.formHorario = new FormGroup({
       'pabellon': new FormControl('', [Validators.required ,Validators.min(0), Validators.min(0), Validators.max(99)]),
@@ -130,7 +135,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   }
 
   manageState() {
-    this.store.select('asignacionEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+    this.store.select('solicitudEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
       manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdDelete, this.toastr,
         this.errorService, () => {
           updateGrid(this.gridOptions, state.data, this.gridColumnApi);
@@ -142,6 +147,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.solicitudEspaciosFacade.buscarSolicitantes().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.solicitantes = data;
       this.solicitantesFiltrado = data;
+    });
+    this.solicitudEspaciosFacade.buscarEspacios().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.espacios = data;
     });
   }
 
@@ -155,10 +163,28 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   clickSolicitar(){
     let form = this.form.getRawValue();
-    console.log(form);
-    this.solicitudEspaciosFacade.registrar(form).pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      console.log(state);
-    });
+    form = {
+      ...form,
+      fechaReserva: getFormattedDate(this.form.getRawValue().fechaReserva,'YYYY-MM-DD')
+    }
+    this.prestando = true;
+    this.solicitudEspaciosFacade.registrar(form).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      (data) => {
+          this.prestando = false;
+          this.mdSave.hide();
+          this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+            updateGrid(this.gridOptions, data, this.gridColumnApi);
+            this.toastr.success('Realizado con exito','Prestamo de espacios');
+          });
+      },
+      (err) => {
+          this.prestando = false;
+          this.toastr.error('Ocurrio un problema en el prestamo del espacio','Prestamo de espacios');
+      },
+      () =>{
+          this.prestando = false;
+      }
+    );
   }
 
   abrirModalRegistrar(){
@@ -168,8 +194,8 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   initColumnDefs(): ColDef[] {
     return [
       {
-        headerName: "Tipo",
-        field: "tipoSolicitud",
+        headerName: "Solicitud",
+        field: "idSolicitud",
         cellClass: 'ob-type-string-center',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" },
@@ -178,41 +204,40 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       {
         headerName: "Espacio",
         field: 'idEspacioAcademico',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.idEspacioAcademico, params.data.descripcionEspacioAcademico);
+        },
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },
       {
         headerName: "Estado",
-        field: 'estado',
-        cellClass: 'ob-type-string',
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" }
-      },
-      {
-        headerName: "DNI",
-        field: 'dni',
+        field: 'estadoSolicitud',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.estadoSolicitud, params.data.descripcionEstadoSolicitud);
+        },
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },
       {
         headerName: "Solicitante",
-        field: 'solicitante',
+        field: 'dni',
+        valueGetter: (params) => {
+          if(params.data){
+            return params.data.nombres + ' ' + params.data.nombres + ' ' + params.data.apellidoPaterno + params.data.apellidoMaterno
+          }else{
+            return '';
+          }
+        },
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },
       {
-        headerName: "Registro",
-        field: 'registro',
-        cellClass: 'ob-type-string',
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" }
-      },
-      {
-        headerName: "Reserva",
-        field: 'reserva',
+        headerName: "Fecha",
+        field: 'fechaReserva',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
@@ -227,6 +252,13 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       {
         headerName: "Fin",
         field: 'horaFin',
+        cellClass: 'ob-type-string',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Motivo",
+        field: 'motivo',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
