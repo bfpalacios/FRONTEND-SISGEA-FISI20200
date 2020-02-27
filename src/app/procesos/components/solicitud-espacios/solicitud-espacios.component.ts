@@ -84,9 +84,8 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'idSolicitud':new FormControl('', )
     });
     this.formHorario = new FormGroup({
-      'pabellon': new FormControl('', [Validators.required ,Validators.min(0), Validators.min(0), Validators.max(99)]),
-      'tipoEspacio': new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      'fecha': new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      'idsEspacioAcademico': new FormControl([], [Validators.required]),
+      'fecha': new FormControl('', [Validators.required]),
     })
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
