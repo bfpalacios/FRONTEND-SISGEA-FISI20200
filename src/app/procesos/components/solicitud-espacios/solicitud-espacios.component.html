@@ -15,32 +15,26 @@
         <legend class="well-legend"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Filtros </legend>
 
     <div [formGroup]="formHorario">
-              <!--   <div class="row">
+            <div class="row">
               <label class="col-sm-2 ob-custom-label-form">Espacios</label>
               <div class="form-group col-sm-4">
                 <ng-select #pabellonSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
-                    placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                    placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'" [multiple]="true"
                     formControlName="idsEspacioAcademico">
                 <ng-template ng-option-tmp let-item="item">
-                    {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+                    {{item.descripcionEspacioAcademico}}
                 </ng-template>
                 <ng-template ng-label-tmp let-item="item">
-                    {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+                    {{item.descripcionEspacioAcademico}}
                 </ng-template>
                 </ng-select>
               </div>
-            </div>-->
-            <div class="row">
               <label class="col-sm-2 ob-custom-label-form">Fecha</label>
               <div class="form-group col-sm-4">
-                <div class="input-group">
-                  <input stype="text" class="form-control" placeholder="" #drpFechaProceso="bsDaterangepicker"
-                    [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue', adaptivePosition: true }"
-                    bsDaterangepicker formControlName="fecha" />
-                  <div class="input-group-append">
-                    <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
-                  </div>
-                </div>
+                <input type="text" class="form-control mb-3" placeholder=""
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                  bsDatepicker formControlName="fecha" />
+                <bfv-messages></bfv-messages>
               </div>
             </div>
             <div class="row">
