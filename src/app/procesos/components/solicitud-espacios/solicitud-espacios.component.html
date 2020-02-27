@@ -33,7 +33,7 @@
               <div class="form-group col-sm-4">
                 <input type="text" class="form-control mb-3" placeholder=""
                   [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
-                  bsDatepicker formControlName="fecha" />
+                  bsDatepicker formControlName="fechas" />
                 <bfv-messages></bfv-messages>
               </div>
             </div>
@@ -179,7 +179,7 @@
                   bsDatepicker formControlName="fechaReserva" />
                 <bfv-messages></bfv-messages>
                 <div class="input-group-append">
-                  <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
+                  <span class="input-group-text"><i class="icon-calendar"></i></span>
                 </div>
             </div>
           </div>

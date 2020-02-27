@@ -14,6 +14,15 @@ export function getFormattedDate(date: any, format: string = 'DD/MM/YYYY'): stri
   }
 }
 
+export function getLocalString(date: any): string{
+  let strDate = date.toLocaleString();
+  let strResult = '';
+  strDate = strDate.split(',')[0];
+  strDate = strDate.split("/");
+  strResult = strDate[2] + "-" + addZero(strDate[0]) + "-"  +addZero(strDate[1]);
+  return strResult;
+}
+
 /*Convert from 2019-10-03 to 03/10/2019 */
 export function getFormattedDateFromYYYYMMDDtoDDMMYYYY(date: string): string {
   if (date === null) return null;

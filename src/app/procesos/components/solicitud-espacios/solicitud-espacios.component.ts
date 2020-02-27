@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { FormModalComponent, ConfirmModalComponent, TemplateMantenimientoComponent, MdFormOpts, MdConfirmOpts, ButtonsCellRendererComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS, getContextMenuItemsMantenimiento, addLabelToObjsArr, getFormattedDate, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS, getContextMenuItemsMantenimiento, getLocalString, addLabelToObjsArr, getFormattedDate, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
@@ -88,7 +88,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     });
     this.formHorario = new FormGroup({
       'idsEspacioAcademico': new FormControl([], [Validators.required]),
-      'fecha': new FormControl('', [Validators.required]),
+      'fechas': new FormControl('', [Validators.required]),
     })
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
@@ -107,8 +107,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     };
     this.gridOptionsHorario = {
       ...commonConfigTablaMantenimiento,
+      rowData: [],
       getRowNodeId: (data) => {
-        return data.idOrigen;
+        return data.horario;
       },
       onGridReady: (params) => {
         this.gridApiHorario = params.api;
@@ -167,16 +168,117 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   onClickBuscarHorarioEspacio(){
     this.buscando = true;
+    updateGrid(this.gridOptionsHorario, [], this.gridColumnApiHorario, false, false);
+    if(this.formHorario.getRawValue().fechas == null){
+      this.buscando = false;
+      return; 
+    }
     let criterio = this.formHorario.getRawValue();
-    console.log(criterio);
-    criterio.fecha = getFormattedDate(this.form.getRawValue().fecha,'YYYY-MM-DD')
-    console.log(criterio);
+    criterio = {
+      ...criterio,
+      fecha: getLocalString(this.formHorario.getRawValue().fechas)
+    }
     this.solicitudEspaciosFacade.buscarEspaciosHorarios(criterio).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-      (data) => {
+      (data: any[]) => {
         this.buscando = false;
-        console.log(data);
+        if(data.length == 0){
+          return;
+        }
+        this.gridOptionsHorario.api.setColumnDefs(this.getInitColDefEspaciosDinamicos(data));
+        updateGrid(this.gridOptionsHorario, this.getDataEspaciosDinamicos(data), this.gridColumnApiHorario, false, false);
       }
     );
+  }
+
+  getInitColDefEspaciosDinamicos(data: any[]): any[]{
+    let columnResult: any[] = [];
+    let espacios: any[] = [];
+    let espaciosConDesc: any = {};
+    data.forEach(e => {
+      if(espacios.indexOf(e.idEspacioAcademico)==-1){
+        espacios.push(e.idEspacioAcademico);
+        espaciosConDesc[e.idEspacioAcademico] = e.descripcionEspacioAcademico;
+      }
+    });
+    columnResult.push({
+      headerName: "Horario",
+      field: "horario",
+      cellClass: 'ob-type-string-center',
+    })
+    espacios.forEach(e => {
+      columnResult.push({
+        headerName: espaciosConDesc[e],
+        field: "descripcion"+e,
+        id: e,
+        cellClass: 'ob-type-string',
+        cellStyle: function(params) {
+          console.log(params)
+          if(params.value!=0 && params.value!=null && params.value!=undefined) {
+            console.log(params);
+            let id = params.colDef.id;
+            let indicador = params.data["indicador"+id];
+            if(indicador == 'V'){
+              return {'background-color': 'darkseagreen', 'color': 'white', 'font-weight': 'bold'};
+            }
+            if(indicador == 'R'){
+              return {'background-color': 'indianred', 'color': 'white', 'font-weight': 'bold'};
+            }
+            return null;
+          }else {
+            return null;
+          }
+        }
+      })
+    });
+    console.log(columnResult);
+    return columnResult;
+  }
+
+  getDataEspaciosDinamicos(data: any[]): any[]{
+    let dataResult: any[] = [];
+    let espacios: any[] = [];
+    let horarios: any[] = [];
+    let espaciosConDesc: any = {};
+    data.forEach(e => {
+      if(espacios.indexOf(e.idEspacioAcademico)==-1){
+        espacios.push(e.idEspacioAcademico);
+        espaciosConDesc[e.idEspacioAcademico] = e.descripcionEspacioAcademico;
+      }
+    });
+    data.forEach(e => {
+      if(horarios.indexOf(e.horario)==-1){
+        horarios.push(e.horario);
+      }
+    });
+    horarios.forEach(e => {
+      let obj: any = {};
+      obj["horario"] = e;
+      espacios.forEach(m => {
+        obj["descripcion"+m] = ''
+        obj["indicador"+m] = ''
+      });
+      dataResult.push(obj);
+    });
+    dataResult.forEach(result => {
+      data.forEach(d => {
+        if(result.horario == d.horario){
+          let curso = d.descripcionCurso == null ? '' :  d.descripcionCurso;
+          let tipoHorario = d.tipoHorario == null ? '' : d.tipoHorario;
+          let descTipoHorario = '';
+          descTipoHorario == 'L' ? 'Laboratorio' : tipoHorario == 'T' ? 'Teoria' : '';
+          let descripcion = '';
+          let indicador = 'V';
+          if(curso != '' && tipoHorario != ''){
+            descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
+            indicador = 'R';
+          }
+          result["descripcion"+d.idEspacioAcademico] = descripcion;
+          result["indicador"+d.idEspacioAcademico] = indicador;
+        }
+      });
+    });
+    console.log(dataResult);
+    return dataResult;
   }
 
 
@@ -225,6 +327,8 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   enableControls(this.form, false, 'fechaRegistro');
   this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
+
+
 save() {
   const action = this.mdUpdate.action;
   switch (action) {
@@ -255,8 +359,6 @@ save() {
       break;
   }
 }
-
-
 
 
   initColumnDefs(): ColDef[] {
