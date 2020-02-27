@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MultitabDetFacade } from '../../../mantenimiento/facade';
 import { SolicitudEspaciosFacade } from '../../facade/solicitud-espacios.facade';
-
+import { SolicitudEspacio } from '../../model/index'
 @Component({
   selector: 'app-solicitud-espacios',
   templateUrl: './solicitud-espacios.component.html',
@@ -22,7 +22,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('template') template: TemplateMantenimientoComponent;
   @ViewChild('mdDelete') mdDelete: ConfirmModalComponent;
   @ViewChild('mdSave') mdSave: FormModalComponent;
-
+  @ViewChild('mdUpdate') mdUpdate: FormModalComponent;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   type: Type;
@@ -51,6 +51,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   solicitantes: any[] = [];
   espacios: any[] = [];
   solicitantesFiltrado: any[] = [];
+  estadoSolicitud: any[] = [];
 
   constructor(
     private solicitudEspaciosFacade: SolicitudEspaciosFacade,
@@ -78,6 +79,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'fechaReserva': new FormControl('', [Validators.required]),
       'horaFin': new FormControl('', [Validators.required]),
       'horaInicio': new FormControl('', [Validators.required]),
+      'estadoSolicitud':new FormControl('', )
     });
     this.formHorario = new FormGroup({
       'pabellon': new FormControl('', [Validators.required ,Validators.min(0), Validators.min(0), Validators.max(99)]),
@@ -151,7 +153,13 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.solicitudEspaciosFacade.buscarEspacios().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.espacios = data;
     });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.estadoSolicitud).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.estadoSolicitud = data;
+    });
   }
+
+
+
 
   onChangeTipoSolicitante(item){
     if(item==undefined || item==null){
@@ -190,6 +198,26 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   abrirModalRegistrar(){
     this.mdSave.show({});
   }
+
+  showMdUpdate(params) {
+  let data: SolicitudEspacio = params.node.data;
+
+  this.mdFormOpts = this.mdUpdateOpts;
+//  enableControls(this.form, false, 'idSolicitud');
+  this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
+}
+save() {
+  const action = this.mdUpdate.action;
+  switch (action) {
+
+    case RESOURCE_ACTIONS.ACTUALIZACION:
+    //  this.canalFacade.actualizar(this.form.getRawValue());
+      break;
+  }
+}
+
+
+
 
   initColumnDefs(): ColDef[] {
     return [
@@ -262,6 +290,19 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: 'Acción',
+        cellClass: 'text-center',
+        cellRendererFramework: ButtonsCellRendererComponent,
+        cellRendererParams: {
+          edit: {
+            visible: true,
+            action: this.showMdUpdate.bind(this)
+          }
+        },
+        filter: false,
+        sortable: false
       }
     ];
   }

@@ -7,7 +7,9 @@ export const MULTITAB_IDS = {
 tipoEspacio:1,
 escuelaAcademica:3,
 tipoSolicitante:6,
+estadoSolicitud:7,
 base:9,
+
 
 
 }
