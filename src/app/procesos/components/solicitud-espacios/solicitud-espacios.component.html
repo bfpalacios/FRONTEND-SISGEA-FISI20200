@@ -159,6 +159,18 @@
             <bfv-messages></bfv-messages>
           </div>
 
+          <label class="col-sm-1 ob-custom-label-form">Fecha Solicitud</label>
+          <div class="form-group col-sm-3 col-lg-3">
+            <div class="input-group">
+                <input type="text" class="form-control mb-2" placeholder=""
+                  [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue' }"
+                  bsDatepicker formControlName="fechaRegistro" />
+                <bfv-messages></bfv-messages>
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
+                </div>
+            </div>
+          </div>
           <label class="col-sm-1 ob-custom-label-form">Fecha Reserva</label>
           <div class="form-group col-sm-3 col-lg-3">
             <div class="input-group">
@@ -171,18 +183,39 @@
                 </div>
             </div>
           </div>
-          <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Estado Solicitud</label>
-          <div class="col-sm-3 col-md-3 col-lg-3">
-            <ng-select #estadoSolicitudSelect [items]="estadoSolicitud" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet"
-            [notFoundText]="'No hay datos encontrados.'"
-              formControlName="estadoSolicitud" >
-            </ng-select>
-            <bfv-messages></bfv-messages>
-          </div>
+
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Espacio</label>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <ng-select #pabellonSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
+            placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+            formControlName="idEspacioAcademico">
+            <ng-template ng-option-tmp let-item="item">
+          {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+          {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
+            </ng-template>
+          </ng-select>
+          <bfv-messages></bfv-messages>
+        </div>
+
+        <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Inicio</label>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+          <input class="form-control" formControlName="horaInicio">
+          <bfv-messages></bfv-messages>
+        </div>
+        <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Fin</label>
+        <div class="form-group col-sm-3 col-md-3 col-lg-3">
+          <input class="form-control" formControlName="horaFin">
+          <bfv-messages></bfv-messages>
+        </div>
+
       </div>
       <div class="form-group row">
         <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Tipo</label>
-        <div class="col-sm-5 col-md-5 col-lg-5">
+        <div class="col-sm-3 col-md-3 col-lg-3">
           <ng-select #pabellonSelect [items]="tipoSolicitante" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet"
             placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
             formControlName="tipoSolicitud" (change)="onChangeTipoSolicitante($event)">
@@ -190,7 +223,7 @@
           <bfv-messages></bfv-messages>
         </div>
         <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Solicitante</label>
-        <div class="col-sm-5 col-md-5 col-lg-5">
+        <div class="col-sm-7 col-md-7 col-lg-7">
           <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
             placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
             formControlName="idSolicitante">
@@ -204,22 +237,7 @@
           <bfv-messages></bfv-messages>
         </div>
       </div>
-      <div class="form-group row">
-        <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Espacio</label>
-        <div class="col-sm-11 col-md-11 col-lg-11">
-          <ng-select #pabellonSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
-            placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
-            formControlName="idEspacioAcademico">
-            <ng-template ng-option-tmp let-item="item">
-          {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
-            </ng-template>
-            <ng-template ng-label-tmp let-item="item">
-          {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
-            </ng-template>
-          </ng-select>
-          <bfv-messages></bfv-messages>
-        </div>
-      </div>
+
       <div class="form-group row">
         <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Motivo</label>
         <div class="col-sm-11 col-md-11 col-lg-11">
@@ -227,6 +245,24 @@
           <bfv-messages></bfv-messages>
         </div>
       </div>
+      <div class="form-group row">
+        <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Estado Solicitud</label>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <ng-select #estadoSolicitudSelect [items]="estadoSolicitud" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet"
+          [notFoundText]="'No hay datos encontrados.'"
+            formControlName="estadoSolicitud" >
+          </ng-select>
+          <bfv-messages></bfv-messages>
+        </div>
+        <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Estado Solicitud</label>
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <ng-select #estadoSolicitudSelect [items]="estadoAsistencia" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet"
+          [notFoundText]="'No hay datos encontrados.'"
+            formControlName="estadoAsistencia" >
+          </ng-select>
+          <bfv-messages></bfv-messages>
+        </div>
+        </div>
 
   </div>
 </app-form-modal>
