@@ -162,6 +162,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   onClickBuscarHorarioEspacio(){
     this.buscando = true;
     let criterio = this.formHorario.getRawValue();
+    console.log(criterio);
+    criterio.fecha = getFormattedDate(this.form.getRawValue().fecha,'YYYY-MM-DD')
+    console.log(criterio);
     this.solicitudEspaciosFacade.buscarEspaciosHorarios(criterio).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (data) => {
         this.buscando = false;

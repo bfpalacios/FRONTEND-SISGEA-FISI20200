@@ -30,7 +30,6 @@ export class EspacioAcademicoService extends HttpService {
   }
 
   buscarEspacioHorario(criterio: any): Observable<any> {
-    super.setEndpoint(`${this.path}compensaciones/pagination`);
     let httpParams = super.getHttpParamsFromCriteria(criterio);
     return super.get('/estado', httpParams);
   }
