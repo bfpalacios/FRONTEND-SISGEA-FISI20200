@@ -25,19 +25,9 @@ export const routes: Routes = [
       title: 'Inicio'
     },
     children: [
-      /*{
-        path: 'dashborad',
-        loadChildren: './dashborad/dashboard.module#DashboardModule',
-        //canActivate: [AuthGuard]
-      },*/
       {
         path: 'mantenimiento',
         loadChildren: './mantenimiento/mantenimiento.module#MantenimientoModule',
-        //canActivate: [AuthGuard]
-      },
-      {
-        path: 'consulta',
-        loadChildren: './consultas/consulta.module#ConsultaModule',
         //canActivate: [AuthGuard]
       },
       {

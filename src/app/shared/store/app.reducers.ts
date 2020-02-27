@@ -11,7 +11,7 @@ import * as fromEspacioAcademico from './reducers/mantenimiento/espacio-academic
 import * as fromMultitabCab from './reducers/mantenimiento/multitab-cab.reducer';
 import * as fromMultitabDet from './reducers/mantenimiento/multitab-det.reducer';
 /*Consultas*/
-import * as fromCompensacion from './reducers/consultas/compensacion.reducer';
+
 /*Seguridad*/
 import * as fromSistema from './reducers/seguridad/sistema.reducer';
 import * as fromUsuarioSeg from './reducers/seguridad/usuario.reducer';
@@ -40,9 +40,6 @@ import {
 MultitabDet,
 } from '../../mantenimiento/models';
 /* Consultas */
-import {
-  Compensacion
-} from '../../consultas/models';
 /* Seguridad */
 import {
   UsuarioSeg,
@@ -75,7 +72,6 @@ export interface AppState {
   multitabCabs: State<MultitabCab>,
   multitabDets: State<MultitabDet>,
   // Consultas
-  compensaciones: ConsultaState<Compensacion>,
   // Seguridad
   sistema: fromSistema.SistemaSegState,
   usuariosSeg: State<UsuarioSeg>,
@@ -108,7 +104,6 @@ export const appReducers: ActionReducerMap<AppState> = {
   multitabCabs: fromMultitabCab.multitabCabReducer,
   multitabDets: fromMultitabDet.multitabDetReducer,
   // Consultas
-  compensaciones: fromCompensacion.consultaCompensacionReducer,
   // Seguridad
   sistema: fromSistema.sistemaReducer,
   usuariosSeg: fromUsuarioSeg.usuarioReducer,

@@ -35,6 +35,8 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
     modalClass: 'modal-mantenimientos'
   }
 
+  periodoCargando: boolean;
+
   public navItems = [];
   public sidebarMinimized = true;
   private changes: MutationObserver;
@@ -45,7 +47,7 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
 
   public nombreUsuario = '';
   public infoApp: any;
-  //public allChildren: NavData[] = [];
+  public allChildren: any[] = [];
   public childSelected;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   public permisoConsultaFechaProceso: boolean = false;

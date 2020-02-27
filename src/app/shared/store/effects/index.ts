@@ -8,7 +8,7 @@ import { MultitabCabEffects } from './mantenimiento/multitab-cab.effects';
 import { MultitabDetEffects } from './mantenimiento/multitab-det.effects';
 
 // Consultas
-import { CompensacionEffects } from './consultas/compensacion.effects';
+
 
 // Seguridad
 import { SistemaEffects } from './seguridad/sistema.effects';
@@ -39,7 +39,6 @@ export const effectsArr = [
   MultitabCabEffects,
   MultitabDetEffects,
   // Consultas
-  CompensacionEffects,
   // Seguridad
   SistemaEffects,
   UsuarioSegEffects,
@@ -68,7 +67,6 @@ export * from './mantenimiento/espacio-academico.effects';
 export * from './mantenimiento/multitab-cab.effects';
 export * from './mantenimiento/multitab-det.effects';
 // Consultas
-export * from './consultas/compensacion.effects';
 // Seguridad
 export * from './seguridad/sistema.effects';
 export * from './seguridad/usuario-seg.effects';
