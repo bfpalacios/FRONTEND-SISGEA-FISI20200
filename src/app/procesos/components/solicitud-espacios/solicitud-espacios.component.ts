@@ -75,6 +75,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'tipoSolicitud': new FormControl('', [Validators.required]),
       'idSolicitante': new FormControl('', [Validators.required]),
       'motivo': new FormControl('', [Validators.required, Validators.maxLength(200)]),
+    //  'idsEspacioAcademico': new FormControl('', ),
       'idEspacioAcademico': new FormControl('', [Validators.required]),
       'fechaReserva': new FormControl('', [Validators.required]),
       'horaFin': new FormControl('', [Validators.required]),
@@ -158,7 +159,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       this.estadoSolicitud = data;
     });
   }
-  
+
   onClickBuscarHorarioEspacio(){
     this.buscando = true;
     let criterio = this.formHorario.getRawValue();
@@ -169,7 +170,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       }
     );
   }
-  
+
 
   onChangeTipoSolicitante(item){
     if(item==undefined || item==null){
@@ -268,7 +269,7 @@ save() {
         filterParams: { newRowsAction: "keep" }
       },
       {
-        headerName: "Estado",
+        headerName: "Estado Solicitud",
         field: 'estadoSolicitud',
         valueGetter: (params) => {
           return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.estadoSolicitud, params.data.descripcionEstadoSolicitud);
