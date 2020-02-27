@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../shared/store/app.reducers';
 import { Observable } from 'rxjs';
-
+import { SolicitudEspacio } from '../model';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,6 +26,11 @@ export class SolicitudEspaciosService extends HttpService {
 
   registrar(data: any): Observable<any>  {
     return super.post(data);
+  }
+
+  actualizar(solicitudEspacio: SolicitudEspacio): Observable<any>  {
+    console.log("ESTOY ACTUALIZANDO")
+    return super.put(solicitudEspacio,solicitudEspacio.idSolicitud);
   }
 
 

@@ -79,7 +79,8 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'fechaReserva': new FormControl('', [Validators.required]),
       'horaFin': new FormControl('', [Validators.required]),
       'horaInicio': new FormControl('', [Validators.required]),
-      'estadoSolicitud':new FormControl('', )
+      'estadoSolicitud':new FormControl('', ),
+      'idSolicitud':new FormControl('', )
     });
     this.formHorario = new FormGroup({
       'pabellon': new FormControl('', [Validators.required ,Validators.min(0), Validators.min(0), Validators.max(99)]),
@@ -201,9 +202,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   showMdUpdate(params) {
   let data: SolicitudEspacio = params.node.data;
-
+console.log(data);
   this.mdFormOpts = this.mdUpdateOpts;
-//  enableControls(this.form, false, 'idSolicitud');
+  enableControls(this.form, false, 'idSolicitud');
   this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 save() {
@@ -211,7 +212,25 @@ save() {
   switch (action) {
 
     case RESOURCE_ACTIONS.ACTUALIZACION:
-    //  this.canalFacade.actualizar(this.form.getRawValue());
+      this.solicitudEspaciosFacade.actualizar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+        (data) => {
+          this.mdUpdate.hide();
+            },
+
+        (err) => {
+
+                  //this.prestando = false;
+                  this.toastr.error('Ocurrio un problema en el prestamo del espacio','Prestamo de espacios');
+              },
+        () =>{
+                //  this.prestando = false;
+              }
+
+
+      );
+
+
+
       break;
   }
 }
