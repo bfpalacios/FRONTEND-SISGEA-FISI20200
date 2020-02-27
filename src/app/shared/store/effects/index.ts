@@ -36,6 +36,8 @@ export const effectsArr = [
   OrigenEffects,
   SolicitanteEffects,
   EspacioAcademicoEffects,
+  MultitabCabEffects,
+  MultitabDetEffects,
   // Consultas
   CompensacionEffects,
   // Seguridad
@@ -63,6 +65,8 @@ export * from './auth/auth-sistema.effects';
 export * from './mantenimiento/origen.effects';
 export * from './mantenimiento/solicitante.effects';
 export * from './mantenimiento/espacio-academico.effects';
+export * from './mantenimiento/multitab-cab.effects';
+export * from './mantenimiento/multitab-det.effects';
 // Consultas
 export * from './consultas/compensacion.effects';
 // Seguridad

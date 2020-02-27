@@ -70,6 +70,12 @@ export const navItems: NavData[] = [
         icon: 'fa fa-table nivel-1',
         url: '/mantenimiento/espacio-academico',
         permissions: ['MANT_ESPACIO_ACADEMICO']
+      },
+      {
+        name: 'Tabla de Tablas',
+        icon: 'fa fa-table nivel-1',
+        url: '/mantenimiento/multitab',
+        permissions: ['MANT_MULCAB', 'MANT_MULDET']
       }
     ]
   },

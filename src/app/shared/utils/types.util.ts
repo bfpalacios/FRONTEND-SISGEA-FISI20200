@@ -31,7 +31,8 @@ export const TYPES = {
   DOCENTES: { name: 'Docentes', otherTitle: 'Carga de Docentes', title: 'Docente', resource: 'MANT_DOCENTE', fileNameExport:"Docentes" , module: MODULE.MANTENIMIENTO},
   SOLICITANTE: { name: 'Solicitante', title: 'Solicitante', resource: 'MANT_SOLICITANTE', fileNameExport:"Solicitantes" , module: MODULE.MANTENIMIENTO},
   ESPACIO_ACADEMICO: { name: 'Espacio Académico', title: 'Espacio académico', resource: 'MANT_ESPACIO_ACADEMICO', fileNameExport:"EspaciosAcademicos" , module: MODULE.MANTENIMIENTO},
-
+  MULTITAB_CAB: { name: 'Tabla de Tablas', title: 'Tabla de Tablas', resource: 'MANT_MULCAB', fileNameExport:"Multitablas" , module: MODULE.MANTENIMIENTO},
+  MULTITAB_DET: { name: 'Tabla de Tablas Detalle', title: 'Tabla de Tablas Detalle', resource: 'MANT_MULDET', fileNameExport:"MultitablasDetalle", module: MODULE.MANTENIMIENTO },
   /* Consultas */
   COMPENSACION:{name:'Log Contable',title: 'Log Contable',resource:'CON_COMPENSACION', fileNameExport:"LogContable", module: MODULE.CONSULTAS},
   /*Seguridad*/

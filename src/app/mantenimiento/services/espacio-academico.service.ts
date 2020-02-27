@@ -11,19 +11,28 @@ import { FILE_EXT } from '../../shared/utils';
   providedIn: 'root'
 })
 export class EspacioAcademicoService extends HttpService {
+  path: string;
 
   constructor(
     injector: Injector,
     httpClient: HttpClient,
     store: Store<AppState>
   ) {
-    let path;
-    store.select('globalData').subscribe(data => path = data.pathEndpoints.MANT_GENERAL);
+    let path: string;
+    store.select('globalData')
+      .subscribe(data => path = data.pathEndpoints.CONSULTAS);
     super(injector, httpClient, `${path}espacios-academicos`);
+    this.path = path;
   }
 
   buscarTodos(): Observable<any>  {
     return super.get();
+  }
+
+  buscarEspacioHorario(criterio: any): Observable<any> {
+    super.setEndpoint(`${this.path}compensaciones/pagination`);
+    let httpParams = super.getHttpParamsFromCriteria(criterio);
+    return super.get('/estado', httpParams);
   }
 
   registrar(espacioAcademico: EspacioAcademico): Observable<any>  {
