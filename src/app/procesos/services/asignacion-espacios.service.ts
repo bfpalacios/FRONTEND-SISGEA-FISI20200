@@ -29,7 +29,7 @@ export class AsignacionEspaciosService extends HttpService {
   }
 
   procesarAsignacion(): Observable<any>  {
-    return super.get('/procesar');
+    return super.post('','/procesar');
   }
 
 
