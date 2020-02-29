@@ -34,6 +34,11 @@ export const routes: Routes = [
         path: 'procesos',
         loadChildren: './procesos/procesos.module#ProcesosModule',
         //canActivate: [AuthGuard]
+      },
+      {
+        path: 'seguridad',
+        loadChildren: './seguridad/seguridad.module#SeguridadModule',
+        //canActivate: [AuthGuard]
       }
     ]
   },

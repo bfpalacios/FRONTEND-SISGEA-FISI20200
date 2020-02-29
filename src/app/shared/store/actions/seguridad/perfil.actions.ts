@@ -28,19 +28,6 @@ export class GetAllPerfilFail implements Action {
   constructor(public payload: HttpErrorResponse) { }
 }
 
-export class GetPerfilBySistema implements Action {
-  readonly type = actions.GET_BY_SISTEMA;
-  constructor(public payload: number) { }
-}
-export class GetPerfilBySistemaSuccess implements Action {
-  readonly type = actions.GET_BY_SISTEMA_SUCCESS;
-  constructor(public payload: Perfil[]) { }
-}
-export class GetPerfilBySistemaFail implements Action {
-  readonly type = actions.GET_BY_SISTEMA_FAIL;
-  constructor(public payload: HttpErrorResponse) { }
-}
-
 export class AddPerfil implements Action {
   readonly type = actions.ADD;
   constructor(public payload: Perfil) {
@@ -93,9 +80,6 @@ export type PerfilActions
   = GetAllPerfil
   | GetAllPerfilSuccess
   | GetAllPerfilFail
-  | GetPerfilBySistema
-  | GetPerfilBySistemaSuccess
-  | GetPerfilBySistemaFail 
   | AddPerfil
   | AddPerfilSuccess
   | AddPerfilFail

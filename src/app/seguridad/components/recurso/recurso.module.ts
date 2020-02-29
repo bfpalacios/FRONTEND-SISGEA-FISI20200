@@ -5,6 +5,7 @@ import { RecursoComponent } from './recurso.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ObGridModule } from '../../../shared/ob-grid.module';
 import { RecursoFacade } from '../../facade';
+import { MultitabCabFacade, MultitabDetFacade } from '../../../mantenimiento/facade';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { RecursoFacade } from '../../facade';
     RecursoRoutingModule
   ],
   providers: [
-    RecursoFacade
+    RecursoFacade,
+    MultitabDetFacade,
+    MultitabCabFacade,
   ]
 })
 export class RecursoModule { }

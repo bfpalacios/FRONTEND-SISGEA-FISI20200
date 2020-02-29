@@ -4,39 +4,34 @@ import { HttpClient } from '@angular/common/http';
 import { Perfil } from '../models';
 import { Observable } from 'rxjs';
 import { SEC_CONTEXT_PATH } from '../../shared/utils';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../shared/store/app.reducers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PerfilService extends HttpService {
 
-  constructor(injector: Injector, httpClient: HttpClient, @Inject(SEC_CONTEXT_PATH) context: string) {
-    super(injector, httpClient, 'sistemas', context);
+  constructor(injector: Injector, httpClient: HttpClient, store: Store<AppState>, @Inject(SEC_CONTEXT_PATH) context: string) {
+    let path;
+    store.select('globalData').subscribe(data => path = data.pathEndpoints.MANT_GENERAL);
+    super(injector, httpClient, 'perfiles', context);
   }
 
   buscarTodos(): Observable<any> {
-    super.setEndpoint('perfiles');
     return super.get();
   }
 
-  buscarPorSistema(idSistema: number): Observable<any> {
-    super.setEndpoint('sistemas');
-    return super.get(`/${idSistema}/perfiles`);
-  }
-
   registrar(perfil: Perfil): Observable<any> {
-    super.setEndpoint('sistemas');
-    return super.post(perfil, `${perfil.idSistema}/perfiles`);
+    return super.post(perfil);
   }
 
   actualizar(perfil: Perfil): Observable<any> {
-    super.setEndpoint('sistemas');
-    return super.put(perfil, `${perfil.idSistema}/perfiles/${perfil.idPerfil}`);
+    return super.put(perfil, perfil.idPerfil);
   }
 
   eliminar(perfil: Perfil): Observable<any> {
-    super.setEndpoint('sistemas');
-    return super.delete(`${perfil.idSistema}/perfiles/${perfil.idPerfil}`);
+    return super.delete(perfil.idPerfil);
   }
 
 }

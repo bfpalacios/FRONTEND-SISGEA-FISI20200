@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://167.172.237.186:8080",
+  "baseUrl": "http://18.191.197.188:8080",
   "apiContextPath": "/sisgea/api",
   "secContextPath": "/uba-security/api",
   "batchContextPath": "/sisgea-batch/api",

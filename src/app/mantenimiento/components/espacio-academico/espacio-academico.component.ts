@@ -35,6 +35,8 @@ export class EspacioAcademicoComponent implements OnInit, AfterViewInit, OnDestr
   private gridColumnApi;
   templateHtmlMsg:string;
   tipoEspacio:any[]= [];
+  pabellon:any[]= [];
+  tipoMultiTabCab:string;
   constructor(
     private espacioAcademicoFacade: EspacioAcademicoFacade,
     private multitabDetFacade: MultitabDetFacade,
@@ -95,6 +97,10 @@ export class EspacioAcademicoComponent implements OnInit, AfterViewInit, OnDestr
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoEspacio).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       console.log(data);
       this.tipoEspacio=data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      console.log(data);
+      this.pabellon=data;
     });
     this.store.select('espaciosAcademico').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
       manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdDelete, this.toastr,
@@ -177,6 +183,9 @@ export class EspacioAcademicoComponent implements OnInit, AfterViewInit, OnDestr
       },{
         headerName: "Pabellón",
         field: 'pabellon',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.pabellon, params.data.descripcionPabellon);
+        },
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }

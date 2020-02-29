@@ -19,7 +19,7 @@ export class UsuarioSegEffects {
   @Effect()
   GetAll$ = this.actions$.pipe(ofType(fromUsuario.actions.GET_ALL), switchMap(() => {
     return this.usuarioService.buscarTodos().pipe(map(res => {
-      addLabelToObjsArr(res, 'label', false, 'username');
+      addLabelToObjsArr(res, 'label', false, 'usuario');
       return new fromUsuario.GetAllUsuarioSuccess(res);
     }), catchError((err) => {
       return of(new fromUsuario.GetAllUsuarioFail(err));

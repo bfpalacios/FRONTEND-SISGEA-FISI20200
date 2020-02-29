@@ -28,7 +28,6 @@ import { ErrorService } from "../../../shared/services/errors/error.service";
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 //import { Usuario } from '../../../reportes/admin/models';
-import { GestionCuentaComponent } from './gestion-cuenta/gestion-cuenta.component';
 
 @Component({
   selector: 'app-usuario',
@@ -39,7 +38,6 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('templateUsuario') template: TemplateMantenimientoComponent;
   @ViewChild('mdDelete') mdDelete: ConfirmModalComponent;
   @ViewChild('mdSave') mdSave: FormModalComponent;
-  @ViewChild('gestionCuenta') gestionCuenta: GestionCuentaComponent;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   mdConfirmOpts: MdConfirmOpts;
   mdRegisterOpts: MdFormOpts;
@@ -53,7 +51,8 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
   templateHtmlMsg: string;
 
   initUsuario: UsuarioSeg = {
-    username: '',
+    usuario: '',
+    contraseña: '',
     nombres: '',
     apellidos: ''
   };
@@ -73,18 +72,20 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mdUpdateOpts = configFormMd.getUpdateMdOpts(this.type);
     this.form = new FormGroup(
       {
-        'username': new FormControl('', [Validators.required, Validators.minLength(1),
+        'usuario': new FormControl('', [Validators.required, Validators.minLength(1),
         Validators.maxLength(20)]),
+        'contraseña': new FormControl('', [Validators.required, Validators.minLength(1),
+        Validators.maxLength(45)]),
         'nombres': new FormControl('', [Validators.required, Validators.minLength(1),
-        Validators.maxLength(50)]),
+        Validators.maxLength(40)]),
         'apellidos': new FormControl('', [Validators.required, Validators.minLength(1),
-        Validators.maxLength(50)])
+        Validators.maxLength(40)])
       });
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
       ...commonConfigTablaMantenimiento,
       getRowNodeId: (data) => {
-        return data.username;
+        return data.usuario;
       },
       onGridReady: (params) => {
         this.gridApi = params.api;
@@ -116,20 +117,21 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showMdRegister(): void {
     this.mdFormOpts = this.mdRegisterOpts;
-    enableControls(this.form, true, 'username');
+    enableControls(this.form, true, 'usuario');
     this.mdSave.show(this.initUsuario, RESOURCE_ACTIONS.REGISTRO);
   }
 
   showMdUpdate(params): void {
     let data: UsuarioSeg = params.node.data;
     this.mdFormOpts = this.mdUpdateOpts;
-    enableControls(this.form, false, 'username');
+    enableControls(this.form, false, 'usuario');
+    enableControls(this.form, false, 'contraseña');
     this.mdSave.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
   }
 
   showMdDelete(params): void {
     let data: UsuarioSeg = params.node.data;
-    this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[codigo]/gi, data.username);
+    this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[codigo]/gi, data.usuario);
     this.mdDelete.show(data);
   }
 
@@ -154,11 +156,17 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
   initColumnDefs(): ColDef[] {
     return [
       {
-        headerName: "Username",
-        field: "username",
+        headerName: "Usuario",
+        field: "usuario",
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" },
         sort: 'asc'
+      },
+      {
+        headerName: "Contraseña",
+        field: "contraseña",
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" }
       },
       {
         headerName: "Nombres",
@@ -183,16 +191,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
           delete: {
             visible: this.template.permisoEliminacion,
             action: this.showMdDelete.bind(this)
-          },
-          details: [
-            {
-              visible: this.template.permisoConsultaDetalle,
-              icon: 'fa-shield',
-              tooltip: 'Mantener cuenta de usuario',
-              buttonClass: 'btn-xs btn-success',
-              action: this.showMdGestionCuenta.bind(this)
-            }
-          ]
+          }
         },
         filter: false,
         sortable: false
@@ -200,8 +199,4 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
   }
 
-  showMdGestionCuenta(params){
-    let data: any = params.data;
-    this.gestionCuenta.show(data);
-  }
 }

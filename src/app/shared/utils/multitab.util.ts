@@ -9,10 +9,10 @@ escuelaAcademica:3,
 tipoSolicitante:6,
 estadoSolicitud:7,
 base:9,
-estadoAsistencia:13,
 tipoSolicitud:8,
-pabellon:12
-
+pabellon:12,
+estadoAsistencia:13,
+categoriaRecurso:15
 
 
 }
