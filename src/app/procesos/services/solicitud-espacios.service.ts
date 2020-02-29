@@ -29,8 +29,17 @@ export class SolicitudEspaciosService extends HttpService {
   }
 
   actualizar(solicitudEspacio: SolicitudEspacio): Observable<any>  {
-  
+
     return super.put(solicitudEspacio,solicitudEspacio.idSolicitud);
+  }
+
+  cargar(files: File[]): Observable<any>  {
+    let formData: FormData  = new FormData();
+    files.forEach(function(item){
+        formData.append("file[]", item, item.name);
+    });
+    console.log(files,formData);
+    return super.upload(formData, 'carga-archivo', {responseType: 'text'});
   }
 
 

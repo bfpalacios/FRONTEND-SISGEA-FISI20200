@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { FormModalComponent, ConfirmModalComponent, TemplateMantenimientoComponent, MdFormOpts, MdConfirmOpts, ButtonsCellRendererComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS, getContextMenuItemsMantenimiento, getLocalString, addLabelToObjsArr, getFormattedDate, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS, removeElementArr,getContextMenuItemsMantenimiento, getLocalString, addLabelToObjsArr, getFormattedDate, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState, FA_ICON_UPLOAD, MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS, MESSAGE_BODY_CARGA_DUPLICADA_ERROR, MESSAGE_BODY_CARGA_VACIA_ERROR, MESSAGE_TITLE_CARGA_ERROR } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MultitabDetFacade } from '../../../mantenimiento/facade';
 import { SolicitudEspaciosFacade } from '../../facade/solicitud-espacios.facade';
 import { SolicitudEspacio } from '../../model/index'
+import { NgxDropzoneChangeEvent } from 'ngx-dropzone';
 @Component({
   selector: 'app-solicitud-espacios',
   templateUrl: './solicitud-espacios.component.html',
@@ -53,6 +54,19 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   solicitantesFiltrado: any[] = [];
   estadoSolicitud: any[] = [];
   estadoAsistencia: any[] = [];
+
+  configCarga: any ={
+    accept: '.pdf',
+    multiple: false,
+    maxFileSize: 20971520, //20MB
+    expandable: true,
+    loading: false,
+    class: FA_ICON_UPLOAD
+  }
+  files: File[] = [];
+  cargando: boolean = false;
+
+  filesNamesAdded: string[] = [];
 
   constructor(
     private solicitudEspaciosFacade: SolicitudEspaciosFacade,
@@ -141,6 +155,22 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.ngUnsubscribe.complete();
   }
 
+  onSelect(event: NgxDropzoneChangeEvent) {
+    event.addedFiles.filter(e=>{
+      if(this.filesNamesAdded.indexOf(e.name)==-1){
+          this.files.push(e);
+          this.filesNamesAdded.push(e.name);
+      }else{
+        this.toastr.error(MESSAGE_BODY_CARGA_DUPLICADA_ERROR.replace('name',e.name),MESSAGE_TITLE_CARGA_ERROR);
+      }
+    });
+  }
+
+  onRemove(event) {
+    removeElementArr(this.filesNamesAdded,event.name);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
   manageState() {
     this.store.select('solicitudEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
       manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdDelete, this.toastr,
@@ -171,7 +201,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     updateGrid(this.gridOptionsHorario, [], this.gridColumnApiHorario, false, false);
     if(this.formHorario.getRawValue().fechas == null){
       this.buscando = false;
-      return; 
+      return;
     }
     let criterio = this.formHorario.getRawValue();
     criterio = {
@@ -297,10 +327,20 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       fechaReserva: getFormattedDate(this.form.getRawValue().fechaReserva,'YYYY-MM-DD')
     }
     this.prestando = true;
+
     this.solicitudEspaciosFacade.registrar(form).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (data) => {
           this.prestando = false;
           this.mdSave.hide();
+          //
+          this.solicitudEspaciosFacade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+            if(this.files.length >= 1){
+              this.toastr.success(MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS);
+            }else{
+              this.toastr.error(MESSAGE_BODY_CARGA_VACIA_ERROR, MESSAGE_TITLE_CARGA_ERROR);
+            }
+          });
+        //
           this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
             updateGrid(this.gridOptions, data, this.gridColumnApi);
             this.toastr.success('Realizado con exito','Prestamo de espacios');
@@ -325,6 +365,8 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   this.mdFormOpts = this.mdUpdateOpts;
   enableControls(this.form, false, 'idSolicitud');
   enableControls(this.form, false, 'fechaRegistro');
+  enableControls(this.form, false, 'tipoSolicitud');
+  enableControls(this.form, false, 'idSolicitante');
   this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 
