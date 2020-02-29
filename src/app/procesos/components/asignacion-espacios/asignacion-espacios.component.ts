@@ -235,13 +235,6 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
         filterParams: { newRowsAction: "keep" }
       },
       {
-        headerName: "Tipo Horario",
-        field: 'tipoHorario',
-        cellClass: 'ob-type-string',
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" }
-      },
-      {
         headerName: "Día",
         field: 'dia',
         cellClass: 'ob-type-string',

@@ -56,7 +56,7 @@ export class EspacioAcademicoComponent implements OnInit, AfterViewInit, OnDestr
       'idEspacioAcademico': new FormControl('', [Validators.required ,Validators.min(0), Validators.min(0), Validators.max(999)]),
       'tipoEspacio': new FormControl('', []),
       'descripcionEspacioAcademico': new FormControl('', [Validators.required, Validators.maxLength(40)]),
-      'aforo': new FormControl('', [Validators.required, Validators.maxLength(3)]),
+      'aforo': new FormControl('', [Validators.required,Validators.min(1), Validators.maxLength(3)]),
       'pabellon': new FormControl('', [Validators.required, Validators.maxLength(20)]),
       'asignable': new FormControl('', [Validators.required, Validators.maxLength(1)]),
 
