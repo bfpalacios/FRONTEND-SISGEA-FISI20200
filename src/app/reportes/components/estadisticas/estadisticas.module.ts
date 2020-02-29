@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { EstadisticasRoutingModule } from './estadisticas-routing.module';
 import { EstadisticasComponent } from './estadisticas.component';
 import { SharedModule } from '../../../shared/shared.module';
-//import { EstadisticasFacade } from '../../facade';
+import { EstadisticasFacade } from '../../facade';
 import { ObGridModule } from '../../../shared/ob-grid.module';
+import { ObDatepickerModule } from '../../../shared/ob-datepicker.module';
 
 @NgModule({
   declarations: [EstadisticasComponent],
@@ -12,10 +13,11 @@ import { ObGridModule } from '../../../shared/ob-grid.module';
     CommonModule,
     SharedModule,
     ObGridModule,
-    EstadisticasRoutingModule
+    EstadisticasRoutingModule,
+    ObDatepickerModule
   ],
   providers: [
-    //EstadisticasFacade
+    EstadisticasFacade
   ]
 })
 export class EstadisticasModule { }

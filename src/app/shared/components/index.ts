@@ -17,5 +17,4 @@ export * from './pagelength-detalle/pagelength-detalle.component';
 export * from './pie-paginacion/pie-paginacion.component';
 export * from './ag-grid/progress-cell/progress-cell.component';
 export * from './ob-modal-help/ob-modal-help.component';
-//export * from './template-permisos-usuario/template-permisos-usuario.component';
-//export * from './template-reporteador/template-reporteador.component';
+export * from './template-reporte/template-reporte.component';
