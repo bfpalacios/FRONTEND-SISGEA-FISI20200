@@ -7,8 +7,7 @@ import { SeguridadRoutingModule } from './seguridad-routing.module';
   imports: [
     CommonModule,
     SeguridadRoutingModule
-  ],
-  providers: []
+  ]
 })
 export class SeguridadModule {
 }

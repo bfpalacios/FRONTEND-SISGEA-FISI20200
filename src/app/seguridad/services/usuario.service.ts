@@ -28,10 +28,10 @@ export class UsuarioService extends HttpService {
   }
 
   actualizar(usuario: UsuarioSeg): Observable<any> {
-    return super.put(usuario, usuario.username);
+    return super.put(usuario, usuario.usuario);
   }
 
   eliminar(usuario: UsuarioSeg): Observable<any> {
-    return super.delete(usuario.username);
+    return super.delete(usuario.usuario);
   }
 }

@@ -65,14 +65,6 @@
                 }
               ]
             },
-            "dev-gpeca": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-gpeca.ts"
-                }
-              ]
-            },
             "dev-camra": {
               "fileReplacements": [
                 {
@@ -81,59 +73,11 @@
                 }
               ]
             },
-            "dev-ffoes": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-ffoes.ts"
-                }
-              ]
-            },
             "dev-mcoes": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/dev/environment.dev-mcoes.ts"
-                }
-              ]
-            },
-            "dev-bgaso": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-bgaso.ts"
-                }
-              ]
-            },
-            "dev-cdecr": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-cdecr.ts"
-                }
-              ]
-            },
-            "dev-ccu": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-ccu.ts"
-                }
-              ]
-            },
-            "dev-hllcc": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-hllcc.ts"
-                }
-              ]
-            },
-            "dev-gbali": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-gbali.ts"
                 }
               ]
             },
@@ -160,22 +104,6 @@
                   "with": "src/environments/dev/environment.dev-calca.ts"
                 }
               ]
-            },
-            "dev-jggtt": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-jggtt.ts"
-                }
-              ]
-            },
-            "dev-wzequ": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/dev/environment.dev-wzequ.ts"
-                }
-              ]
             }
           }
         },
@@ -191,32 +119,11 @@
             "dev-jorpa": {
               "browserTarget": "ng:build:dev-jorpa"
             },
-            "dev-gpeca": {
-              "browserTarget": "ng:build:dev-gpeca"
-            },
             "dev-camra": {
               "browserTarget": "ng:build:dev-camra"
             },
-            "dev-ffoes": {
-              "browserTarget": "ng:build:dev-ffoes"
-            },
-            "dev-bgaso": {
-              "browserTarget": "ng:build:dev-bgaso"
-            },
-            "dev-cdecr": {
-              "browserTarget": "ng:build:dev-cdecr"
-            },
             "dev-mcoes": {
               "browserTarget": "ng:build:dev-mcoes"
-            },
-            "dev-ccu": {
-              "browserTarget": "ng:build:dev-ccu"
-            },
-            "dev-hllcc": {
-              "browserTarget": "ng:build:dev-hllcc"
-            },
-            "dev-gbali": {
-              "browserTarget": "ng:build:dev-gbali"
             },
             "dev-kmuza": {
               "browserTarget": "ng:build:dev-kmuza"
@@ -226,12 +133,6 @@
             },
             "dev-calca": {
               "browserTarget": "ng:build:dev-calca"
-            },
-            "dev-jggtt": {
-              "browserTarget": "ng:build:dev-jggtt"
-            },
-            "dev-wzequ": {
-              "browserTarget": "ng:build:dev-wzequ"
             }
           }
         },

@@ -18,40 +18,39 @@ export function perfilSegReducer(state = INITIAL_STATE, action: PerfilActions): 
   switch (action.type) {
     case actions.RESET:
       return { ...INITIAL_STATE };
-    case actions.GET_ALL:
-    case actions.GET_BY_SISTEMA:
-      return {
-        ...state,
-        action: RESOURCE_ACTIONS.CONSULTA,
-        loading: true,
-        done: false,
-        failed: false,
-        errors: null,
-        selected: null
+      case actions.GET_ALL: {
+        return {
+          ...state,
+          action: RESOURCE_ACTIONS.CONSULTA,
+          loading: true,
+          done: false,
+          failed: false,
+          errors: null,
+          selected: null
+        };
       }
-    case actions.GET_ALL_SUCCESS:
-    case actions.GET_BY_SISTEMA_SUCCESS:
-      return {
-        ...state,
-        data: action.payload,
-        loading: false,
-        done: true,
-        failed: false,
-        errors: null,
-        selected: null
-      };
-    case actions.GET_ALL_FAIL:
-    case actions.GET_BY_SISTEMA_FAIL:
-      return {
-        ...state,
-        data: [],
-        loading: false,
-        done: false,
-        failed: true,
-        errors: action.payload,
-        selected: null
-      };
-
+      case actions.GET_ALL_SUCCESS: {
+        return {
+          ...state,
+          data: action.payload,
+          loading: false,
+          done: true,
+          failed: false,
+          errors: null,
+          selected: null
+        };
+      }
+      case actions.GET_ALL_FAIL: {
+        return {
+          ...state,
+          data: [],
+          loading: false,
+          done: false,
+          failed: true,
+          errors: action.payload,
+          selected: null
+        };
+      }
     case actions.ADD: {
       return {
         ...state,
@@ -101,8 +100,7 @@ export function perfilSegReducer(state = INITIAL_STATE, action: PerfilActions): 
       };
     }
     case actions.UPDATE_SUCCESS: {
-      const index = state.data.findIndex(perfil => perfil.idPerfil === state.selected.idPerfil
-        && perfil.idSistema === state.selected.idSistema);
+      const index = state.data.findIndex(perfil => perfil.idPerfil === state.selected.idPerfil);
       if (index >= 0) {
         const data = [
           ...state.data.slice(0, index),
@@ -144,8 +142,7 @@ export function perfilSegReducer(state = INITIAL_STATE, action: PerfilActions): 
       };
     }
     case actions.DELETE_SUCCESS: {
-      const data = state.data.filter(perfil => perfil.idPerfil !== state.selected.idPerfil
-        || perfil.idSistema !== state.selected.idSistema);
+      const data = state.data.filter(perfil => perfil.idPerfil !== state.selected.idPerfil);
       return {
         ...state,
         data,

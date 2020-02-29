@@ -30,20 +30,6 @@ export class PerfilEffects {
     }));
 
   @Effect()
-  GetBySistema$ = this.actions$.pipe(
-    ofType(fromPerfil.actions.GET_BY_SISTEMA),
-    switchMap((action: fromPerfil.GetAllPerfil) => {
-      return this.perfilService.buscarPorSistema(action.payload).pipe(
-        map(res => {
-          addLabelToObjsArr(res, 'label', false, 'idPerfil', 'descripcionPerfil');
-          return new fromPerfil.GetAllPerfilSuccess(res);
-        }),
-        catchError((err) => {
-          return of(new fromPerfil.GetAllPerfilFail(err));
-        }));
-    }));
-
-  @Effect()
   AddPerfil$ = this.actions$.pipe(ofType(fromPerfil.actions.ADD),
     withLatestFrom(this.store$.select('globalData', 'messages')),
     switchMap(

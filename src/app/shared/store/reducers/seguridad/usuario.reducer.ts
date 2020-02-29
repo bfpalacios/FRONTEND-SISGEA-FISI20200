@@ -98,7 +98,7 @@ export function usuarioReducer(state = INITIAL_STATE, action: UsuarioActions): S
       };
     }
     case actions.UPDATE_SUCCESS: {
-      const index = state.data.findIndex(usuario => usuario.username === state.selected.username);
+      const index = state.data.findIndex(usuario => usuario.usuario === state.selected.usuario);
       if (index >= 0) {
         const data = [
           ...state.data.slice(0, index),
@@ -140,7 +140,7 @@ export function usuarioReducer(state = INITIAL_STATE, action: UsuarioActions): S
       };
     }
     case actions.DELETE_SUCCESS: {
-      const data = state.data.filter(usuario => usuario.username !== state.selected.username);
+      const data = state.data.filter(usuario => usuario.usuario !== state.selected.usuario);
       return {
         ...state,
         data,

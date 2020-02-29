@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { ErrorService } from '../../../shared/services/errors/error.service';
-import { TYPES, Type, configFormMd, commonConfigTablaMantenimiento, manageCrudState, updateGrid, autoSizeColumns, joinWords, DEFAULT_SEPARATOR, renderYesNoLabel, RESOURCE_ACTIONS, enableControls } from '../../../shared/utils';
+import { TYPES, Type, configFormMd, commonConfigTablaMantenimiento, manageCrudState, updateGrid, autoSizeColumns, joinWords, DEFAULT_SEPARATOR, renderYesNoLabel, RESOURCE_ACTIONS, enableControls, MULTITAB_IDS } from '../../../shared/utils';
 import { RecursoFacade } from '../../facade';
 import { ToastrService } from 'ngx-toastr';
 import { AppState } from '../../../shared/store/app.reducers';
@@ -9,8 +9,9 @@ import { TemplateMantenimientoComponent, ConfirmModalComponent, FormModalCompone
 import { Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridApi, GridOptions, ColDef } from 'ag-grid-community';
-import { CategoriaRecurso, RecursoSeg } from '../../models';
+import { RecursoSeg } from '../../models';
 import { takeUntil } from 'rxjs/operators';
+import { MultitabDetFacade } from '../../../mantenimiento/facade';
 
 @Component({
   selector: 'app-recurso',
@@ -32,10 +33,11 @@ export class RecursoComponent implements OnInit, AfterViewInit, OnDestroy {
   private gridColumnApi;
   gridOptions: GridOptions;
   templateHtmlMsg: string;
-  categoriasRecurso: CategoriaRecurso[] = [];
+  categoriasRecurso: any[] = [];
 
   constructor(private recursoFacade: RecursoFacade, private toastr: ToastrService,
-    private store: Store<AppState>, private errorService: ErrorService) {
+    private store: Store<AppState>, private errorService: ErrorService,
+    private multitabDetFacade: MultitabDetFacade) {
     this.type = TYPES.RECURSO;
   }
 
@@ -47,9 +49,7 @@ export class RecursoComponent implements OnInit, AfterViewInit, OnDestroy {
     this.form = new FormGroup({
       'idRecurso': new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(40)]),
       'descripcionRecurso': new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(100)]),
-      'idCategoriaRecurso': new FormControl('', [Validators.required]),
-      'auditable': new FormControl(false),
-      'asignable': new FormControl(false)
+      'idCategoriaRecurso': new FormControl('', [Validators.required])
     });
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
@@ -64,8 +64,10 @@ export class RecursoComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     };
     this.recursoFacade.initData();
-    this.store.select('categoriasRecurso').pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(state => this.categoriasRecurso = state.data);
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.categoriaRecurso).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      console.log(data);
+      this.categoriasRecurso = data;
+    });
   }
 
   ngAfterViewInit(){
@@ -147,36 +149,6 @@ export class RecursoComponent implements OnInit, AfterViewInit, OnDestroy {
         valueGetter: (params) => {
           return joinWords(DEFAULT_SEPARATOR, params.data.idCategoriaRecurso, params.data.descripcionCategoriaRecurso);
         }
-      },
-      {
-        headerName: 'Auditable',
-        field: 'auditable',
-        cellClass: 'text-center',
-        filter: 'agTextColumnFilter',
-        floatingFilterComponentFramework: ObSwitchFilterGridComponent,
-        floatingFilterComponentParams: {
-          yesOption: 'true',
-          noOption: 'false',
-          suppressFilterButton: true
-        },
-        cellRenderer: (params) => {
-          return renderYesNoLabel(params.value)
-        }
-      },
-      {
-        headerName: 'Asignable',
-        field: 'asignable',
-        cellClass: 'text-center',
-        filter: 'agTextColumnFilter',
-        floatingFilterComponentFramework: ObSwitchFilterGridComponent,
-        floatingFilterComponentParams: {
-          yesOption: 'true',
-          noOption: 'false',
-          suppressFilterButton: true
-        },
-        cellRenderer: (params) => {
-          return renderYesNoLabel(params.value)
-        },
       },
       {
         headerName: 'Acción',

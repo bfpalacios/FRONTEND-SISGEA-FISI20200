@@ -15,14 +15,10 @@ export class RecursoFacade {
   }
 
   registrar(recurso: RecursoSeg) {
-    recurso.asignable = recurso.asignable === null ? false: recurso.asignable;
-    recurso.auditable = recurso.auditable === null ? false: recurso.auditable;
     this.store.dispatch(new AddRecurso(recurso));
   }
 
   actualizar(recurso: RecursoSeg) {
-    recurso.asignable = recurso.asignable === null ? false: recurso.asignable;
-    recurso.auditable = recurso.auditable === null ? false: recurso.auditable;
     this.store.dispatch(new UpdateRecurso(recurso));
   }
 
@@ -31,6 +27,6 @@ export class RecursoFacade {
   }
 
   initData() {
-    this.store.dispatch(new GetAllCategoriaRecurso());
+    
   }
 }

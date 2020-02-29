@@ -97,4 +97,28 @@ export const navItems: NavData[] = [
       },
     ]
   },
+  {
+    name: 'Seguridad',
+    icon: 'fa fa-shield nivel-0',
+    children: [
+      {
+        name: 'Usuarios',
+        url: '/seguridad/usuarios',
+        icon: 'fa fa-user nivel-1',
+        permissions: ['MANT_USUARI']
+      },
+      {
+        name: 'Recursos',
+        url: '/seguridad/recursos',
+        icon: 'fa fa-cogs nivel-1',
+        permissions: ['MANT_REC']
+      },
+      {
+        name: 'Perfiles',
+        url: '/seguridad/perfiles',
+        icon: 'fa fa-university nivel-1',
+        permissions: ['MANT_SISTEM']
+      }
+    ]
+  }
 ];

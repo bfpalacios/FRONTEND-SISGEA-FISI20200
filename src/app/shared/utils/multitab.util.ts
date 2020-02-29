@@ -10,8 +10,8 @@ tipoSolicitante:6,
 estadoSolicitud:7,
 base:9,
 pabellon:12,
-estadoAsistencia:13
-
+estadoAsistencia:13,
+categoriaRecurso:15
 
 
 }

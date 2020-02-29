@@ -6,12 +6,10 @@ import { UsuarioComponent } from './usuario.component';
 import { SharedModule } from "../../../shared/shared.module";
 import { UsuarioFacade, UsuarioPerfilFacade } from "../../facade";
 import { ObGridModule } from '../../../shared/ob-grid.module';
-import { GestionCuentaComponent } from './gestion-cuenta/gestion-cuenta.component';
 
 @NgModule({
   declarations: [
-    UsuarioComponent,
-    GestionCuentaComponent
+    UsuarioComponent
   ],
   imports: [
     CommonModule,
