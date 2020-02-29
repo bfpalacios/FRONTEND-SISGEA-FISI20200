@@ -42,6 +42,8 @@ export class SolicitudEspaciosService extends HttpService {
     return super.upload(formData, 'carga-archivo', {responseType: 'text'});
   }
 
-
+  aprobar (solicitudEspacio: SolicitudEspacio): Observable<any>  {
+    return super.put(solicitudEspacio,'aprobar/' + solicitudEspacio.idSolicitud);
+  }
 
 }
