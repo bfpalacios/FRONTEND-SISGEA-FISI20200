@@ -9,4 +9,4 @@ import { ReportesRoutingModule } from './reportes-routing.module';
     ReportesRoutingModule
   ]
 })
-export class ProcesosModule { }
+export class ReportesModule { }
