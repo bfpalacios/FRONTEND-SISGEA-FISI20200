@@ -176,7 +176,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     let criterio = this.formHorario.getRawValue();
     criterio = {
       ...criterio,
-      fecha: getLocalString(this.formHorario.getRawValue().fechas)
+      fecha: getFormattedDate(this.formHorario.getRawValue().fechas,'YYYY-MM-DD')
     }
     this.solicitudEspaciosFacade.buscarEspaciosHorarios(criterio).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (data: any[]) => {
