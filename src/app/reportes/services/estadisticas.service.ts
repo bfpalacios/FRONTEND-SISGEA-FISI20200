@@ -20,8 +20,9 @@ export class EstadisticasService extends HttpService {
     super(injector, httpClient, `${path}estadisticas`);
   }
 
-  buscarTodos(): Observable<any>  {
-    return super.get();
+  buscarPorCriterio(criterio: any): Observable<any>  {
+    let httpParams = super.getHttpParamsFromCriteria(criterio);
+    return super.get('', httpParams);
   }
 
 

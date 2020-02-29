@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { EstadisticasFacade } from '../../facade';
 import { ObGridModule } from '../../../shared/ob-grid.module';
 import { ObDatepickerModule } from '../../../shared/ob-datepicker.module';
+import { MultitabDetFacade } from '../../../mantenimiento/facade';
 
 @NgModule({
   declarations: [EstadisticasComponent],
@@ -17,7 +18,8 @@ import { ObDatepickerModule } from '../../../shared/ob-datepicker.module';
     ObDatepickerModule
   ],
   providers: [
-    EstadisticasFacade
+    EstadisticasFacade,
+    MultitabDetFacade
   ]
 })
 export class EstadisticasModule { }

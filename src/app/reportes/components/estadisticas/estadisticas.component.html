@@ -48,12 +48,16 @@
             </ng-select>
             <bfv-messages></bfv-messages>
           </div>
-          <label class="col-sm-1 ob-custom-label-form">Motivo</label>
+          <label class="col-sm-1 ob-custom-label-form">Fecha Reserva</label>
           <div class="form-group col-sm-3">
-            <ng-select #binSelect [items]="motivos" class="ng-select-custom" bindLabel="label" bindValue="idMotivos"
-              placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'" formControlName="motivos">
-            </ng-select>
-            <bfv-messages></bfv-messages>
+            <div class="input-group">
+              <input stype="text" class="form-control" placeholder="" #drpFechaProceso="bsDaterangepicker"
+                [bsConfig]="{ rangeInputFormat: 'DD/MM/YYYY', containerClass: 'theme-blue', adaptivePosition: true }"
+                bsDaterangepicker formControlName="fechaReserva" />
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="drpFechaProceso.toggle()"><i class="icon-calendar"></i></span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row">

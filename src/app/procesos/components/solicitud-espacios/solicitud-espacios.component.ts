@@ -257,9 +257,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
         id: e,
         cellClass: 'ob-type-string',
         cellStyle: function(params) {
-          console.log(params)
           if(params.value!=0 && params.value!=null && params.value!=undefined) {
-            console.log(params);
             let id = params.colDef.id;
             let indicador = params.data["indicador"+id];
             if(indicador == 'V'){
@@ -275,7 +273,6 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
         }
       })
     });
-    console.log(columnResult);
     return columnResult;
   }
 

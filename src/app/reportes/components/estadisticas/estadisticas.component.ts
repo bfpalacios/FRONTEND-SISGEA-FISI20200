@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { TemplateReporteComponent, ConfirmModalComponent, FormModalComponent, MdConfirmOpts, MdFormOpts, ButtonsCellRendererComponent, ObSwitchFilterGridComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, DEFAULT_SEPARATOR, getFormattedDate, getContextMenuItemsMantenimiento, joinWords, commonConfigTablaMantenimiento, updateGrid, configFormMd, manageCrudState, enableControls, commontConfigTablaServerSideScroll, autoSizeColumns, getContextMenuItemsConsultas, CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS, getDateRange, getDaysInRange, CUSTOM_MESSAGE_MAX_RANGE_EXCEDED, BUSQUEDA_INVALIDA, getDateFromString, setValueControls, renderYesNoLabel, formatMoney } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, DEFAULT_SEPARATOR, MULTITAB_IDS, commonConfigTablaReportesAvanzados, getFormattedDate, getContextMenuItemsMantenimiento, joinWords, commonConfigTablaMantenimiento, updateGrid, configFormMd, manageCrudState, enableControls, commontConfigTablaServerSideScroll, autoSizeColumns, getContextMenuItemsConsultas, CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS, getDateRange, getDaysInRange, CUSTOM_MESSAGE_MAX_RANGE_EXCEDED, BUSQUEDA_INVALIDA, getDateFromString, setValueControls, renderYesNoLabel, formatMoney } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef, ColGroupDef } from 'ag-grid-community';
 import { EstadisticasFacade } from '../../facade';
@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { MultitabDetFacade } from '../../../mantenimiento/facade';
 
 @Component({
   selector: 'app-estadisticas',
@@ -34,7 +35,6 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
   tiposEspacios: any[] = [];
   espacios: any[] = [];
   tipoSolicitud: any[] = [];
-  motivos: any[] = [];
   solicitantes: any[] = [];
 
   buscando: boolean = false;
@@ -42,27 +42,28 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
   vssVisa: any;
   fechaProcesoForm: Date;
 
-
   constructor(
     private toastr: ToastrService,
     private store: Store<AppState>,
-    private estadisticasFacade: EstadisticasFacade
+    private estadisticasFacade: EstadisticasFacade,
+    private multitabDetFacade: MultitabDetFacade,
   ) {
     this.type = TYPES.ESTADISTICAS;
   }
 
   ngOnInit() {
     this.form = new FormGroup({
-      'fechaRegistro': new FormControl('', [Validators.required, Validators.maxLength(23)]),
+      'fechaRegistro': new FormControl(''),
+      'fechaReserva': new FormControl(''),
       'pabellones': new FormControl([]),
       'tipoEspacios': new FormControl([]),
       'espacios': new FormControl([]),
       'tiposSolicitudes': new FormControl([]),
-      'motivos': new FormControl([]),
       'solicitantes': new FormControl([]),
     });
     this.gridOptions = {
-      ...commonConfigTablaMantenimiento,
+      ...commonConfigTablaReportesAvanzados,
+      paginationPageSize: 50,
       getRowNodeId: (data) => {
         return data.id;
       },
@@ -73,6 +74,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         this.gridReady = true;
         this.gridReady = true;
       },
+      groupMultiAutoColumn: true,
       getContextMenuItems: (params) => {
         return getContextMenuItemsConsultas(params, this.type, this.template.permisoExportacion);
       },
@@ -80,10 +82,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
       groupIncludeTotalFooter: true,
 
     };
-
+    this.estadisticasFacade.initCombos();
     this.manageState();
-    //this.vssVisaFacade.initData();
-
   }
 
   ngAfterViewInit() {
@@ -93,7 +93,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
   }
 
   ngOnDestroy() {
-    //this.vssVisaFacade.resetState();
+    this.estadisticasFacade.reset();
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
   }
@@ -106,63 +106,115 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
   }
 
   manageState() {
-    
+    this.store.select('espaciosAcademico').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      this.espacios = state.data;
+    });
+    this.store.select('solicitantes').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      this.solicitantes = state.data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoEspacio).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.tiposEspacios = data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoSolicitud).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.tipoSolicitud = data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.pabellones = data;
+    });
   }
   
   
   onClickSearchBtn(){
-    
+    this.buscando = true;
+    let criterios: any = this.form.getRawValue();
+    let rangoFechaReserva = getDateRange(criterios.fechaReserva);
+    criterios.fechaReservaInicio = rangoFechaReserva.fechaInicio;
+    criterios.fechaReservaFin = rangoFechaReserva.fechaFin;
+    let rangoFechaRegistro = getDateRange(criterios.fechaRegistro);
+    criterios.fechaRegistroInicio = rangoFechaRegistro.fechaInicio;
+    criterios.fechaRegistroFin = rangoFechaRegistro.fechaFin;
+    this.estadisticasFacade.buscarPorCriterios(criterios).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      //OK
+      (data) => {
+        this.buscando = false;
+        if (data.length == 0) {
+          this.toastr.info(CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS);
+        }
+        updateGrid(this.gridOptions, data, this.gridColumnApi, true, true);
+        autoSizeColumns(this.gridColumnApi);
+      },
+      //Error
+      (err) => {
+        this.buscando = false;
+      },
+      //Complete
+      () => {
+        this.buscando = false;
+      }
+    );
   }
   
   initColumnDefs(): ColDef[]{
     return [
       {
-        headerName: "Solicitud",
-        field: "idSolicitud",
-        cellClass: 'ob-type-string-center',
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" },
-
-      },
-      {
         headerName: "Espacio",
-        field: 'idEspacioAcademico',
-        valueGetter: (params) => {
-          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.idEspacioAcademico, params.data.descripcionEspacioAcademico);
-        },
+        field: 'descripcionEspacioAcademico',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
       {
-        headerName: "Estado Solicitud",
-        field: 'estadoSolicitud',
-        valueGetter: (params) => {
-          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.estadoSolicitud, params.data.descripcionEstadoSolicitud);
-        },
+        headerName: "Tipo",
+        field: 'descripcionTipoEspacio',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        chartDataType: "category",
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Pabellon",
+        field: 'descripcionPabellon',
+        cellClass: 'ob-type-string',
+        filter: 'agTextColumnFilter',
+        chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
       {
         headerName: "Solicitante",
-        field: 'dni',
-        valueGetter: (params) => {
-          if(params.data){
-            return params.data.nombres + ' ' + params.data.nombres + ' ' + params.data.apellidoPaterno + params.data.apellidoMaterno
-          }else{
-            return '';
-          }
-        },
+        field: "nombreCompleto",
+        cellClass: 'ob-type-string-center',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" },
+      },
+      {
+        headerName: "Estado Solicitud",
+        field: 'descripcionEstadoSolicitud',
+        cellClass: 'ob-type-string',
+        filter: 'agTextColumnFilter',
+        chartDataType: "category",
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Tipo Solicitud",
+        field: 'descripcionTipoSolicitud',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },
       {
-        headerName: "Fecha",
+        headerName: "Registro",
+        field: 'fechaRegistro',
+        cellClass: 'ob-type-string',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Reserva",
         field: 'fechaReserva',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
       {
@@ -177,13 +229,15 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'horaFin',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
       {
-        headerName: "Motivo",
-        field: 'motivo',
+        headerName: "Asistencia",
+        field: 'descripcionEstadoAsistencia',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
     ]
