@@ -36,7 +36,9 @@ import {
   TemplateConsultaComponent,
   TemplateMantenimientoComponent,
   PagelengthDetalleComponent,
-  ObModalHelpComponent
+  ObModalHelpComponent,
+  //TemplatePermisosUsuarioComponent,
+  //TemplateReporteadorComponent
 } from './components';
 import { SafePipe } from './pipes';
 import { AutofocusDirective, OnlynumbersDirective, OnlytextDirective, UppercaseDirective, MoneyDirective, DescriptionDirective } from './directives';
@@ -70,7 +72,9 @@ const COMPONENTS = [
   ConsultaModalComponent,
   PagelengthDetalleComponent,
   TemplateSimpleComponent,
-  ObModalHelpComponent
+  ObModalHelpComponent//,
+  //TemplatePermisosUsuarioComponent,
+  //TemplateReporteadorComponent
 ];
 
 const PIPES = [

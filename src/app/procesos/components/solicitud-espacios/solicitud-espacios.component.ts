@@ -48,6 +48,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   prestando: boolean = false;
 
   tipoSolicitante: any[] = [];
+  tipoSolicitud: any[] = [];
+  pabellon: any[] = [];
+  tipoEspacio: any[] = [];
   solicitantes: any[] = [];
   espacios: any[] = [];
   solicitantesFiltrado: any[] = [];
@@ -84,7 +87,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'estadoSolicitud':new FormControl('', ),
       'idSolicitud':new FormControl('', ),
       'estadoAsistencia':new FormControl('', ),
+      'pabellon': new FormControl('', ),
       'fechaRegistro':new FormControl('', ),
+      'idTipoEspacio':new FormControl('', ),
     });
     this.formHorario = new FormGroup({
       'idsEspacioAcademico': new FormControl([], [Validators.required]),
@@ -148,8 +153,18 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
           updateGrid(this.gridOptions, state.data, this.gridColumnApi);
         });
     });
+
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoSolicitante).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.tipoSolicitante = data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoSolicitud).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.tipoSolicitud = data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.pabellon = data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoEspacio).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.tipoEspacio = data;
     });
     this.solicitudEspaciosFacade.buscarSolicitantes().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.solicitantes = data;
@@ -323,8 +338,16 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   showMdUpdate(params) {
   let data: SolicitudEspacio = params.node.data;
   this.mdFormOpts = this.mdUpdateOpts;
-  enableControls(this.form, false, 'idSolicitud');
-  enableControls(this.form, false, 'fechaRegistro');
+  enableControls(this.form, false, 'tipoSolicitud');
+  enableControls(this.form, false, 'idSolicitante');
+  enableControls(this.form, false, 'motivo');
+  enableControls(this.form, false, 'pabellon');
+  enableControls(this.form, false, 'fechaReserva');
+  enableControls(this.form, false, 'idEspacioAcademico');
+  enableControls(this.form, false, 'horaInicio');
+  enableControls(this.form, false, 'horaInicio');
+  enableControls(this.form, false, 'horaFin');
+  enableControls(this.form, false, 'idTipoEspacio');
   this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 

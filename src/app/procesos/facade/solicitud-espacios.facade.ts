@@ -43,4 +43,6 @@ export class SolicitudEspaciosFacade {
     return this.service.actualizar(solicitudEspacio);
     //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
   }
+
+  
 }

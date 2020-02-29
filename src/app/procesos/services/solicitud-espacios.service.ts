@@ -33,6 +33,9 @@ export class SolicitudEspaciosService extends HttpService {
     return super.put(solicitudEspacio,solicitudEspacio.idSolicitud);
   }
 
+  aprobar (solicitudEspacio: SolicitudEspacio): Observable<any>  {
+    return super.put(solicitudEspacio,'aprobar/' + solicitudEspacio.idSolicitud);
+  }
 
 
 }

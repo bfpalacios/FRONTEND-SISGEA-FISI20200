@@ -17,5 +17,8 @@ export interface SolicitudEspacio {
 	horaInicio:string,
 	horaFin:string,
 	estadoAsistencia:string,
+	pabellon:string,
+	descripcionPabellon:string,
+	idTipoEspacio: string
 
 }
