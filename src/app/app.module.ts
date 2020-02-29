@@ -19,7 +19,6 @@ import * as fromAuth from './shared/store/actions/auth/auth.actions';
 import { AppInitService } from './shared/services/init/app.init.service';
 import { AppConfigService } from './shared/services/config/app-config.service';
 import { LicenseManager } from "ag-grid-enterprise/main";
-import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 export function jwtOptionsFactory(storageService: StorageService) {
   return {
@@ -81,8 +80,7 @@ export function clearGlobalState(reducer) {
     })
   ],
   declarations: [
-    AppComponent,
-    EstadisticasComponent
+    AppComponent
   ],
   providers: [{
     provide: LocationStrategy,
