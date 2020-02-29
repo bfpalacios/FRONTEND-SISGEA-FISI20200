@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8080',
+  baseUrl: 'http://18.191.197.188:8080',
   apiContextPath: '/sisgea/api',
   secContextPath: '/uba-security/api',
   batchContextPath: '/sisgea-batch/api',

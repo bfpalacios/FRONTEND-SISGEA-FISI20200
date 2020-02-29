@@ -9,6 +9,7 @@ escuelaAcademica:3,
 tipoSolicitante:6,
 estadoSolicitud:7,
 base:9,
+pabellon:12,
 estadoAsistencia:13
 
 
