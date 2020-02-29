@@ -372,6 +372,16 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   }
 
   abrirModalRegistrar(){
+    enableControls(this.form, true, 'tipoSolicitud');
+    enableControls(this.form, true, 'idSolicitante');
+    enableControls(this.form, true, 'motivo');
+    enableControls(this.form, true, 'pabellon');
+    enableControls(this.form, true, 'fechaReserva');
+    enableControls(this.form, true, 'idEspacioAcademico');
+    enableControls(this.form, true, 'horaInicio');
+    enableControls(this.form, true, 'horaInicio');
+    enableControls(this.form, true, 'horaFin');
+    enableControls(this.form, true, 'idTipoEspacio');
     this.mdSave.show({});
   }
 
