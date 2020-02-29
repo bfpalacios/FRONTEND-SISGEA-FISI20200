@@ -44,5 +44,7 @@ export class SolicitudEspaciosFacade {
     //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
   }
 
-  
+  cargar(files: File[]): Observable<any>{
+    return this.service.cargar(files);
+  }
 }
