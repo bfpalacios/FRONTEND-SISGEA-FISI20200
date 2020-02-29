@@ -98,6 +98,18 @@ export const navItems: NavData[] = [
     ]
   },
   {
+    name: 'Reportes',
+    icon: 'fa fa-bar-chart nivel-0',
+    children: [
+      {
+        name: 'Estadisticas',
+        url: '/reportes/estadisticas',
+        icon: 'fa fa-pie-chart nivel-1',
+        permissions: ['RPT_ESTADISTICAS']
+      }
+    ]
+  },
+  {
     name: 'Seguridad',
     icon: 'fa fa-shield nivel-0',
     children: [
