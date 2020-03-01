@@ -36,15 +36,9 @@ const routes: Routes = [
         loadChildren: './components/multitab-cab/multitab-cab.module#MultitabCabModule'
       },
       {
-        path: 'origen',
-        loadChildren: './components/origen/origen.module#OrigenModule'
-      }
-      ,
-      {
         path: 'solicitante',
         loadChildren: './components/solicitante/solicitante.module#SolicitanteModule'
-      }
-      ,
+      },
       {
         path: 'espacio-academico',
         loadChildren: './components/espacio-academico/espacio-academico.module#EspacioAcademicoModule'

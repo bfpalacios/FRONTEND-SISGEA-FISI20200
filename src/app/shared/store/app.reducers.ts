@@ -5,7 +5,6 @@ import * as fromUi from './reducers/ui.reducer';
 import * as fromAuth from './reducers/auth/auth.reducer';
 import * as fromHelp from './reducers/help.reducer';
 /*Mantenimientos*/
-import * as fromOrigen from './reducers/mantenimiento/origen.reducer';
 import * as fromSolicitante from './reducers/mantenimiento/solicitante.reducer';
 import * as fromEspacioAcademico from './reducers/mantenimiento/espacio-academico.reducer';
 import * as fromMultitabCab from './reducers/mantenimiento/multitab-cab.reducer';
@@ -33,7 +32,6 @@ import * as fromSolicitudEspacios from './reducers/procesos/solicitud-espacios.r
 
 /* Mantenimientos */
 import {
-  Origen,
   Solicitante,
   EspacioAcademico,
   MultitabCab,
@@ -66,7 +64,6 @@ export interface AppState {
   auth: fromAuth.State,
   help: fromHelp.PageState,
   // Mantenimientos
-  origenes: State<Origen>,
   solicitantes: State<Solicitante>,
   espaciosAcademico: State<EspacioAcademico>,
   multitabCabs: State<MultitabCab>,
@@ -98,7 +95,6 @@ export const appReducers: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
   help: fromHelp.helpReducer,
   // Mantenimientos
-  origenes: fromOrigen.origennReducer,
   solicitantes: fromSolicitante.solicitanteReducer,
   espaciosAcademico: fromEspacioAcademico.espacioAcademicoReducer,
   multitabCabs: fromMultitabCab.multitabCabReducer,

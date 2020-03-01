@@ -185,7 +185,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
       {
         headerName: "Solicitante",
         field: "nombreCompleto",
-        cellClass: 'ob-type-string-center',
+        cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         enablePivot: false,
         enableRowGroup: true,

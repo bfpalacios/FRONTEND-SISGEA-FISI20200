@@ -1,4 +1,3 @@
-export * from './origen.facade';
 export * from './solicitante.facade';
 export * from './espacio-academico.facade';
 export * from './curso.facade';

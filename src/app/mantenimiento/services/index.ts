@@ -1,4 +1,3 @@
-export * from './origen.service';
 export * from './multitab-cab.service';
 export * from './multitab-det.service';
 export * from './solicitante.service';

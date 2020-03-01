@@ -1,7 +1,6 @@
 import { AuthEffects } from './auth/auth.effects';
 import { AuthSistemaEffects } from './auth/auth-sistema.effects';
 // Mantenimientos
-import { OrigenEffects } from './mantenimiento/origen.effects';
 import { SolicitanteEffects } from './mantenimiento/solicitante.effects';
 import { EspacioAcademicoEffects } from './mantenimiento/espacio-academico.effects';
 import { MultitabCabEffects } from './mantenimiento/multitab-cab.effects';
@@ -33,7 +32,6 @@ export const effectsArr = [
   AuthEffects,
   AuthSistemaEffects,
   // Mantenimientos
-  OrigenEffects,
   SolicitanteEffects,
   EspacioAcademicoEffects,
   MultitabCabEffects,
@@ -61,7 +59,6 @@ export const effectsArr = [
 export * from './auth/auth.effects';
 export * from './auth/auth-sistema.effects';
 // Mantenimientos
-export * from './mantenimiento/origen.effects';
 export * from './mantenimiento/solicitante.effects';
 export * from './mantenimiento/espacio-academico.effects';
 export * from './mantenimiento/multitab-cab.effects';
