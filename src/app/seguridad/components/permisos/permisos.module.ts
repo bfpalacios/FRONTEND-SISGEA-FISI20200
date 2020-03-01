@@ -6,11 +6,15 @@ import { PerfilRecursoFacade, PerfilUsuarioFacade } from '../../facade';
 import { SharedModule } from '../../../shared/shared.module';
 import { ObGridModule } from '../../../shared/ob-grid.module';
 import { ObTreeModule } from '../../../shared/ob-tree.module';
+import { PerfilRecursoComponent } from './perfil-recurso/perfil-recurso.component';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [
-    PermisosComponent
+    PermisosComponent,
+    PerfilRecursoComponent,
+    PerfilUsuarioComponent
   ],
   imports: [
     CommonModule,
