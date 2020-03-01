@@ -84,7 +84,11 @@
 
 
     <app-pagelength [gridApi]="gridApi"></app-pagelength>
-    <ag-grid-angular #agGrid class="ag-theme-balham"
+    <ag-grid-angular 
+      #agGrid 
+      class="ag-theme-balham"
+      style="height: 600px;"
+      [rowData]="[]"
       [gridOptions]="gridOptions">
     </ag-grid-angular>
 

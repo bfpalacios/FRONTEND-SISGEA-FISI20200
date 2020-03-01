@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { TemplateReporteComponent, ConfirmModalComponent, FormModalComponent, MdConfirmOpts, MdFormOpts, ButtonsCellRendererComponent, ObSwitchFilterGridComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, DEFAULT_SEPARATOR, MULTITAB_IDS, commonConfigTablaReportesAvanzados, getFormattedDate, getContextMenuItemsMantenimiento, joinWords, commonConfigTablaMantenimiento, updateGrid, configFormMd, manageCrudState, enableControls, commontConfigTablaServerSideScroll, autoSizeColumns, getContextMenuItemsConsultas, CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS, getDateRange, getDaysInRange, CUSTOM_MESSAGE_MAX_RANGE_EXCEDED, BUSQUEDA_INVALIDA, getDateFromString, setValueControls, renderYesNoLabel, formatMoney } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, DEFAULT_SEPARATOR, MULTITAB_IDS, commonConfigTablaReportesAvanzados, getContextMenuItemsReportesAvanzados, getFormattedDate, getContextMenuItemsMantenimiento, joinWords, commonConfigTablaMantenimiento, updateGrid, configFormMd, manageCrudState, enableControls, commontConfigTablaServerSideScroll, autoSizeColumns, getContextMenuItemsConsultas, CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS, getDateRange, getDaysInRange, CUSTOM_MESSAGE_MAX_RANGE_EXCEDED, BUSQUEDA_INVALIDA, getDateFromString, setValueControls, renderYesNoLabel, formatMoney } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef, ColGroupDef } from 'ag-grid-community';
 import { EstadisticasFacade } from '../../facade';
@@ -11,6 +11,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { MultitabDetFacade } from '../../../mantenimiento/facade';
+import "ag-grid-enterprise/chartsModule";
 
 @Component({
   selector: 'app-estadisticas',
@@ -65,21 +66,19 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
       ...commonConfigTablaReportesAvanzados,
       paginationPageSize: 50,
       getRowNodeId: (data) => {
-        return data.id;
+        return data.idSolicitud;
       },
       onGridReady: (params) => {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
         autoSizeColumns(this.gridColumnApi);
         this.gridReady = true;
-        this.gridReady = true;
       },
       groupMultiAutoColumn: true,
       getContextMenuItems: (params) => {
-        return getContextMenuItemsConsultas(params, this.type, this.template.permisoExportacion);
+        return getContextMenuItemsReportesAvanzados(params, undefined, true, 'Reporte');
       },
-      groupIncludeFooter: true,
-      groupIncludeTotalFooter: true,
+      //groupIncludeFooter: true,
 
     };
     this.estadisticasFacade.initCombos();
@@ -161,6 +160,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'descripcionEspacioAcademico',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
@@ -169,6 +170,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'descripcionTipoEspacio',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
@@ -177,6 +180,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'descripcionPabellon',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
@@ -185,6 +190,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: "nombreCompleto",
         cellClass: 'ob-type-string-center',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" },
       },
       {
@@ -192,6 +199,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'descripcionEstadoSolicitud',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         chartDataType: "category",
         filterParams: { newRowsAction: "keep" }
       },
@@ -200,6 +209,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'descripcionTipoSolicitud',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" }
       },
       {
@@ -207,6 +218,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'fechaRegistro',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" }
       },
       {
@@ -215,6 +228,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         chartDataType: "category",
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" }
       },
       {
@@ -222,6 +237,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         field: 'horaInicio',
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" }
       },
       {
@@ -230,6 +247,8 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         chartDataType: "category",
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" }
       },
       {
@@ -238,7 +257,17 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         chartDataType: "category",
+        enablePivot: false,
+        enableRowGroup: true,
         filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Cantidad",
+        field: 'cantidad',
+        cellClass: 'ob-type-number',
+        chartDataType: "series",
+        enablePivot: true,
+        enableRowGroup: false,
       },
     ]
   }
