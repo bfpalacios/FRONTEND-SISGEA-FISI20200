@@ -52,8 +52,14 @@
         <ag-grid-angular
           #agGrid
           class="ag-theme-balham"
-          [gridOptions]="gridOptionsHorario"
-        ></ag-grid-angular>
+          [gridOptions]="gridOptionsHorario">
+        </ag-grid-angular>
+        <div class="row">
+          <div class="col-12 text-right" style="padding-top: 10px !important;">
+            <label class="ob-custom-label-form"> <i class="fa fa-square" style="color: indianred; padding-right: 5px !important;" aria-hidden="true"></i>  Ocupado por programación</label>
+            <label class="ob-custom-label-form"> <i class="fa fa-square" style="color: gold; padding-right: 5px !important;" aria-hidden="true"></i>  Ocupado por reserva</label>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-4">
