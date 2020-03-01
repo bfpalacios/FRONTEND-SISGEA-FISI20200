@@ -28,22 +28,18 @@ export const routes: Routes = [
       {
         path: 'mantenimiento',
         loadChildren: './mantenimiento/mantenimiento.module#MantenimientoModule',
-        //canActivate: [AuthGuard]
       },
       {
         path: 'procesos',
         loadChildren: './procesos/procesos.module#ProcesosModule',
-        //canActivate: [AuthGuard]
       },
       {
         path: 'reportes',
         loadChildren: './reportes/reportes.module#ReportesModule',
-        //canActivate: [AuthGuard]
       },
       {
         path: 'seguridad',
         loadChildren: './seguridad/seguridad.module#SeguridadModule',
-        //canActivate: [AuthGuard]
       }
     ]
   },

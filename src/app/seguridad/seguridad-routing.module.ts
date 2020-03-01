@@ -16,29 +16,12 @@ const routes: Routes = [
         loadChildren: './components/perfil/perfil.module#PerfilModule'
       },
       {
-        path: 'parametros-seguridad',
-        loadChildren: './components/parametro-seguridad/parametro-seguridad.module#ParametroSeguridadModule'
-      },
-      {
-        path: 'tipos-autenticaciones',
-        loadChildren: './components/tipo-autenticacion/tipo-autenticacion.module#TipoAutenticacionModule'
-      },
-
-      {
-        path: 'categorias-recursos',
-        loadChildren: './components/categoria-recurso/categoria-recurso.module#CategoriaRecursoModule'
-      },
-      {
-        path: 'sistemas',
-        loadChildren: './components/sistema/sistema.module#SistemaModule'
-      },
-      {
         path: 'recursos',
         loadChildren: './components/recurso/recurso.module#RecursoModule'
       },
       {
-        path: 'menus',
-        loadChildren: './components/menu/menu.module#MenuModule'
+        path: 'permisos',
+        loadChildren: './components/permisos/permisos.module#PermisosModule'
       },
       {
         path: '', redirectTo: 'usuarios', pathMatch: 'full'

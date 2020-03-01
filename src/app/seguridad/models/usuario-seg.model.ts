@@ -1,6 +1,6 @@
 export interface UsuarioSeg {
   usuario: string,
-  contraseña: string,
+  contrasenia: string,
   nombres: string,
   apellidos: string
 }

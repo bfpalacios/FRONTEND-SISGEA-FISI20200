@@ -9,3 +9,5 @@ export * from './recurso.facade';
 export * from './menu.facade';
 export * from './perfil-menu.recurso.facade';
 export * from './menu-recurso.facade';
+export * from './perfil-recurso.facade';
+export * from './perfil-usuario.facade';

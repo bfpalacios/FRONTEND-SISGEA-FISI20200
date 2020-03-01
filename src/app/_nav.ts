@@ -130,7 +130,13 @@ export const navItems: NavData[] = [
         name: 'Perfiles',
         url: '/seguridad/perfiles',
         icon: 'fa fa-university nivel-1',
-        permissions: ['MANT_SISTEM']
+        permissions: ['MANT_PERFIL']
+      },
+      {
+        name: 'Permisos',
+        url: '/seguridad/permisos',
+        icon: 'fa fa-user-times nivel-1',
+        permissions: ['MANT_PERMISOS']
       }
     ]
   }

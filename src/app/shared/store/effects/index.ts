@@ -23,6 +23,8 @@ import { PerfilEffects } from './seguridad/perfil.effects';
 import { UsuarioPerfilEffects } from './seguridad/usuario-perfil-seg.effects';
 import { AsignacionPermisosEffects } from './seguridad/asignacion-permisos.effects';
 import { MenuRecursoEffects } from './seguridad/menu-recurso.effects';
+import { PerfilRecursoEffects } from './seguridad/perfil-recurso.effects';
+import { PerfilUsuarioEffects } from './seguridad/perfil-usuario.effects';
 
 // Procesos
 import { AsignacionEspaciosEffects } from './procesos/asignacion-espacios.effects';
@@ -51,6 +53,8 @@ export const effectsArr = [
   UsuarioPerfilEffects,
   AsignacionPermisosEffects,
   MenuRecursoEffects,
+  PerfilRecursoEffects,
+  PerfilUsuarioEffects,
   //Procesos
   AsignacionEspaciosEffects,
   SolicitudEspaciosEffects,
@@ -78,6 +82,8 @@ export * from './seguridad/perfil.effects';
 export * from './seguridad/usuario-perfil-seg.effects';
 export * from './seguridad/asignacion-permisos.effects';
 export * from './seguridad/menu-recurso.effects';
+export * from './seguridad/perfil-recurso.effects';
+export * from './seguridad/perfil-usuario.effects';
 // Proceso
 export * from './procesos/solicitud-espacios.effects';
 export * from './procesos/asignacion-espacios.effects';

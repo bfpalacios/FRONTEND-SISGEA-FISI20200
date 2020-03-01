@@ -23,6 +23,8 @@ import * as fromMenu from './reducers/seguridad/menu.reducer';
 import * as fromTipoMenu from './reducers/seguridad/tipo-menu.reducer';
 import * as fromRecursoGrilla from './reducers/seguridad/menu-recurso.reducer';
 import * as fromPerfilSeg from './reducers/seguridad/perfil.reducer';
+import * as fromPerfilRecurso from './reducers/seguridad/perfil-recurso.reducer';
+import * as fromPerfilUsuario from './reducers/seguridad/perfil-usuario.reducer';
 import * as fromUsuarioPerfilSeg from './reducers/seguridad/usuario-perfil.reducer';
 import * as fromAsignacionPermisos from './reducers/seguridad/asignacion-permisos.reducer';
 import * as fromRecursoAsignacionGrilla from './reducers/seguridad/asignacion-permisos-grilla.reducer';
@@ -81,6 +83,8 @@ export interface AppState {
   tiposMenu: State<TipoMenu>,
   menuRecursos: State<MenuRecurso>,
   perfilesSeg: State<Perfil>,
+  perfilRecurso: State<any>,
+  perfilUsuario: State<any>,
   usuariosPerfilesSeg: State<UsuarioPerfil>,
   asignacionPermisos: State<PerfilMenuRecursoNodo>,
   asignacionPermisosGrilla: fromRecursoAsignacionGrilla.RecursoAsignacionState,
@@ -112,6 +116,8 @@ export const appReducers: ActionReducerMap<AppState> = {
   tiposMenu: fromTipoMenu.tipoMenuReducer,
   menuRecursos: fromRecursoGrilla.menuRecursoReducer,
   perfilesSeg: fromPerfilSeg.perfilSegReducer,
+  perfilRecurso: fromPerfilRecurso.perfilRecursoReducer,
+  perfilUsuario: fromPerfilUsuario.perfilUsuarioReducer,
   usuariosPerfilesSeg: fromUsuarioPerfilSeg.usuarioPerfilReducer,
   asignacionPermisos: fromAsignacionPermisos.asignacionPermisosReducer,
   asignacionPermisosGrilla: fromRecursoAsignacionGrilla.asignacionPermisosGrillaReducer,

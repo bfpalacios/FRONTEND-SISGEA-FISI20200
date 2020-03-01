@@ -45,10 +45,11 @@ export const TYPES = {
   RECURSO: {name: 'Recurso', title: 'Recurso', resource: 'MANT_RECURS', fileNameExport:"Rercusos", module: MODULE.SEGURIDAD},
   MENU: { name: 'Menú', title: 'Menú', resource: 'MANT_MENU', fileNameExport:"Menu" , module: MODULE.SEGURIDAD},
   CTA_USUARIO: { name: 'Cuenta Usuario', title: 'Cuenta Usuario', resource: 'MANT_CTAUSU', fileNameExport:"CuentaUsuario", module: MODULE.SEGURIDAD},
+  PERMISOS: { name: 'Asignación de permisos', title: 'Asignación de permisos', resource: 'ASIG_PERMIS', module: MODULE.SEGURIDAD },
   ASIG_PERMIS: { name: 'Asignación de permisos', title: 'Asignación de permisos', resource: 'ASIG_PERMIS', module: MODULE.SEGURIDAD },
   MENU_RECURSO: { name: 'Aisgnación de recursos', title: 'Asignación de recursos', resource: 'MANT_MEN_REC', module: MODULE.SEGURIDAD },
   /*Procesos*/
-  ASIG_ESPACIOS: { name: 'Aisgnación de espacios', otherTitle: 'Asignación de espacios', btnText:'Asignar', btnIcon:'fa-bolt', title: 'Asignación de espacios', resource: 'EJEC_ASIGESPACIOS', module: MODULE.PROCESOS },
+  ASIG_ESPACIOS: { name: 'Aisgnación de espacios', otherTitle: 'Asignación de espacios', btnText:'Asignar', btnIcon:'fa-bolt', title: 'Asignación de espacios', resource: 'MANT_PERMISOS', module: MODULE.PROCESOS },
   SOLI_ESPACIOS: { name: 'Solicitud de espacios', otherTitle: 'Solicitud de espacios', btnText:'Prestar', btnIcon:'fa-bolt', title: 'Solicitud de espacios', resource: 'EJEC_SOLIESPACIOS', module: MODULE.PROCESOS },
   /*Reportes*/
   ESTADISTICAS: { name: 'Estadísticas', otherTitle: 'Reportes estadísticos', title: 'Estadísticas', resource: 'RPT_ESTADISTICAS', module: MODULE.REPORTES }
