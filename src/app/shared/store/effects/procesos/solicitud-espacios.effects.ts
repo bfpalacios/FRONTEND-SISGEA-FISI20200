@@ -11,6 +11,7 @@ import { addLabelToObjsArr, sortByAttr } from '../../../utils';
 
 @Injectable()
 export class SolicitudEspaciosEffects {
+  SolicitudEspaciosService: any;
 
   constructor(
     private actions$: Actions,
@@ -32,6 +33,24 @@ export class SolicitudEspaciosEffects {
             }),
             catchError((err) => {
               return of(new fromSolicitudEspacios.GetAllSolicitudEspaciosFail(err));
+            })
+          )
+      })
+    );
+
+    @Effect()
+  UpdateEspacioAcademico$ = this.actions$
+    .pipe(
+      ofType(fromSolicitudEspacios.actions.UPDATE),
+      withLatestFrom(this.store$.select('globalData', 'messages')),
+      switchMap(([action, messages]: [fromSolicitudEspacios.AprobarSolicitudEspacios, GlobalMessages]) => {
+        return this.SolicitudEspaciosService.aprobar(action.payload)
+          .pipe(
+            map(res => {
+              return new fromSolicitudEspacios.AprobarSolicitudEspaciosSuccess({ data: res, message: messages.UPDATE_SUCCESS });
+            }),
+            catchError(err => {
+              return of(new fromSolicitudEspacios.AprobarSolicitudEspaciosFail(err))
             })
           )
       })

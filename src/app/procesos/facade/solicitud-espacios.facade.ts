@@ -44,5 +44,10 @@ export class SolicitudEspaciosFacade {
     //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
   }
 
+  aprobar(solicitudEspacio: SolicitudEspacio){
+    return this.service.aprobar(solicitudEspacio);
+    //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
+  }
+
   
 }

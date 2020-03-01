@@ -23,8 +23,24 @@ export class ResetSolicitudEspacios implements Action {
   constructor(public payload: any = null) {};
 }
 
+export class AprobarSolicitudEspacios implements Action {
+  readonly type = actions.UPDATE;
+  constructor(public payload: any) {}
+}
+export class AprobarSolicitudEspaciosSuccess implements Action {
+  readonly type = actions.UPDATE_SUCCESS;
+  constructor(public payload: any) {}
+}
+export class AprobarSolicitudEspaciosFail implements Action {
+  readonly type = actions.UPDATE_FAIL;
+  constructor(public payload: any) {}
+}
+
 export type SolicitudEspaciosActions
   = GetAllSolicitudEspacios
   | GetAllSolicitudEspaciosSuccess
   | GetAllSolicitudEspaciosFail
-  | ResetSolicitudEspacios;
+  | ResetSolicitudEspacios
+  | AprobarSolicitudEspacios
+  | AprobarSolicitudEspaciosSuccess
+  | AprobarSolicitudEspaciosFail;

@@ -23,6 +23,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('mdDelete') mdDelete: ConfirmModalComponent;
   @ViewChild('mdSave') mdSave: FormModalComponent;
   @ViewChild('mdUpdate') mdUpdate: FormModalComponent;
+  @ViewChild('mdAprobar') mdAprobar: FormModalComponent;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   type: Type;
@@ -30,6 +31,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   mdRegisterOpts: MdFormOpts;
   mdUpdateOpts: MdFormOpts;
   mdFormOpts: MdFormOpts;
+  mdAprobarOpts: MdFormOpts;
   form:FormGroup;
   formHorario:FormGroup;
   gridOptions: GridOptions;
@@ -72,8 +74,10 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.mdConfirmOpts = configFormMd.getDeleteMdOpts(this.templateHtmlMsg);
     this.mdRegisterOpts = configFormMd.getRegisterMdOpts(this.type);
     this.mdUpdateOpts = configFormMd.getUpdateMdOpts(this.type);
+    this.mdAprobarOpts = configFormMd.getUpdateMdOpts(this.type);
     this.mdRegisterOpts.modalClass = 'modal-reglas-compensacion';
     this.mdUpdateOpts.modalClass = 'modal-reglas-compensacion';
+    this.mdAprobarOpts.modalClass = 'modal-reglas-compensacion';
     this.mdRegisterOpts.buttons.ok.hidden = true;
     this.form = new FormGroup({
       'tipoSolicitud': new FormControl('', [Validators.required]),
@@ -332,12 +336,37 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   }
 
   abrirModalRegistrar(){
+    enableControls(this.form, true, 'tipoSolicitud');
+    enableControls(this.form, true, 'idSolicitante');
+    enableControls(this.form, true, 'motivo');
+    enableControls(this.form, true, 'idEspacioAcademico');
+    enableControls(this.form, true, 'fechaReserva');
+    enableControls(this.form, true, 'horaInicio');
+    enableControls(this.form, true, 'horaFin');
     this.mdSave.show({});
   }
 
-  showMdUpdate(params) {
+showMdUpdate(params) {
   let data: SolicitudEspacio = params.node.data;
   this.mdFormOpts = this.mdUpdateOpts;
+  enableControls(this.form, false, 'idSolicitud');
+  enableControls(this.form, false, 'fechaRegistro');
+  enableControls(this.form, false, 'fechaReserva');
+  enableControls(this.form, true, 'idEspacioAcademico');
+  enableControls(this.form, true, 'horaInicio');
+  enableControls(this.form, true, 'horaFin');
+  enableControls(this.form, true, 'tipoSolicitud');
+  enableControls(this.form, true, 'idSolicitante');
+  enableControls(this.form, true, 'motivo');
+  enableControls(this.form, true, 'estadoSolicitud');
+  enableControls(this.form, true, 'estadoAsistencia');
+
+  this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
+}
+
+showMdAprobar(params) {
+  let data: SolicitudEspacio = params.node.data;
+  this.mdFormOpts = this.mdAprobarOpts;
   enableControls(this.form, false, 'tipoSolicitud');
   enableControls(this.form, false, 'idSolicitante');
   enableControls(this.form, false, 'motivo');
@@ -348,7 +377,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   enableControls(this.form, false, 'horaInicio');
   enableControls(this.form, false, 'horaFin');
   enableControls(this.form, false, 'idTipoEspacio');
-  this.mdUpdate.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
+  this.mdAprobar.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 
 
@@ -376,11 +405,44 @@ save() {
 
 
       );
+  }
+}
+
+
+aprobar() {
+  const action = this.mdUpdate.action;
+  switch (action) {
+
+    case RESOURCE_ACTIONS.ACTUALIZACION:
+
+      this.solicitudEspaciosFacade.aprobar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+        (data) => {
+          this.mdUpdate.hide();
+          this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+            updateGrid(this.gridOptions, data, this.gridColumnApi);
+            this.toastr.success('Realizado con exito','Prestamo de espacios');
+          });
+            },
+
+        (err) => {
+
+                  this.toastr.error('Ocurrio un problema en el prestamo del espacio','Prestamo de espacios');
+              },
+        () =>{
+
+              }
+
+
+      );
 
 
 
       break;
   }
+}
+
+hide(){
+  console.log("saliendo");
 }
 
 
@@ -464,6 +526,10 @@ save() {
           edit: {
             visible: true,
             action: this.showMdUpdate.bind(this)
+          },
+          delete: {
+            visible: this.template.permisoEliminacion,
+            action: this.showMdAprobar.bind(this)
           }
         },
         filter: false,
