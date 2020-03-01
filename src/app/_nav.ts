@@ -76,7 +76,7 @@ export const navItems: NavData[] = [
         name: 'Tabla de Tablas',
         icon: 'fa fa-table nivel-1',
         url: '/mantenimiento/multitab',
-        permissions: ['MANT_MULCAB', 'MANT_MULDET']
+        permissions: ['MANT_MULTITABLAS']
       }
     ]
   },
@@ -118,7 +118,7 @@ export const navItems: NavData[] = [
         name: 'Usuarios',
         url: '/seguridad/usuarios',
         icon: 'fa fa-user nivel-1',
-        permissions: ['MANT_USUARI']
+        permissions: ['MANT_USUARIO']
       },
       {
         name: 'Recursos',

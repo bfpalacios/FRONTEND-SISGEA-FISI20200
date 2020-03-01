@@ -55,16 +55,26 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onLogin() {
     let loginForm: LoginForm = this.loginFormGroup.getRawValue();
-    console.log(loginForm)
     this.authFacade.logIn(loginForm).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-     (response) =>{
-      console.log(response)
+     (response) =>{      
       if(response.ok){
         let body = response.body;
         if(body.exito){        
           //Guardando permisos en la cookie del navegador
           sessionStorage.setItem('username',body.username);
-          sessionStorage.setItem('recursos',body.recursos);
+          if(body.recursos.length != 0){
+            let recursos = '';
+            body.recursos.forEach(function(item,idx){
+              if(idx != body.recursos.length){
+                recursos = recursos + item.idRecurso + ",";
+              }else{
+                recursos = recursos + item.idRecurso;
+              }
+            })
+            sessionStorage.setItem('recursos',recursos);
+          }else{
+            sessionStorage.setItem('recursos','none');
+          }
           sessionStorage.setItem('inicioAutorizacion',body.inicioAutorizacion);
           sessionStorage.setItem('finAutorizacion',body.finAutorizacion);
           //Redirigiendo al inicio

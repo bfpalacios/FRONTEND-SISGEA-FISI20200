@@ -16,7 +16,7 @@ export class AuthService extends HttpService {
   }
 
   logIn(data: LoginForm): Observable<HttpResponse<any>> {
-    localStorage.clear();
+    sessionStorage.clear();
     return this.post(data, null, { responseType: 'json', observe: 'response' });
   }
 

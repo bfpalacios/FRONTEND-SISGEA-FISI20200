@@ -89,13 +89,11 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
     this.store.select('globalData', 'infoApp').pipe(takeUntil(this.ngUnsubscribe)).subscribe(infoApp => this.infoApp = infoApp);
     //obteniendo los recursos de la sesion
     let allRecursos: any = sessionStorage.getItem('recursos');
-    console.log(allRecursos);
-    let recursos: any[] = [];
-    allRecursos.forEach(function(item){
-      recursos.push(item.idRecurso);
-    });
-    let menu = this.getLastChildren(navItems,recursos);
-    console.log(menu);
+    if(allRecursos=='none'){
+      return; 
+    }
+    allRecursos = allRecursos.split(',');
+    this.navItemsFiltrado = this.getMenuAutorizado(this.setRecursosAutorizados(navItems,allRecursos));
     //obteniendo el nombre del usuario
     this.nombreUsuario = sessionStorage.getItem('username');
   }
@@ -122,7 +120,32 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
     this.router.navigate([data.url]);
   }
 
-  getLastChildren(navItems: NavData[], recursos: any[]) {
+  getMenuAutorizado(navItems: NavData[]) {
+    let menuAutorizado: NavData[] = [];
+    for (let it of navItems) {
+      let hijos = this.getMenuHijosAutorizados(it);
+      if(hijos.length != 0){
+        menuAutorizado.push({
+          name: it.name,
+          icon: it.icon,
+          children: hijos
+        });
+      }
+    }
+    return menuAutorizado;
+  }
+
+  getMenuHijosAutorizados(navItem: NavData){
+    let hijosAutorizados: NavData[] = [];
+    for (let child of navItem.children) {
+      if(child.autorizado){
+        hijosAutorizados.push(child);
+      }
+    }
+    return hijosAutorizados;
+  }
+
+  setRecursosAutorizados(navItems: NavData[], recursos: any[]) {
     for (let it of navItems) {
       this.getLastChild(it, recursos);
     }
