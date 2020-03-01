@@ -81,7 +81,7 @@
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Solicitante</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
               <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
-                placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                placeholder="Selecciona un solicitante" [notFoundText]="'No hay datos encontrados.'"
                 formControlName="idSolicitante">
                 <ng-template ng-option-tmp let-item="item">
               {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}}
@@ -104,7 +104,7 @@
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Espacio</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
               <ng-select #pabellonSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
-                placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+                placeholder="Selccione un espacio" [notFoundText]="'No hay datos encontrados.'"
                 formControlName="idEspacioAcademico">
                 <ng-template ng-option-tmp let-item="item">
               {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}}
@@ -303,17 +303,17 @@
     <div class="form-group row">
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Tipo</label>
       <div class="col-sm-3 col-md-3 col-lg-3">
-        <ng-select #pabellonSelect [items]="tipoSolicitud" class="ng-select-custom" 
-          bindLabel="descripcionItem" 
+        <ng-select #pabellonSelect [items]="tipoSolicitud" class="ng-select-custom"
+          bindLabel="descripcionItem"
           bindValue="idMultitabDet"
-          placeholder="TODOS" 
+          placeholder="TODOS"
           [notFoundText]="'No hay datos encontrados.'"
           formControlName="tipoSolicitud" (change)="onChangeTipoSolicitante($event)">
           <ng-template ng-option-tmp let-item="item">
-            {{item.idMultitabDet}} - {{item.descripcionItem}} 
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
               </ng-template>
               <ng-template ng-label-tmp let-item="item">
-            {{item.idMultitabDet}} - {{item.descripcionItem}} 
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
               </ng-template>
         </ng-select>
         <bfv-messages></bfv-messages>
@@ -335,7 +335,7 @@
       </div>
     </div>
 
-    
+
     <div class="form-group row">
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Motivo</label>
       <div class="col-sm-11 col-md-11 col-lg-11">
@@ -344,22 +344,22 @@
       </div>
     </div>
 
-    
+
 
     <div class="form-group row">
       <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Pabellón</label>
       <div class="col-sm-4 col-md-4 col-lg-4">
-        <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom" 
-          bindLabel="descripcionItem" 
+        <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom"
+          bindLabel="descripcionItem"
           bindValue="idMultitabDet"
-          placeholder="TODOS" 
+          placeholder="TODOS"
           [notFoundText]="'No hay datos encontrados.'"
           formControlName="pabellon" (change)="onChangeTipoSolicitante($event)">
           <ng-template ng-option-tmp let-item="item">
-            {{item.idMultitabDet}} - {{item.descripcionItem}} 
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
               </ng-template>
               <ng-template ng-label-tmp let-item="item">
-            {{item.idMultitabDet}} - {{item.descripcionItem}} 
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
               </ng-template>
         </ng-select>
         <bfv-messages></bfv-messages>
@@ -379,7 +379,7 @@
       </div>
     </div>
 
-    
+
     <div class="form-group row">
       <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Espacio</label>
       <div class="col-sm-4 col-md-4 col-lg-4">
@@ -403,21 +403,21 @@
       </div>
     </div>
 
-    
+
     <div class="form-group row">
       <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Tipo Espacio</label>
       <div class="col-sm-4 col-md-4 col-lg-4">
-        <ng-select #pabellonSelect [items]="tipoEspacio" class="ng-select-custom" 
-          bindLabel="descripcionItem" 
+        <ng-select #pabellonSelect [items]="tipoEspacio" class="ng-select-custom"
+          bindLabel="descripcionItem"
           bindValue="idMultitabDet"
-          placeholder="TODOS" 
+          placeholder="TODOS"
           [notFoundText]="'No hay datos encontrados.'"
           formControlName="idTipoEspacio" (change)="onChangeTipoSolicitante($event)">
           <ng-template ng-option-tmp let-item="item">
-            {{item.idMultitabDet}} - {{item.descripcionItem}} 
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
               </ng-template>
               <ng-template ng-label-tmp let-item="item">
-            {{item.idMultitabDet}} - {{item.descripcionItem}} 
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
               </ng-template>
         </ng-select>
         <bfv-messages></bfv-messages>
