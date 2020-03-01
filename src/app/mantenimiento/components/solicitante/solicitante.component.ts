@@ -55,11 +55,11 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mdUpdateOpts = configFormMd.getUpdateMdOpts(this.type);
     this.form = new FormGroup({
       'idSolicitante' : new FormControl([]),
-      'dni': new FormControl('', [Validators.required, Validators.maxLength(8)]),
+      'dni': new FormControl('', [Validators.required,Validators.minLength(8), Validators.maxLength(8)]),
       'nombres': new FormControl('', [Validators.required, Validators.maxLength(40)]),
       'apellidoMaterno': new FormControl('', [Validators.required, Validators.maxLength(40)]),
       'apellidoPaterno': new FormControl('', [Validators.required, Validators.maxLength(40)]),
-      'celular': new FormControl('', [Validators.required, Validators.maxLength(9)]),
+      'celular': new FormControl('', [Validators.required,Validators.minLength(8), Validators.maxLength(9)]),
       'email': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'tipoSolicitante' : new FormControl([]),
       'escuela' : new FormControl([]),
@@ -128,6 +128,7 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showMdUpdate(params){
     console.log(params.node.data);
+    console.log(this.base);
     let data: Solicitante = params.node.data;
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'idSolicitante');
@@ -213,18 +214,27 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
         headerName: "Tipo Solicitante",
         field: 'tipoSolicitante',
         cellClass: 'ob-type-string',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.tipoSolicitante, params.data.descripcionTipoSolicitante);
+        },
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },{
         headerName: "Base",
         field: 'base',
         cellClass: 'ob-type-string',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.base, params.data.descripcionBase);
+        },
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },{
         headerName: "Escuela Académica",
         field: 'escuela',
         cellClass: 'ob-type-string',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.escuela, params.data.descripcionEscuela);
+        },
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },
