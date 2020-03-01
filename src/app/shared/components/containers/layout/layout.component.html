@@ -9,23 +9,6 @@
 
   </ul>
   <ul class="nav navbar-nav ml-auto mr-2">
-    <!--<li class="nav-item dropdown d-md-down-none">
-      <a aria-haspopup="true" class="nav-link" data-toggle="dropdown" dropdowntoggle="" href="#" role="button" aria-expanded="false">
-        <i class="icon-bell"></i>
-        <span class="badge badge-pill badge-danger">5</span>
-      </a>
-      <div
-        aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right dropdown-menu-lg"
-        style="left: auto; right: 0px; top: 100%; transform: translateY(0px);">
-        <div class="dropdown-header text-center">
-          <strong>5 notificaciones</strong>
-        </div>
-        <a class="dropdown-item" style="font-size: 10px !important;">
-          <i class="fa fa-exclamation" aria-hidden="true" style="color: red;"></i>
-          Tipo de cambio SBS no registrado *ngIf="permisoConsultaFechaProceso"
-        </a>
-      </div>
-    </li>-->
     <li (click)="abrirModalParametros()" class="nav-item px-3 redirect">
       <i class="fa fa-calendar"></i>&nbsp;Periodo Académico: <span *ngIf="loadingFecha; else periodoCargando">Cargando...</span>
         {{ periodo === null ? 'No se puede mostrar': periodo }}
@@ -63,15 +46,12 @@
          <button type="button" class="btn btn-xs" (click)="contractSidebarItems()" tooltip="Contraer"><i class="fa fa-compress" aria-hidden="true" style="color: #fff"></i></button>
        </div>
      </li>
-    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized" #sidebarNav></app-sidebar-nav>
+    <app-sidebar-nav [navItems]="navItemsFiltrado" [perfectScrollbar] [disabled]="sidebarMinimized" #sidebarNav></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
   <main class="main">
     <ol class="breadcrumb">
       <app-breadcrumb></app-breadcrumb>
-      <!--<li class="breadcrumb-menu d-md-down-none">
-        <app-ob-modal-help [componente]="componenteActual"></app-ob-modal-help>
-      </li>-->
     </ol>
     <div class="container-fluid">
       <router-outlet (activate)='onActivate($event)'></router-outlet>

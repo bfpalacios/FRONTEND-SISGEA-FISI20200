@@ -10,7 +10,8 @@ export interface NavData {
   attributes?: object;
   divider?: boolean;
   class?: string;
-  permissions?: string[]
+  permissions?: string[],
+  autorizado?: boolean
 }
 
 export const navItems: NavData[] = [

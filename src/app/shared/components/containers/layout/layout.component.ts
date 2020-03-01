@@ -1,6 +1,6 @@
 import { Component, OnDestroy, Inject, OnInit, AfterViewInit, ChangeDetectorRef, Output, EventEmitter, ChangeDetectionStrategy, Renderer2, ElementRef, ViewChild, AfterContentChecked } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { navItems } from '../../../../_nav';
+import { navItems, NavData } from '../../../../_nav';
 import { AppState } from '../../../store/app.reducers';
 import { Store } from '@ngrx/store';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -37,7 +37,9 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
 
   periodoCargando: boolean;
 
-  public navItems = [];
+  public navItemsFiltrado = [];
+  
+
   public sidebarMinimized = true;
   private changes: MutationObserver;
   public element: HTMLElement;
@@ -85,20 +87,22 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
       'periodo': new FormControl('', [Validators.required ,Validators.minLength(6), Validators.maxLength(6), Validators.required]),
     });
     this.store.select('globalData', 'infoApp').pipe(takeUntil(this.ngUnsubscribe)).subscribe(infoApp => this.infoApp = infoApp);
-    this.store.select('auth', 'menuOptions').pipe(takeUntil(this.ngUnsubscribe)).subscribe(menuOptions => {
-      this.navItems = this.auth ? menuOptions : navItems;
-      //this.allChildren = this.getLastChildren(this.navItems);
+    //obteniendo los recursos de la sesion
+    let allRecursos: any = sessionStorage.getItem('recursos');
+    console.log(allRecursos);
+    let recursos: any[] = [];
+    allRecursos.forEach(function(item){
+      recursos.push(item.idRecurso);
     });
-    this.store.select('auth', 'user').pipe(takeUntil(this.ngUnsubscribe)).subscribe(user => {
-      this.nombreUsuario = user;
-    });
-    this.initFechaProceso();
+    let menu = this.getLastChildren(navItems,recursos);
+    console.log(menu);
+    //obteniendo el nombre del usuario
+    this.nombreUsuario = sessionStorage.getItem('username');
   }
 
   ngAfterViewInit() {
     this.contractSidebarItems();
     this.parametrosGeneralesFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
-      console.log(data);
       this.periodo = data[0].periodo;
     });
   }
@@ -118,24 +122,28 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
     this.router.navigate([data.url]);
   }
 
-/*getLastChildren(navItems: NavData[]) {
-    let items: NavData[] = [];
+  getLastChildren(navItems: NavData[], recursos: any[]) {
     for (let it of navItems) {
-      this.getLastChild(it, items);
+      this.getLastChild(it, recursos);
     }
-    return items;
+    return navItems;
   }
 
-  getLastChild(navItem: NavData, children: NavData[]) {
+  getLastChild(navItem: NavData, recursos: any[]) {
     if (!navItem.children || navItem.children.length === 0) {
-      children.push(navItem);
-      return children;
+      recursos.forEach(function(item){
+        if(recursos.indexOf(navItem.permissions[0])!=-1){
+          navItem.autorizado = true;
+        }else{
+          navItem.autorizado = false;
+        }
+      });
     } else {
       for (let child of navItem.children) {
-        this.getLastChild(child, children);
+        this.getLastChild(child,recursos);
       }
     }
-  }*/
+  }
 
   redirectParametrosSistema() {
     window.open(`${window.location.pathname}#/mantenimiento/parametroSistema`, '_blank');
@@ -144,41 +152,16 @@ export class LayoutComponent implements OnDestroy, OnInit, AfterViewInit {
   contractSidebarItems() {
     //Mario: Por mientras, hasta encontrar otra forma con Render2 y ElementRef
     let navItems = this.sidebarNav.nativeElement.querySelectorAll('app-sidebar-nav-dropdown');
-    //let navItems =  document.getElementsByTagName('app-sidebar-nav-dropdown');
     for (let i = 0; i < navItems.length; i++) {
-      //navItems[i].classList.remove('open');
       this.renderer.removeClass(navItems[i], 'open');
     }
-    //let itemActive = document.getElementsByClassName('active nav-link');
-    /*while(itemActive.parentNode.nodeName === "APP-SIDEBAR"){
-        if(itemActive.nodeName === "APP-SIDEBAR-NAV-DROPDOWN"){
-          itemActive.classList.add('open');
-        }
-        itemActive = itemActive.parentElement;
-    }*/
   }
 
   initFechaProceso() {
-  /*  this.permisoConsultaFechaProceso = this.permissionsService.hasPermission(
-      //this.permissionsService.getValidActions(TYPES.PARAMETRO_SISTEMA.resource), RESOURCE_ACTIONS.CONSULTA);
-    if (this.permisoConsultaFechaProceso) {
-      //this.store.dispatch(new GetAllParametroSistema());
-    }
-    this.store.select('parametrosSistema').pipe(takeUntil(this.ngUnsubscribe)).subscribe(state => {
-      setTimeout(() => {
-        //this.loadingFecha = state.loading;
-      });
-      //this.fechaProceso = state.data && state.data.length > 0 ? state.data[0].fechaProceso : null;
-    });*/
+
   }
 
-  /*
-    Mario: implementado solo para obtener el texto de ayuda de la pagina,
-           este metodo no es el responsable del cambio de la pagina
-  */
   onActivate(componente: any){
-    //this.componenteActual = componente;
-    //this.store.dispatch(new UpdatePage(this.componenteActual));
   }
 
   abrirModalParametros(){
