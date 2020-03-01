@@ -59,7 +59,7 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
       'nombres': new FormControl('', [Validators.required, Validators.maxLength(40)]),
       'apellidoMaterno': new FormControl('', [Validators.required, Validators.maxLength(40)]),
       'apellidoPaterno': new FormControl('', [Validators.required, Validators.maxLength(40)]),
-      'celular': new FormControl('', [Validators.required,Validators.minLength(8), Validators.maxLength(9)]),
+      'celular': new FormControl('', [Validators.required,Validators.min(99999999),Validators.max(999999999)]),
       'email': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'tipoSolicitante' : new FormControl([]),
       'escuela' : new FormControl([]),
@@ -139,7 +139,7 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
 
     let data: Solicitante = params.node.data;
     this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[codigo\]/gi,
-      joinWords(DEFAULT_SEPARATOR, data.idSolicitante, data.dni));
+      joinWords(DEFAULT_SEPARATOR, data.idSolicitante, data.dni, data.apellidoPaterno + ' ' + data.apellidoMaterno + ' ' + data.nombres));
     this.mdDelete.show(data);
   }
 
