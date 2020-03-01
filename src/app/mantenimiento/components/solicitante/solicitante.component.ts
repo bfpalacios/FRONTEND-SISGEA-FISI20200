@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormModalComponent, ConfirmModalComponent, TemplateMantenimientoComponent, MdFormOpts, MdConfirmOpts, ButtonsCellRendererComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, getContextMenuItemsMantenimiento, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState,MULTITAB_IDS } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, getContextMenuItemsMantenimiento, DEFAULT_SEPARATOR, SPACE_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState,MULTITAB_IDS } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { Solicitante ,MultitabDet} from '../../models';
@@ -187,15 +187,12 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },{
-        headerName: "Apellido Paterno",
+        headerName: "Apellidos",
         field: 'apellidoPaterno',
         cellClass: 'ob-type-string',
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" }
-      },{
-        headerName: "Apellido Materno",
-        field: 'apellidoMaterno',
-        cellClass: 'ob-type-string',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(SPACE_SEPARATOR, params.data.apellidoPaterno, params.data.apellidoMaterno);
+        },
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },{
