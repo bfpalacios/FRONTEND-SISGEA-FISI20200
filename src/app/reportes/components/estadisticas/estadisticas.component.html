@@ -19,16 +19,28 @@
           <label class="col-sm-1 ob-custom-label-form">Pabellón</label>
           <div class="form-group col-sm-3">
             <ng-select [items]="pabellones" class="ng-select-custom"
-              bindLabel="label" bindValue="idPabellon" placeholder="Seleccione un pabellón" [multiple]="true"
+              bindLabel="label" bindValue="idMultitabDet" placeholder="Seleccione un pabellón" [multiple]="true"
               [notFoundText]="'No hay datos encontrados.'" formControlName="pabellones">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.descripcionItem}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.descripcionItem}}
+              </ng-template>
             </ng-select>
             <bfv-messages></bfv-messages>
           </div>
           <label class="col-sm-1 ob-custom-label-form">Tipo Espacio</label>
           <div class="form-group col-sm-3">
             <ng-select #institucionSelect [items]="tiposEspacios" class="ng-select-custom" bindLabel="label"
-              bindValue="idEspacioAcademico" placeholder="TODOS" [multiple]="true"
+              bindValue="idMultitabDet" placeholder="TODOS" [multiple]="true"
               [notFoundText]="'No hay datos encontrados.'" formControlName="tipoEspacios">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.descripcionItem}} 
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.descripcionItem}} 
+              </ng-template>
             </ng-select>
             <bfv-messages></bfv-messages>
           </div>
@@ -36,15 +48,27 @@
         <div class="row">
           <label class="col-sm-1 ob-custom-label-form">Espacio</label>
           <div class="form-group col-sm-3">
-            <ng-select #binSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idBIN"
+            <ng-select #binSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
               placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'" formControlName="espacios">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.idEspacioAcademico}} - {{item.descripcion}} 
+                  </ng-template>
+                  <ng-template ng-label-tmp let-item="item">
+                {{item.idEspacioAcademico}} - {{item.descripcion}} 
+                  </ng-template>
             </ng-select>
             <bfv-messages></bfv-messages>
           </div>
           <label class="col-sm-1 ob-custom-label-form">Tipo Solicitud</label>
           <div class="form-group col-sm-3">
-            <ng-select #binSelect [items]="tipoSolicitud" class="ng-select-custom" bindLabel="label" bindValue="idBIN"
+            <ng-select #binSelect [items]="tipoSolicitud" class="ng-select-custom" bindLabel="label" bindValue="idMultitabDet"
               placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'" formControlName="tiposSolicitudes">
+              <ng-template ng-option-tmp let-item="item">
+                {{item.descripcionItem}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+                {{item.descripcionItem}}
+              </ng-template>
             </ng-select>
             <bfv-messages></bfv-messages>
           </div>
@@ -62,9 +86,15 @@
         </div>
         <div class="row">
           <label class="col-sm-1 ob-custom-label-form">Solicitante</label>
-          <div class="form-group col-sm-3">
+          <div class="form-group col-sm-6">
             <ng-select #binSelect [items]="solicitantes" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
               placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'" formControlName="solicitantes">
+                <ng-template ng-option-tmp let-item="item">
+                  {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}} 
+                </ng-template>
+                <ng-template ng-label-tmp let-item="item">
+                  {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}} 
+                </ng-template>
             </ng-select>
             <bfv-messages></bfv-messages>
           </div>
