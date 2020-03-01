@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AsignacionEspaciosService extends HttpService {
+export class EstadisticasService extends HttpService {
 
   constructor(
     injector: Injector,
@@ -17,20 +17,14 @@ export class AsignacionEspaciosService extends HttpService {
   ) {
     let path;
     store.select('globalData').subscribe(data => path = data.pathEndpoints.MANT_GENERAL);
-    super(injector, httpClient, `${path}asignacion-espacios`);
+    super(injector, httpClient, `${path}estadisticas`);
   }
 
-  buscarTodos(): Observable<any>  {
-    return super.get();
+  buscarPorCriterio(criterio: any): Observable<any>  {
+    let httpParams = super.getHttpParamsFromCriteria(criterio);
+    return super.get('', httpParams);
   }
 
-  actualizar(data: any): Observable<any>  {
-    return super.put(data, data.id);
-  }
-
-  procesarAsignacion(): Observable<any>  {
-    return super.post('','/procesar');
-  }
 
 
 

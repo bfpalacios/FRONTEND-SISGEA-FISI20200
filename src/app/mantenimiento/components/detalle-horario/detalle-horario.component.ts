@@ -150,11 +150,11 @@ export class DetalleHorarioComponent implements OnInit, AfterViewInit, OnDestroy
       },
       {
         headerName: "Tipo",
-        field: "idTipoHorario",
+        field: "tipoHorario",
         cellClass: 'ob-type-string-center',
         filter: 'agTextColumnFilter',
         valueGetter: (params) => {
-          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.idTipoHorario, params.data.descripcionTipoHorario);
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.tipoHorario, params.data.descripcionTipoHorario);
         },
         filterParams: { newRowsAction: "keep" },
       },
