@@ -39,14 +39,13 @@ export class SolicitudEspaciosFacade {
   registrar(data: any): Observable<any>{
     return this.service.registrar(data);
   }
+  
   actualizar(solicitudEspacio: SolicitudEspacio){
     return this.service.actualizar(solicitudEspacio);
-    //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
   }
 
   aprobar(solicitudEspacio: SolicitudEspacio){
     return this.service.aprobar(solicitudEspacio);
-    //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
   }
 
   cancelar(solicitudEspacio: SolicitudEspacio){
@@ -54,8 +53,7 @@ export class SolicitudEspaciosFacade {
   }
 
   rechazar(solicitudEspacio: SolicitudEspacio){
-    this.store.dispatch(new RechazarSolicitudEspacios(solicitudEspacio));
-    //return this.service.rechazar(solicitudEspacio);
+    return this.service.rechazar(solicitudEspacio);
   }
 
   cargar(files: File[]): Observable<any>{
