@@ -60,6 +60,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   estadoSolicitud: any[] = [];
   estadoAsistencia: any[] = [];
 
+
   configCarga: any ={
     accept: '.pdf',
     multiple: false,
@@ -213,6 +214,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.estadoAsistencia).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.estadoAsistencia = data;
     });
+
   }
 
   onClickBuscarHorarioEspacio(){
@@ -330,9 +332,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
               descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
               break;
             default:
-              indicador = 'V'; 
+              indicador = 'V';
               descripcion = ''
-              break; 
+              break;
           }
           result["descripcion"+d.idEspacioAcademico] = descripcion;
           result["indicador"+d.idEspacioAcademico] = indicador;

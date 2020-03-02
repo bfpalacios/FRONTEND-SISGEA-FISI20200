@@ -5,6 +5,8 @@ import { AsignacionEspaciosComponent } from './asignacion-espacios.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { AsignacionEspaciosFacade } from '../../facade';
 import { ObGridModule } from '../../../shared/ob-grid.module';
+import { MultitabDetFacade, MultitabCabFacade } from '../../../mantenimiento/facade';
+import { EspacioAcademicoFacade} from '../../../mantenimiento/facade';
 
 @NgModule({
   declarations: [AsignacionEspaciosComponent],
@@ -15,7 +17,10 @@ import { ObGridModule } from '../../../shared/ob-grid.module';
     AsignacionEspaciosRoutingModule
   ],
   providers: [
-    AsignacionEspaciosFacade
+    AsignacionEspaciosFacade,
+    MultitabDetFacade,
+    MultitabCabFacade,
+    EspacioAcademicoFacade
   ]
 })
 export class AsignacionEspaciosModule { }
