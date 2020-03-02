@@ -25,6 +25,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('mdSave') mdSave: FormModalComponent;
   @ViewChild('mdUpdate') mdUpdate: FormModalComponent;
   @ViewChild('mdAprobar') mdAprobar: FormModalComponent;
+  @ViewChild('mdCancelar') mdCancelar: ConfirmModalComponent;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   type: Type;
@@ -87,6 +88,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnInit() {
+    this.templateHtmlMsg =`<p>¿Está seguro que desea cancelar la solicitud <strong>[identificador]</strong> en el espacio académico <strong>[aula]</strong>?</p>`;
     this.mdConfirmOpts = configFormMd.getDeleteMdOpts(this.templateHtmlMsg);
     this.mdRegisterOpts = configFormMd.getRegisterMdOpts(this.type);
     this.mdUpdateOpts = configFormMd.getUpdateMdOpts(this.type);
@@ -185,7 +187,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   manageState() {
     this.store.select('solicitudEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdDelete, this.toastr,
+      manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdCancelar, this.toastr,
         this.errorService, () => {
           updateGrid(this.gridOptions, state.data, this.gridColumnApi);
         });
@@ -438,6 +440,20 @@ showMdAprobar(params) {
   this.mdAprobar.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 
+showMdCancelar(params) {
+  let data: any = params.node.data;
+  let nombre: string = data.apellidoMaterno + " " + data.apellidoMaterno + ", " + data.nombres;
+  this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[identificador\]/gi,
+    joinWords(DEFAULT_SEPARATOR, data.dni, nombre))
+  .replace(/\[aula\]/gi,joinWords(DEFAULT_SEPARATOR, data.idEspacioAcademico, data.descripcionEspacioAcademico));
+  
+  this.mdCancelar.show(data);
+}
+
+
+cancelar() {
+  this.solicitudEspaciosFacade.cancelar(this.mdCancelar.data);
+}
 
 save() {
   const action = this.mdUpdate.action;
@@ -468,14 +484,14 @@ save() {
 
 
 aprobar() {
-  const action = this.mdUpdate.action;
+  const action = this.mdAprobar.action;
   switch (action) {
 
     case RESOURCE_ACTIONS.ACTUALIZACION:
 
       this.solicitudEspaciosFacade.aprobar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         (data) => {
-          this.mdUpdate.hide();
+          this.mdAprobar.hide();
           this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
             updateGrid(this.gridOptions, data, this.gridColumnApi);
             this.toastr.success('Realizado con exito','Prestamo de espacios');
@@ -492,15 +508,8 @@ aprobar() {
 
 
       );
-
-
-
       break;
   }
-}
-
-hide(){
-  console.log("saliendo");
 }
 
 
@@ -581,13 +590,17 @@ hide(){
         cellClass: 'text-center',
         cellRendererFramework: ButtonsCellRendererComponent,
         cellRendererParams: {
-          edit: {
+          /*edit: {
             visible: true,
             action: this.showMdUpdate.bind(this)
+          },*/
+          edit: {
+            visible: true,
+            action: this.showMdAprobar.bind(this)
           },
           delete: {
             visible: this.template.permisoEliminacion,
-            action: this.showMdAprobar.bind(this)
+            action: this.showMdCancelar.bind(this)
           }
         },
         filter: false,

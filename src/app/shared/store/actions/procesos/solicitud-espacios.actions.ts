@@ -36,6 +36,19 @@ export class AprobarSolicitudEspaciosFail implements Action {
   constructor(public payload: any) {}
 }
 
+export class CancelarSolicitudEspacios implements Action {
+  readonly type = actions.DELETE;
+  constructor(public payload: any) {}
+}
+export class CancelarSolicitudEspaciosSuccess implements Action {
+  readonly type = actions.DELETE_SUCCESS;
+  constructor(public payload: any) {}
+}
+export class CancelarSolicitudEspaciosFail implements Action {
+  readonly type = actions.DELETE_FAIL;
+  constructor(public payload: any) {}
+}
+
 export type SolicitudEspaciosActions
   = GetAllSolicitudEspacios
   | GetAllSolicitudEspaciosSuccess
@@ -43,4 +56,7 @@ export type SolicitudEspaciosActions
   | ResetSolicitudEspacios
   | AprobarSolicitudEspacios
   | AprobarSolicitudEspaciosSuccess
-  | AprobarSolicitudEspaciosFail;
+  | AprobarSolicitudEspaciosFail
+  | CancelarSolicitudEspacios
+  | CancelarSolicitudEspaciosSuccess
+  | CancelarSolicitudEspaciosFail;
