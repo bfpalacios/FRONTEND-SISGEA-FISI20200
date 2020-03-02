@@ -89,8 +89,12 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       },
       getContextMenuItems: (params) => {
         return getContextMenuItemsMantenimiento(params,this.type,this.template.permisoExportacion);
+      },
+      getRowStyle: (params) => {
+        if (params.data.espacio == 'SIN AULA') {
+          return { background: '#FFCABE',  'color': 'white' }
+        }
       }
-
     }
     this.asignacionEspaciosFacade.initCombo().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (data) => {
@@ -298,6 +302,16 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       {
         headerName: "Espacio",
         field: 'espacio',
+        /*cellStyle: function(params) {
+          if(params.value!=0 && params.value!=null && params.value!=undefined) {
+            if(params.value == 'SIN AULA'){
+              return {'background-color': 'darkseagreen', 'color': 'white', 'font-weight': 'bold'};
+            }
+            return null;
+          }else {
+            return null;
+          }
+        },*/
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }

@@ -55,8 +55,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onLogin() {
     let loginForm: LoginForm = this.loginFormGroup.getRawValue();
+    this.loading = true;
     this.authFacade.logIn(loginForm).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
-     (response) =>{      
+     (response) =>{
+      this.loading = false;      
       if(response.ok){
         let body = response.body;
         if(body.exito){        

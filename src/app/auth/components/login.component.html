@@ -39,7 +39,10 @@
                     </div>
                   </div-->
                   <div class="row">
-                    <button type="submit" [disabled]="loading" class="btn btn-block btn-primary">Iniciar sesión</button>
+                    <button type="submit" [disabled]="loading" class="btn btn-block btn-primary">
+                      <i class="fa" [ngClass]="{'fa-spinner fa-pulse fa-fw': loading  , '': !loading}"></i>
+                        Iniciar sesión
+                    </button>
                   </div>
                 </form>
               </div>
