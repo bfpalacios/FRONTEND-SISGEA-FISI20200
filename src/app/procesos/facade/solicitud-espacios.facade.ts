@@ -49,7 +49,7 @@ export class SolicitudEspaciosFacade {
   }
 
   cancelar(solicitudEspacio: SolicitudEspacio){
-    this.store.dispatch(new CancelarSolicitudEspacios(solicitudEspacio));
+    return this.service.cancelar(solicitudEspacio);
   }
 
   rechazar(solicitudEspacio: SolicitudEspacio){

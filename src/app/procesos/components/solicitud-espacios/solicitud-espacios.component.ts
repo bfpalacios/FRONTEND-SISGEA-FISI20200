@@ -437,7 +437,6 @@ showMdAprobar(params) {
 }
 
 showMdCancelar(params) {
-  console.log(params);
   let data: any = params.node.data;
   let nombre: string = data.apellidoMaterno + " " + data.apellidoMaterno + ", " + data.nombres;
   this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[identificador\]/gi,joinWords(DEFAULT_SEPARATOR, data.dni, nombre))
@@ -446,7 +445,18 @@ showMdCancelar(params) {
 }
 
 cancelar() {
-  this.solicitudEspaciosFacade.cancelar(this.mdCancelar.data);
+  this.mdCancelar.options.buttons.ok.disabled = true;
+  this.solicitudEspaciosFacade.cancelar(this.mdCancelar.data).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+    (data) => {
+      this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+        this.mdCancelar.hide();
+        updateGrid(this.gridOptions, data, this.gridColumnApi);
+        this.toastr.success('Cancelado con exito','Solicitud');
+        this.mdCancelar.options.buttons.ok.disabled = false;
+      });
+    }
+  );;
+  
 }
 
 rechazar($event){
