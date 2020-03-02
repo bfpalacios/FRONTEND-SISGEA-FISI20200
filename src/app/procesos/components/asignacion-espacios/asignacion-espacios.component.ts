@@ -66,12 +66,21 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       'tipoHorario': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'espacio': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'pabellon': new FormControl('', []),
+      'idCurso': new FormControl('', []),
+      'seccion': new FormControl('', []),
+      'idAsignacion': new FormControl('', []),
+      'idEspacioAcademico': new FormControl('', []),
+      'idHorario': new FormControl('', []),
+      'idHorarioDetalle': new FormControl('', []),
+      'horaInicio': new FormControl('', []),
+      'horaFin': new FormControl('', []),
     })
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
       ...commonConfigTablaMantenimiento,
       getRowNodeId: (data) => {
-        return data.id;
+
+        return data.idAsignacion;
       },
       onGridReady: (params) => {
         this.gridApi = params.api;
@@ -120,14 +129,6 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
     });
 
 
-/*    this.store.select('espaciosAcademico').pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
-      console.log(data);
-
-      this.espaciosAcademicoFiltrado = data;
-      this.espaciosAcademico = data;
-
-    });*/
-
 
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.pabellon = data;
@@ -168,6 +169,7 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
     switch (action) {
       case RESOURCE_ACTIONS.ACTUALIZACION:
         this.asignacionEspaciosFacade.actualizar(this.form.getRawValue());
+        console.log("facade update");
         break;
     }
   }
@@ -185,7 +187,14 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
   }
 
   initColumnDefs(): ColDef[] {
-    return [
+    return [,
+    {
+      headerName: "Asignación",
+      field: 'idAsignacion',
+      cellClass: 'ob-type-string',
+      filter: 'agTextColumnFilter',
+      filterParams: { newRowsAction: "keep" }
+    },
       {
         headerName: "Periodo",
         field: "periodo",
