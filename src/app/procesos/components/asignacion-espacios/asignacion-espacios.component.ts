@@ -137,6 +137,7 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
 
   showMdUpdate(params){
     let data: any = params.node.data;
+        console.log(data);
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'periodo');
     enableControls(this.form, false, 'ciclo');
