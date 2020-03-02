@@ -12,7 +12,8 @@ base:9,
 tipoSolicitud:8,
 pabellon:12,
 estadoAsistencia:13,
-categoriaRecurso:15
+categoriaRecurso:15,
+tipoMotivo:16
 
 
 }

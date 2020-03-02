@@ -69,7 +69,7 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       'idCurso': new FormControl('', []),
       'seccion': new FormControl('', []),
       'idAsignacion': new FormControl('', []),
-      'idEspacioAcademico': new FormControl('', []),
+      'idEspacioAcademico': new FormControl(),
       'idHorario': new FormControl('', []),
       'idHorarioDetalle': new FormControl('', []),
       'horaInicio': new FormControl('', []),
@@ -144,6 +144,7 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
     enableControls(this.form, false, 'curso');
     enableControls(this.form, false, 'matriculados');
     enableControls(this.form, false, 'tipoHorario');
+      console.log('INHABILITA');
     this.mdSave.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
   }
 
@@ -166,11 +167,14 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
   }
 
   save() {
+      console.log("save");
     const action = this.mdSave.action;
+      console.log("facade before update");
     switch (action) {
       case RESOURCE_ACTIONS.ACTUALIZACION:
+      console.log("facade update");
         this.asignacionEspaciosFacade.actualizar(this.form.getRawValue());
-        console.log("facade update");
+
         break;
     }
   }
