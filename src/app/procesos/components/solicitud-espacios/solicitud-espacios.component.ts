@@ -59,6 +59,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   solicitantesFiltrado: any[] = [];
   estadoSolicitud: any[] = [];
   estadoAsistencia: any[] = [];
+  tipoMotivo: any[] = [];
 
 
   configCarga: any ={
@@ -109,6 +110,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'pabellon': new FormControl('', ),
       'fechaRegistro':new FormControl('', ),
       'idTipoEspacio':new FormControl('', ),
+      'tipoSolicitante': new FormControl('', [Validators.required]),
     });
     this.formHorario = new FormGroup({
       'idsEspacioAcademico': new FormControl([], [Validators.required]),
@@ -367,6 +369,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
           this.prestando = false;
           this.mdSave.hide();
           //
+          console.log(this.files)
           this.solicitudEspaciosFacade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
             if(this.files.length >= 1){
               this.toastr.success(MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS);

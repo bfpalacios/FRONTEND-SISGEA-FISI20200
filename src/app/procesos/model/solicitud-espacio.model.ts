@@ -19,6 +19,7 @@ export interface SolicitudEspacio {
 	estadoAsistencia:string,
 	pabellon:string,
 	descripcionPabellon:string,
-	idTipoEspacio: string
+	idTipoEspacio: string,
+  files: File[]
 
 }
