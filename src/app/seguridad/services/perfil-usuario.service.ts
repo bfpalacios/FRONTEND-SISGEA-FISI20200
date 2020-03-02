@@ -26,11 +26,11 @@ export class PerfilUsuarioService extends HttpService {
   }
 
   actualizar(obj: any): Observable<any> {
-    return super.put(obj, obj.idUsuarioPerfil);
+    return super.put(obj, obj.idPerfilUsuario);
   }
 
   eliminar(obj: any): Observable<any> {
-    return super.delete(obj.idUsuarioPerfil);
+    return super.delete(obj.idPerfilUsuario);
   }
 
 }
