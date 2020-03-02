@@ -8,7 +8,7 @@
     <div class="pull-right" style="margin-right: 16px;">
       <button type="submit" style="margin-left: 10px;" [disabled]="options.buttons.ok.disabled"
         class="btn" [hidden]="options.buttons.ok.hidden"
-        [ngClass]="[options.buttons.ok.class ? options.buttons.ok.class : 'btn-primary' ]">
+        [ngClass]="[options.buttons.ok.class ? options.buttons.ok.class : 'btn-primary' ]" (click)="ok()">
         {{options.buttons.ok.text}}
       </button>
       <button type="button" class="btn"

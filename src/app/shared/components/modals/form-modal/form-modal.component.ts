@@ -27,6 +27,7 @@ export class FormModalComponent implements OnInit {
     modalClass: 'modal-mantenimientos'
   };
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submit2: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('md') md: ModalComponent;
   @Input() form: FormGroup;
@@ -47,10 +48,12 @@ export class FormModalComponent implements OnInit {
   }
 
   ok() {
+    console.log("entro al ok");
     this.onSubmit.emit();
   }
 
   hide() {
+    this.submit2.emit();
     this.md.hide();
   }
 

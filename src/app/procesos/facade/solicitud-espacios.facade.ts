@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SolicitudEspaciosService } from '../services';
 import { SolicitanteService, EspacioAcademicoService } from '../../mantenimiento/services';
-import { GetAllSolicitudEspacios, CancelarSolicitudEspacios } from '../../shared/store/actions/procesos/solicitud-espacios.actions';
+import { GetAllSolicitudEspacios, CancelarSolicitudEspacios, RechazarSolicitudEspacios } from '../../shared/store/actions/procesos/solicitud-espacios.actions';
 import { SolicitudEspacio } from '../model';
 @Injectable()
 export class SolicitudEspaciosFacade {
@@ -50,14 +50,12 @@ export class SolicitudEspaciosFacade {
   }
 
   cancelar(solicitudEspacio: SolicitudEspacio){
-    console.log("entro al facade");
-    //return this.service.cancelar(solicitudEspacio);
     this.store.dispatch(new CancelarSolicitudEspacios(solicitudEspacio));
-    //this.store.dispatch(new UpdateSolicitudEspacio(solicitudEspacio));
   }
 
   rechazar(solicitudEspacio: SolicitudEspacio){
-    return this.service.rechazar(solicitudEspacio);
+    this.store.dispatch(new RechazarSolicitudEspacios(solicitudEspacio));
+    //return this.service.rechazar(solicitudEspacio);
   }
 
   cargar(files: File[]): Observable<any>{

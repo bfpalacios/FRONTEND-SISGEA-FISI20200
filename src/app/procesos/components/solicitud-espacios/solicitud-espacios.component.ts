@@ -197,6 +197,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.store.select('solicitudEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
       console.log("estado");
       console.log(state);
+      updateGrid(this.gridOptions, state.data, this.gridColumnApi);
       manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdCancelar, this.toastr,
         this.errorService, () => {
           updateGrid(this.gridOptions, state.data, this.gridColumnApi);
@@ -464,13 +465,17 @@ showMdCancelar(params) {
 
 cancelar() {
   this.solicitudEspaciosFacade.cancelar(this.mdCancelar.data);
-  this.mdCancelar.hide();
   this.mdConfirmOpts.buttons.ok.disabled = false;
+  this.mdCancelar.hide();
+  
 }
 
-rechazar(){
+rechazar($event){
   console.log("entro a rechazar");
-  const action = this.mdAprobar.action;
+  console.log($event);
+  console.log(this.mdAprobar.action);
+  this.solicitudEspaciosFacade.rechazar(this.form.getRawValue());
+  /*const action = this.mdAprobar.action;
   switch (action) {
 
     case RESOURCE_ACTIONS.ACTUALIZACION:
@@ -493,7 +498,7 @@ rechazar(){
 
 
       );
-  }
+  }*/
 }
 
 save() {
@@ -526,6 +531,7 @@ save() {
 
 aprobar() {
   console.log("entro al aprobar");
+  console.log(this.mdAprobar.action);
   const action = this.mdAprobar.action;
   switch (action) {
 

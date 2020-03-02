@@ -74,4 +74,23 @@ export class SolicitudEspaciosEffects {
       })
     );
 
+  @Effect()
+  RechazarSolicitud$ = this.actions$
+    .pipe(
+      ofType(fromSolicitudEspacios.actions.DELETE),
+      withLatestFrom(this.store$.select('globalData', 'messages')),
+      switchMap(([action, messages]: [fromSolicitudEspacios.RechazarSolicitudEspacios, GlobalMessages]) => {
+        console.log("Entro switch map");
+        return this.asignacionEspaciosService.rechazar(action.payload)
+          .pipe(
+            map(res => {
+              return new fromSolicitudEspacios.RechazarSolicitudEspaciosSuccess({ message: messages.UPDATE_SUCCESS });
+            }),
+            catchError(err => {
+              return of(new fromSolicitudEspacios.RechazarSolicitudEspaciosFail(err))
+            })
+          )
+      })
+    );
+
 }

@@ -45,6 +45,10 @@ export class SolicitudEspaciosService extends HttpService {
     return super.put(solicitudEspacio,'aprobar/' + solicitudEspacio.idSolicitud);
   }
 
+  rechazar (solicitudEspacio: SolicitudEspacio): Observable<any>{
+    return super.put(solicitudEspacio,'rechazar/' + solicitudEspacio.idSolicitud);
+  }
+
   cancelar (solicitudEspacio: SolicitudEspacio): Observable<any>  {
     console.log("entro al service");
     return super.put(solicitudEspacio,'cancelar/' + solicitudEspacio.idSolicitud);

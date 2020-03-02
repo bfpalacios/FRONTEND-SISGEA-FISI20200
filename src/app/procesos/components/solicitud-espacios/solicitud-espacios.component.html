@@ -315,7 +315,7 @@
   </div>
 </app-form-modal>
 
-<app-form-modal [options]="mdFormOpts" (onSubmit)="aprobar()" (onSubmit2)="rechazar()"  [form]="form" #mdAprobar>
+<app-form-modal [options]="mdFormOpts" (onSubmit)="aprobar()" (submit2)="rechazar($event)"  [form]="form" #mdAprobar>
   <div [formGroup]="form">
 
     <div class="form-group row">
