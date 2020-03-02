@@ -164,7 +164,7 @@
 
           <div class="form-group row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-        			<ngx-dropzone (change)="onSelect($event)"
+              <ngx-dropzone (change)="onSelect($event)"
         					[multiple]="configCarga.multiple"
         					[accept]="configCarga.accept"
         					[maxFileSize]="configCarga.maxFileSize"
@@ -315,7 +315,7 @@
   </div>
 </app-form-modal>
 
-<app-form-modal [options]="mdFormOpts" (onSubmit)="aprobar()" [form]="form" #mdAprobar>
+<app-form-modal [options]="mdFormOpts" (onSubmit)="aprobar()" (onSubmit2)="rechazar()"  [form]="form" #mdAprobar>
   <div [formGroup]="form">
 
     <div class="form-group row">
@@ -339,8 +339,11 @@
 
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Solicitante</label>
       <div class="col-sm-7 col-md-7 col-lg-7">
-        <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
-        placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+        <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="
+        ng-select-custom" bindLabel="label" 
+        bindValue="idSolicitante"
+        placeholder="TODOS" 
+        [notFoundText]="'No hay datos encontrados.'"
         formControlName="idSolicitante">
           <ng-template ng-option-tmp let-item="item">
         {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}}
