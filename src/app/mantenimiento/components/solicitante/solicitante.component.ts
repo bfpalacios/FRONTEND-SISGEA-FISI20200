@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormModalComponent, ConfirmModalComponent, TemplateMantenimientoComponent, MdFormOpts, MdConfirmOpts, ButtonsCellRendererComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, getContextMenuItemsMantenimiento, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState,MULTITAB_IDS } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, getContextMenuItemsMantenimiento, DEFAULT_SEPARATOR, SPACE_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState,MULTITAB_IDS } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { Solicitante ,MultitabDet} from '../../models';
@@ -59,7 +59,7 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
       'nombres': new FormControl('', [Validators.required, Validators.maxLength(40)]),
       'apellidoMaterno': new FormControl('', [Validators.required, Validators.maxLength(40)]),
       'apellidoPaterno': new FormControl('', [Validators.required, Validators.maxLength(40)]),
-      'celular': new FormControl('', [Validators.required,Validators.minLength(8), Validators.maxLength(9)]),
+      'celular': new FormControl('', [Validators.required,Validators.min(99999999),Validators.max(999999999)]),
       'email': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'tipoSolicitante' : new FormControl([]),
       'escuela' : new FormControl([]),
@@ -139,7 +139,7 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
 
     let data: Solicitante = params.node.data;
     this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[codigo\]/gi,
-      joinWords(DEFAULT_SEPARATOR, data.idSolicitante, data.dni));
+      joinWords(DEFAULT_SEPARATOR, data.idSolicitante, data.dni, data.apellidoPaterno + ' ' + data.apellidoMaterno + ' ' + data.nombres));
     this.mdDelete.show(data);
   }
 
@@ -187,15 +187,12 @@ export class SolicitanteComponent implements OnInit, AfterViewInit, OnDestroy {
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },{
-        headerName: "Apellido Paterno",
+        headerName: "Apellidos",
         field: 'apellidoPaterno',
         cellClass: 'ob-type-string',
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" }
-      },{
-        headerName: "Apellido Materno",
-        field: 'apellidoMaterno',
-        cellClass: 'ob-type-string',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(SPACE_SEPARATOR, params.data.apellidoPaterno, params.data.apellidoMaterno);
+        },
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },{

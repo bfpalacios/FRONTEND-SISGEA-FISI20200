@@ -11,3 +11,5 @@ export * from './menu.service';
 export * from './tipo-menu.service';
 export * from './perfil-menu-recurso.service';
 export * from './menu-recurso.service';
+export * from './perfil-recurso.service';
+export * from './perfil-usuario.service';

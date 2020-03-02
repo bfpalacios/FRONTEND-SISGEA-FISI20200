@@ -1,4 +1,5 @@
 export const DEFAULT_SEPARATOR = ' - ';
+export const SPACE_SEPARATOR = ' ';
 
 export function joinWords(separator:string = DEFAULT_SEPARATOR, ...words: Array<string | number>){
   return words.join(separator);

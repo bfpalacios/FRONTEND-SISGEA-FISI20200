@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { OrigenComponent } from './origen.component';
+import { PermisosComponent } from './permisos.component';
 import { TYPES } from '../../../shared/utils';
 
 const routes: Routes = [
   {
     path: '',
-    component: OrigenComponent,
+    component: PermisosComponent,
     data: {
-      ...TYPES.ORIGEN,
-      permissions: [TYPES.ORIGEN.resource]
+      ...TYPES.ASIG_PERMIS,
+      permissions: [TYPES.ASIG_PERMIS.resource]
     }
   }
 ];
@@ -18,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OrigenRoutingModule { }
+export class PermisosRoutingModule { }

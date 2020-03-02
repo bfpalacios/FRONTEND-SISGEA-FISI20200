@@ -10,7 +10,8 @@ export interface NavData {
   attributes?: object;
   divider?: boolean;
   class?: string;
-  permissions?: string[]
+  permissions?: string[],
+  autorizado?: boolean
 }
 
 export const navItems: NavData[] = [
@@ -75,7 +76,7 @@ export const navItems: NavData[] = [
         name: 'Tabla de Tablas',
         icon: 'fa fa-table nivel-1',
         url: '/mantenimiento/multitab',
-        permissions: ['MANT_MULCAB', 'MANT_MULDET']
+        permissions: ['MANT_MULTITABLAS']
       }
     ]
   },
@@ -117,7 +118,7 @@ export const navItems: NavData[] = [
         name: 'Usuarios',
         url: '/seguridad/usuarios',
         icon: 'fa fa-user nivel-1',
-        permissions: ['MANT_USUARI']
+        permissions: ['MANT_USUARIO']
       },
       {
         name: 'Recursos',
@@ -129,7 +130,13 @@ export const navItems: NavData[] = [
         name: 'Perfiles',
         url: '/seguridad/perfiles',
         icon: 'fa fa-university nivel-1',
-        permissions: ['MANT_SISTEM']
+        permissions: ['MANT_PERFIL']
+      },
+      {
+        name: 'Permisos',
+        url: '/seguridad/permisos',
+        icon: 'fa fa-user-times nivel-1',
+        permissions: ['MANT_PERMISOS']
       }
     ]
   }

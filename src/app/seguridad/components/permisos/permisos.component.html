@@ -1,0 +1,19 @@
+<app-template-mantenimiento [type]="type" #template>
+
+  <div class="row" style="margin-bottom: 20px;">
+    <div class="col-12 pull-right">
+      <app-tab-pane [listaTab]="listaTab"> </app-tab-pane>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div id="divPefilUsuario" [hidden]="!listaTab[0].divVisible">
+        <app-perfil-usuario></app-perfil-usuario>
+      </div>
+      <div id="divPerfilRecurso" [hidden]="!listaTab[1].divVisible">
+        <app-perfil-recurso></app-perfil-recurso>
+      </div>
+    </div>
+  </div>
+
+</app-template-mantenimiento>

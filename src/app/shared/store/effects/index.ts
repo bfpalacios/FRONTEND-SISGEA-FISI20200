@@ -1,7 +1,6 @@
 import { AuthEffects } from './auth/auth.effects';
 import { AuthSistemaEffects } from './auth/auth-sistema.effects';
 // Mantenimientos
-import { OrigenEffects } from './mantenimiento/origen.effects';
 import { SolicitanteEffects } from './mantenimiento/solicitante.effects';
 import { EspacioAcademicoEffects } from './mantenimiento/espacio-academico.effects';
 import { MultitabCabEffects } from './mantenimiento/multitab-cab.effects';
@@ -24,6 +23,8 @@ import { PerfilEffects } from './seguridad/perfil.effects';
 import { UsuarioPerfilEffects } from './seguridad/usuario-perfil-seg.effects';
 import { AsignacionPermisosEffects } from './seguridad/asignacion-permisos.effects';
 import { MenuRecursoEffects } from './seguridad/menu-recurso.effects';
+import { PerfilRecursoEffects } from './seguridad/perfil-recurso.effects';
+import { PerfilUsuarioEffects } from './seguridad/perfil-usuario.effects';
 
 // Procesos
 import { AsignacionEspaciosEffects } from './procesos/asignacion-espacios.effects';
@@ -33,7 +34,6 @@ export const effectsArr = [
   AuthEffects,
   AuthSistemaEffects,
   // Mantenimientos
-  OrigenEffects,
   SolicitanteEffects,
   EspacioAcademicoEffects,
   MultitabCabEffects,
@@ -53,6 +53,8 @@ export const effectsArr = [
   UsuarioPerfilEffects,
   AsignacionPermisosEffects,
   MenuRecursoEffects,
+  PerfilRecursoEffects,
+  PerfilUsuarioEffects,
   //Procesos
   AsignacionEspaciosEffects,
   SolicitudEspaciosEffects,
@@ -61,7 +63,6 @@ export const effectsArr = [
 export * from './auth/auth.effects';
 export * from './auth/auth-sistema.effects';
 // Mantenimientos
-export * from './mantenimiento/origen.effects';
 export * from './mantenimiento/solicitante.effects';
 export * from './mantenimiento/espacio-academico.effects';
 export * from './mantenimiento/multitab-cab.effects';
@@ -81,6 +82,8 @@ export * from './seguridad/perfil.effects';
 export * from './seguridad/usuario-perfil-seg.effects';
 export * from './seguridad/asignacion-permisos.effects';
 export * from './seguridad/menu-recurso.effects';
+export * from './seguridad/perfil-recurso.effects';
+export * from './seguridad/perfil-usuario.effects';
 // Proceso
 export * from './procesos/solicitud-espacios.effects';
 export * from './procesos/asignacion-espacios.effects';

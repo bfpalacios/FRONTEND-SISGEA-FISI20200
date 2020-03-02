@@ -105,18 +105,22 @@ export class DocenteComponent implements OnInit, AfterViewInit, OnDestroy, After
 
   cargarArchivo(){
     this.configCarga.loading = true;
-    this.facade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
-      if(this.files.length >= 1){
-        this.toasterService.success(MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS);
-      }else{
-        this.toasterService.error(MESSAGE_BODY_CARGA_VACIA_ERROR, MESSAGE_TITLE_CARGA_ERROR);
+    this.facade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      data => {
+        data = JSON.parse(data);
+        if(data.exito){
+          this.toasterService.success(data, MESSAGE_TITLE_CARGA_SUCCESS);
+          this.facade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+            updateGrid(this.gridOptions,data,this.gridColumnApi,true,true);
+          });
+        }else {
+          this.toasterService.error(data, MESSAGE_TITLE_CARGA_ERROR);
+        }
+        this.configCarga.loading = false;
+        this.files = [];
+        this.md.hide();
       }
-      this.configCarga.loading = false;
-      this.md.hide();
-      this.facade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
-        updateGrid(this.gridOptions,data,this.gridColumnApi,true,true);
-      });
-    });
+    );
   }
 
   initColumnDefs(): ColDef[] {

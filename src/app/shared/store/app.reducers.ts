@@ -5,7 +5,6 @@ import * as fromUi from './reducers/ui.reducer';
 import * as fromAuth from './reducers/auth/auth.reducer';
 import * as fromHelp from './reducers/help.reducer';
 /*Mantenimientos*/
-import * as fromOrigen from './reducers/mantenimiento/origen.reducer';
 import * as fromSolicitante from './reducers/mantenimiento/solicitante.reducer';
 import * as fromEspacioAcademico from './reducers/mantenimiento/espacio-academico.reducer';
 import * as fromMultitabCab from './reducers/mantenimiento/multitab-cab.reducer';
@@ -24,6 +23,8 @@ import * as fromMenu from './reducers/seguridad/menu.reducer';
 import * as fromTipoMenu from './reducers/seguridad/tipo-menu.reducer';
 import * as fromRecursoGrilla from './reducers/seguridad/menu-recurso.reducer';
 import * as fromPerfilSeg from './reducers/seguridad/perfil.reducer';
+import * as fromPerfilRecurso from './reducers/seguridad/perfil-recurso.reducer';
+import * as fromPerfilUsuario from './reducers/seguridad/perfil-usuario.reducer';
 import * as fromUsuarioPerfilSeg from './reducers/seguridad/usuario-perfil.reducer';
 import * as fromAsignacionPermisos from './reducers/seguridad/asignacion-permisos.reducer';
 import * as fromRecursoAsignacionGrilla from './reducers/seguridad/asignacion-permisos-grilla.reducer';
@@ -33,7 +34,6 @@ import * as fromSolicitudEspacios from './reducers/procesos/solicitud-espacios.r
 
 /* Mantenimientos */
 import {
-  Origen,
   Solicitante,
   EspacioAcademico,
   MultitabCab,
@@ -66,7 +66,6 @@ export interface AppState {
   auth: fromAuth.State,
   help: fromHelp.PageState,
   // Mantenimientos
-  origenes: State<Origen>,
   solicitantes: State<Solicitante>,
   espaciosAcademico: State<EspacioAcademico>,
   multitabCabs: State<MultitabCab>,
@@ -84,6 +83,8 @@ export interface AppState {
   tiposMenu: State<TipoMenu>,
   menuRecursos: State<MenuRecurso>,
   perfilesSeg: State<Perfil>,
+  perfilRecurso: State<any>,
+  perfilUsuario: State<any>,
   usuariosPerfilesSeg: State<UsuarioPerfil>,
   asignacionPermisos: State<PerfilMenuRecursoNodo>,
   asignacionPermisosGrilla: fromRecursoAsignacionGrilla.RecursoAsignacionState,
@@ -98,7 +99,6 @@ export const appReducers: ActionReducerMap<AppState> = {
   auth: fromAuth.authReducer,
   help: fromHelp.helpReducer,
   // Mantenimientos
-  origenes: fromOrigen.origennReducer,
   solicitantes: fromSolicitante.solicitanteReducer,
   espaciosAcademico: fromEspacioAcademico.espacioAcademicoReducer,
   multitabCabs: fromMultitabCab.multitabCabReducer,
@@ -116,6 +116,8 @@ export const appReducers: ActionReducerMap<AppState> = {
   tiposMenu: fromTipoMenu.tipoMenuReducer,
   menuRecursos: fromRecursoGrilla.menuRecursoReducer,
   perfilesSeg: fromPerfilSeg.perfilSegReducer,
+  perfilRecurso: fromPerfilRecurso.perfilRecursoReducer,
+  perfilUsuario: fromPerfilUsuario.perfilUsuarioReducer,
   usuariosPerfilesSeg: fromUsuarioPerfilSeg.usuarioPerfilReducer,
   asignacionPermisos: fromAsignacionPermisos.asignacionPermisosReducer,
   asignacionPermisosGrilla: fromRecursoAsignacionGrilla.asignacionPermisosGrillaReducer,

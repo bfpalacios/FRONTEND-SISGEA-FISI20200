@@ -58,3 +58,9 @@ export const MESSAGE_TITLE_CARGA_SUCCESS = "Carga exitosa";
 export const MESSAGE_BODY_CARGA_SUCCESS = "Proceso de carga completado";
 export const MESSAGE_BODY_CARGA_DUPLICADA_ERROR = "Archivo [name] duplicado";
 export const MESSAGE_BODY_CARGA_VACIA_ERROR = "No ha subido ningún archivo";
+export const MESSAGE_BODY_CARGA_DEFAULT_ERROR = "Ocurrio un problema al cargar el archivo";
+
+//SEGURIDAD
+export const MESSAGE_AUTH_ERROR_BODY = "Usuario no existe o la clave es incorrecta";
+export const MESSAGE_AUTH_ERROR_TITLE = "Autorización";
+export const MESSAGE_AUTH_500_BODY = "Ocurrio un problema en el servidor";

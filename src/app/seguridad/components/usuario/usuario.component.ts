@@ -52,12 +52,13 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
 
   initUsuario: UsuarioSeg = {
     usuario: '',
-    contraseña: '',
+    contrasenia: '',
     nombres: '',
     apellidos: ''
   };
 
   detailType: Type;
+
 
   constructor(private usuarioFacade: UsuarioFacade, private toastr: ToastrService, private store: Store<AppState>,
     private errorService: ErrorService) {
@@ -74,7 +75,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         'usuario': new FormControl('', [Validators.required, Validators.minLength(1),
         Validators.maxLength(20)]),
-        'contraseña': new FormControl('', [Validators.required, Validators.minLength(1),
+        'contrasenia': new FormControl('', [Validators.required, Validators.minLength(1),
         Validators.maxLength(45)]),
         'nombres': new FormControl('', [Validators.required, Validators.minLength(1),
         Validators.maxLength(40)]),
@@ -125,7 +126,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
     let data: UsuarioSeg = params.node.data;
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'usuario');
-    enableControls(this.form, false, 'contraseña');
+    enableControls(this.form, false, 'contrasenia');
     this.mdSave.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
   }
 
@@ -161,12 +162,6 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" },
         sort: 'asc'
-      },
-      {
-        headerName: "Contraseña",
-        field: "contraseña",
-        filter: 'agTextColumnFilter',
-        filterParams: { newRowsAction: "keep" }
       },
       {
         headerName: "Nombres",

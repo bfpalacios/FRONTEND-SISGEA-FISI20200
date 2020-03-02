@@ -1,54 +1,56 @@
-import { Origen } from '../../../../mantenimiento/models';
-import { OrigenActions, actions } from '../../actions/mantenimiento/origen.actions';
-import { RESOURCE_ACTIONS } from '../../../utils';
 import { State } from '../entity-state.model';
+import { PerfilRecursoActions, actions } from '../../actions/seguridad/perfil-recurso.actions';
+import { RESOURCE_ACTIONS } from '../../../utils';
 
-const INITIAL_STATE: State<Origen> = {
-  data: [],
-  selected: null,
+const INITIAL_STATE: State<any> = {
   action: null,
+  data: [],
   loading: false,
-  done: false,
-  failed: false,
   errors: null,
-  doneMessage: null
+  done: false,
+  doneMessage: null,
+  failed: false,
+  selected: null
 }
 
-export function origennReducer(state = INITIAL_STATE, action: OrigenActions): State<Origen> {
+export function perfilRecursoReducer(state = INITIAL_STATE, action: PerfilRecursoActions): State<any> {
   switch (action.type) {
     case actions.RESET:
-      return {...INITIAL_STATE};
-    case actions.GET_ALL:
-      return {
-        ...state,
-        action: RESOURCE_ACTIONS.CONSULTA,
-        loading: true,
-        done: false,
-        failed: false,
-        errors: null,
-        selected: null
-      };
-    case actions.GET_ALL_SUCCESS:
-      return {
-        ...state,
-        data: action.payload,
-        loading: false,
-        done: true,
-        failed: false,
-        errors: null,
-        selected: null
-      };
-    case actions.GET_ALL_FAIL:
-      return {
-        ...state,
-        data: [],
-        loading: false,
-        done: false,
-        failed: true,
-        errors: action.payload,
-        selected: null
-      };
-    case actions.ADD:
+      return { ...INITIAL_STATE };
+      case actions.GET_ALL: {
+        return {
+          ...state,
+          action: RESOURCE_ACTIONS.CONSULTA,
+          loading: true,
+          done: false,
+          failed: false,
+          errors: null,
+          selected: null
+        };
+      }
+      case actions.GET_ALL_SUCCESS: {
+        return {
+          ...state,
+          data: action.payload,
+          loading: false,
+          done: true,
+          failed: false,
+          errors: null,
+          selected: null
+        };
+      }
+      case actions.GET_ALL_FAIL: {
+        return {
+          ...state,
+          data: [],
+          loading: false,
+          done: false,
+          failed: true,
+          errors: action.payload,
+          selected: null
+        };
+      }
+    case actions.ADD: {
       return {
         ...state,
         action: RESOURCE_ACTIONS.REGISTRO,
@@ -58,7 +60,8 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         failed: false,
         errors: null
       };
-    case actions.ADD_SUCCESS:
+    }
+    case actions.ADD_SUCCESS: {
       const data = [
         ...state.data,
         action.payload.data
@@ -73,7 +76,8 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         errors: null,
         doneMessage: action.payload.message
       };
-    case actions.ADD_FAIL:
+    }
+    case actions.ADD_FAIL: {
       return {
         ...state,
         selected: null,
@@ -82,7 +86,8 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         failed: true,
         errors: action.payload
       };
-    case actions.UPDATE:
+    }
+    case actions.UPDATE: {
       return {
         ...state,
         action: RESOURCE_ACTIONS.ACTUALIZACION,
@@ -92,9 +97,9 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         failed: false,
         errors: null
       };
+    }
     case actions.UPDATE_SUCCESS: {
-      const index = state.data
-        .findIndex(b => b.idOrigen === state.selected.idOrigen);
+      const index = state.data.findIndex(e => (e.idPerfilRecurso === state.selected.idPerfilRecurso));
       if (index >= 0) {
         const data = [
           ...state.data.slice(0, index),
@@ -113,7 +118,7 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
       }
       return state;
     }
-    case actions.UPDATE_FAIL:
+    case actions.UPDATE_FAIL: {
       return {
         ...state,
         selected: null,
@@ -122,7 +127,8 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         failed: true,
         errors: action.payload
       };
-    case actions.DELETE:
+    }
+    case actions.DELETE: {
       return {
         ...state,
         action: RESOURCE_ACTIONS.ELIMINACION,
@@ -133,9 +139,9 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         failed: false,
         doneMessage: null
       };
+    }
     case actions.DELETE_SUCCESS: {
-      const data = state.data
-        .filter(b => b.idOrigen !== state.selected.idOrigen);
+      const data = state.data.filter(e => (e.idPerfilRecurso !== state.selected.idPerfilRecurso));
       return {
         ...state,
         data,
@@ -147,7 +153,7 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         doneMessage: action.payload.message
       };
     }
-    case actions.DELETE_FAIL:
+    case actions.DELETE_FAIL: {
       return {
         ...state,
         selected: null,
@@ -156,35 +162,7 @@ export function origennReducer(state = INITIAL_STATE, action: OrigenActions): St
         failed: true,
         errors: action.payload
       };
-      case actions.DOWNLOAD:
-      return {
-        ...state,
-        action: RESOURCE_ACTIONS.EXPORTACION,
-        selected: null,
-        loading: true,
-        done: false,
-        failed: false,
-        errors: null
-      }
-    case actions.DOWNLOAD_SUCCESS:
-      return {
-        ...state,
-        selected: null,
-        loading: false,
-        done: true,
-        failed: false,
-        errors: null,
-        doneMessage: action.payload.message
-      }
-    case actions.DOWNLOAD_FAIL:
-      return {
-        ...state,
-        selected: null,
-        loading: false,
-        done: false,
-        failed: true,
-        errors: action.payload
-      }
+    }
     default:
       return state;
   }

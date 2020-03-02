@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { TemplateReporteComponent, ConfirmModalComponent, FormModalComponent, MdConfirmOpts, MdFormOpts, ButtonsCellRendererComponent, ObSwitchFilterGridComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, DEFAULT_SEPARATOR, MULTITAB_IDS, commonConfigTablaReportesAvanzados, getContextMenuItemsReportesAvanzados, getFormattedDate, getContextMenuItemsMantenimiento, joinWords, commonConfigTablaMantenimiento, updateGrid, configFormMd, manageCrudState, enableControls, commontConfigTablaServerSideScroll, autoSizeColumns, getContextMenuItemsConsultas, CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS, getDateRange, getDaysInRange, CUSTOM_MESSAGE_MAX_RANGE_EXCEDED, BUSQUEDA_INVALIDA, getDateFromString, setValueControls, renderYesNoLabel, formatMoney } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, DEFAULT_SEPARATOR, MULTITAB_IDS, getFormattedDateFromDDMMYYYYtoYYYYMMDD, commonConfigTablaReportesAvanzados, getContextMenuItemsReportesAvanzados, getFormattedDate, getContextMenuItemsMantenimiento, joinWords, commonConfigTablaMantenimiento, updateGrid, configFormMd, manageCrudState, enableControls, commontConfigTablaServerSideScroll, autoSizeColumns, getContextMenuItemsConsultas, CUSTOM_MESSAGE_RESULT_NOT_FOUND, BUSQUEDA_SIN_RESULTADOS, getDateRange, getDaysInRange, CUSTOM_MESSAGE_MAX_RANGE_EXCEDED, BUSQUEDA_INVALIDA, getDateFromString, setValueControls, renderYesNoLabel, formatMoney } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef, ColGroupDef } from 'ag-grid-community';
 import { EstadisticasFacade } from '../../facade';
@@ -78,8 +78,6 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
       getContextMenuItems: (params) => {
         return getContextMenuItemsReportesAvanzados(params, undefined, true, 'Reporte');
       },
-      //groupIncludeFooter: true,
-
     };
     this.estadisticasFacade.initCombos();
     this.manageState();
@@ -97,27 +95,26 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
     this.ngUnsubscribe.complete();
   }
 
-  onChangeInstitucionSelect(items: any[]) {
-    let filtrado = [];
-    //items.forEach(m => filtrado.push(...this.bines.filter(s => s.idInstitucion === m.idInstitucion)));
-    //this.binSelect.clearModel();
-    //this.binesFiltrado = [...filtrado];
-  }
 
   manageState() {
     this.store.select('espaciosAcademico').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      console.log(state.data)
       this.espacios = state.data;
     });
     this.store.select('solicitantes').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      console.log(state.data)
       this.solicitantes = state.data;
     });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoEspacio).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      console.log(data)
       this.tiposEspacios = data;
     });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoSolicitud).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      console.log(data)
       this.tipoSolicitud = data;
     });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      console.log(data)
       this.pabellones = data;
     });
   }
@@ -127,11 +124,11 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
     this.buscando = true;
     let criterios: any = this.form.getRawValue();
     let rangoFechaReserva = getDateRange(criterios.fechaReserva);
-    criterios.fechaReservaInicio = rangoFechaReserva.fechaInicio;
-    criterios.fechaReservaFin = rangoFechaReserva.fechaFin;
+    criterios.fechaReservaInicio = getFormattedDateFromDDMMYYYYtoYYYYMMDD(rangoFechaReserva.fechaInicio);
+    criterios.fechaReservaFin = getFormattedDateFromDDMMYYYYtoYYYYMMDD(rangoFechaReserva.fechaFin);
     let rangoFechaRegistro = getDateRange(criterios.fechaRegistro);
-    criterios.fechaRegistroInicio = rangoFechaRegistro.fechaInicio;
-    criterios.fechaRegistroFin = rangoFechaRegistro.fechaFin;
+    criterios.fechaRegistroInicio = getFormattedDateFromDDMMYYYYtoYYYYMMDD(rangoFechaRegistro.fechaInicio);
+    criterios.fechaRegistroFin = getFormattedDateFromDDMMYYYYtoYYYYMMDD(rangoFechaRegistro.fechaFin);
     this.estadisticasFacade.buscarPorCriterios(criterios).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       //OK
       (data) => {
@@ -188,7 +185,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
       {
         headerName: "Solicitante",
         field: "nombreCompleto",
-        cellClass: 'ob-type-string-center',
+        cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
         enablePivot: false,
         enableRowGroup: true,

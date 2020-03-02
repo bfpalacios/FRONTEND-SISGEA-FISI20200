@@ -77,6 +77,7 @@ export class AuthEffects {
       ofType(fromAuth.authActions.LOGOUT),
       switchMap(() => {
         this.storageService.clear();
+        sessionStorage.clear();
         this.router.navigate(['/login']);
         return of(new fromAuth.LogoutSuccess());
       })

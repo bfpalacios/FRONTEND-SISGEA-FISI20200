@@ -1,0 +1,49 @@
+<app-template-mantenimiento [type]="type" (clickRegisterBtn)="showMdRegister()" #template>
+  <app-pagelength [gridApi]="gridApi"></app-pagelength>
+  <ag-grid-angular #agGrid class="ag-theme-balham" [gridOptions]="gridOptions"></ag-grid-angular>
+</app-template-mantenimiento>
+
+<app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
+  <div [formGroup]="form">
+    <div class="form-group row" *ngIf="registrando">
+      <label class="col-form-label col-sm-3">Id</label>
+      <div class="col-sm-9">
+        <input type="number" class="form-control" formControlName="idPerfilRecurso">
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Perfil</label>
+      <div class="col-sm-9">
+        <ng-select
+            [items]="perfiles" 
+            class="ng-select-custom" 
+            bindLabel="label" 
+            bindValue="idPerfil" 
+            placeholder="TODOS" 
+            [notFoundText]="'No hay datos encontrados.'"
+            formControlName="idPerfil" >
+        </ng-select>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-form-label col-sm-3">Recurso</label>
+      <div class="col-sm-9">
+        <ng-select
+            [items]="recursos" 
+            class="ng-select-custom" 
+            bindLabel="idRecurso" 
+            bindValue="idRecurso" 
+            placeholder="TODOS" 
+            [notFoundText]="'No hay datos encontrados.'"
+            formControlName="idRecurso" >
+        </ng-select>
+        <bfv-messages></bfv-messages>
+      </div>
+    </div>
+  </div>
+</app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="eliminarPerfil()" #mdDelete>
+</app-confirm-modal>

@@ -270,6 +270,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
             if(indicador == 'R'){
               return {'background-color': 'indianred', 'color': 'white', 'font-weight': 'bold'};
             }
+            if(indicador == 'G'){
+              return {'background-color': 'goldenrod', 'color': 'white', 'font-weight': 'bold'};
+            }
             return null;
           }else {
             return null;
@@ -308,15 +311,28 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     dataResult.forEach(result => {
       data.forEach(d => {
         if(result.horario == d.horario){
+          let descripcion = '';
           let curso = d.descripcionCurso == null ? '' :  d.descripcionCurso;
           let tipoHorario = d.tipoHorario == null ? '' : d.tipoHorario;
-          let descTipoHorario = '';
-          descTipoHorario == 'L' ? 'Laboratorio' : tipoHorario == 'T' ? 'Teoria' : '';
-          let descripcion = '';
-          let indicador = 'V';
-          if(curso != '' && tipoHorario != ''){
-            descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
-            indicador = 'R';
+          let descTipoHorario = (tipoHorario == 'L' ? 'Laboratorio' : tipoHorario == 'T' ? 'Teoria' : tipoHorario == 'R' ? 'Reserva' : '');
+          let indicador = '';
+          switch(tipoHorario){
+            case 'L':
+              indicador = 'R';
+              descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
+            break;
+            case 'P':
+              indicador = 'R';
+              descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
+            break;
+            case 'R':
+              indicador = 'G';
+              descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
+              break;
+            default:
+              indicador = 'V'; 
+              descripcion = ''
+              break; 
           }
           result["descripcion"+d.idEspacioAcademico] = descripcion;
           result["indicador"+d.idEspacioAcademico] = indicador;

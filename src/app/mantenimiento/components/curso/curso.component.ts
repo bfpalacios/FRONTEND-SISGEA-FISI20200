@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { ConsultaModalComponent, TemplateMantenimientoComponent } from '../../../shared';
-import { TYPES, Type, getContextMenuItemsMantenimiento, removeElementArr, MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS, MESSAGE_BODY_CARGA_DUPLICADA_ERROR, MESSAGE_TITLE_CARGA_ERROR, MESSAGE_BODY_CARGA_VACIA_ERROR, FA_ICON_UPLOAD, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, updateGrid } from '../../../shared/utils';
+import { TYPES, Type, getContextMenuItemsMantenimiento, removeElementArr, MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS, MESSAGE_BODY_CARGA_DUPLICADA_ERROR, MESSAGE_TITLE_CARGA_ERROR, MESSAGE_BODY_CARGA_VACIA_ERROR, FA_ICON_UPLOAD, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, updateGrid, MESSAGE_BODY_CARGA_DEFAULT_ERROR } from '../../../shared/utils';
 import { NgxDropzoneChangeEvent } from 'ngx-dropzone';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
@@ -106,18 +106,22 @@ export class CursoComponent implements OnInit, AfterViewInit, OnDestroy, AfterVi
 
   cargarArchivo(){
     this.configCarga.loading = true;
-    this.facade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
-      if(this.files.length >= 1){
-        this.toasterService.success(MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS);
-      }else{
-        this.toasterService.error(MESSAGE_BODY_CARGA_VACIA_ERROR, MESSAGE_TITLE_CARGA_ERROR);
+    this.facade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+      data => {
+        data = JSON.parse(data);
+        if(data.exito){
+          this.toasterService.success(data, MESSAGE_TITLE_CARGA_SUCCESS);
+          this.facade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
+            updateGrid(this.gridOptions,data,this.gridColumnApi,true,true);
+          });
+        }else {
+          this.toasterService.error(data, MESSAGE_TITLE_CARGA_ERROR);
+        }
+        this.configCarga.loading = false;
+        this.files = [];
+        this.md.hide();
       }
-      this.configCarga.loading = false;
-      this.md.hide();
-      this.facade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
-        updateGrid(this.gridOptions,data,this.gridColumnApi,true,true);
-      });
-    });
+    );
   }
 
   initColumnDefs(): ColDef[] {
