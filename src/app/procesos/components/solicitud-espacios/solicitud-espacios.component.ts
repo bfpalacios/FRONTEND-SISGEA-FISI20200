@@ -25,6 +25,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('mdSave') mdSave: FormModalComponent;
   @ViewChild('mdUpdate') mdUpdate: FormModalComponent;
   @ViewChild('mdAprobar') mdAprobar: FormModalComponent;
+  @ViewChild('mdCancelar') mdCancelar: ConfirmModalComponent;
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
   type: Type;
@@ -59,6 +60,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   solicitantesFiltrado: any[] = [];
   estadoSolicitud: any[] = [];
   estadoAsistencia: any[] = [];
+  tipoMotivo: any[] = [];
 
 
   configCarga: any ={
@@ -86,10 +88,19 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnInit() {
+    this.templateHtmlMsg =`<p>¿Está seguro que desea cancelar la solicitud <strong>[identificador]</strong> en el espacio académico <strong>[aula]</strong>?</p>`;
     this.mdConfirmOpts = configFormMd.getDeleteMdOpts(this.templateHtmlMsg);
     this.mdRegisterOpts = configFormMd.getRegisterMdOpts(this.type);
     this.mdUpdateOpts = configFormMd.getUpdateMdOpts(this.type);
-    this.mdAprobarOpts = configFormMd.getUpdateMdOpts(this.type);
+    //this.mdAprobarOpts = configFormMd.getUpdateMdOpts(this.type);
+    this.mdAprobarOpts = {
+      title: `Aprobación ${this.type.name}`,
+      buttons: {
+        ok: { text: 'Aprobar', disabled: false, hidden: false },
+        cancel: { text: 'Rechazar', class: 'btn-danger' }
+      },
+      modalClass: 'modal-mantenimientos'
+    };
     this.mdRegisterOpts.modalClass = 'modal-reglas-compensacion';
     this.mdUpdateOpts.modalClass = 'modal-reglas-compensacion';
     this.mdAprobarOpts.modalClass = 'modal-reglas-compensacion';
@@ -109,6 +120,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'pabellon': new FormControl('', ),
       'fechaRegistro':new FormControl('', ),
       'idTipoEspacio':new FormControl('', ),
+      'tipoSolicitante': new FormControl('', [Validators.required]),
     });
     this.formHorario = new FormGroup({
       'idsEspacioAcademico': new FormControl([], [Validators.required]),
@@ -183,7 +195,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
 
   manageState() {
     this.store.select('solicitudEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdDelete, this.toastr,
+      console.log("estado");
+      console.log(state);
+      manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdCancelar, this.toastr,
         this.errorService, () => {
           updateGrid(this.gridOptions, state.data, this.gridColumnApi);
         });
@@ -367,6 +381,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
           this.prestando = false;
           this.mdSave.hide();
           //
+          console.log(this.files)
           this.solicitudEspaciosFacade.cargar(this.files).pipe(takeUntil(this.ngUnsubscribe)).subscribe(data => {
             if(this.files.length >= 1){
               this.toastr.success(MESSAGE_BODY_CARGA_SUCCESS, MESSAGE_TITLE_CARGA_SUCCESS);
@@ -435,6 +450,51 @@ showMdAprobar(params) {
   this.mdAprobar.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
 }
 
+showMdCancelar(params) {
+  console.log(params);
+  let data: any = params.node.data;
+  let nombre: string = data.apellidoMaterno + " " + data.apellidoMaterno + ", " + data.nombres;
+  this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[identificador\]/gi,
+    joinWords(DEFAULT_SEPARATOR, data.dni, nombre))
+  .replace(/\[aula\]/gi,joinWords(DEFAULT_SEPARATOR, data.idEspacioAcademico, data.descripcionEspacioAcademico));
+  
+  this.mdCancelar.show(data);
+}
+
+
+cancelar() {
+  this.solicitudEspaciosFacade.cancelar(this.mdCancelar.data);
+  this.mdCancelar.hide();
+  this.mdConfirmOpts.buttons.ok.disabled = false;
+}
+
+rechazar(){
+  console.log("entro a rechazar");
+  const action = this.mdAprobar.action;
+  switch (action) {
+
+    case RESOURCE_ACTIONS.ACTUALIZACION:
+      this.solicitudEspaciosFacade.rechazar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
+        (data) => {
+          this.mdAprobar.hide();
+          this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+            updateGrid(this.gridOptions, data, this.gridColumnApi);
+            this.toastr.success('Realizado con exito','Rechazado con éxito');
+          });
+            },
+
+        (err) => {
+
+                  this.toastr.error('Ocurrio un problema con el rechazo de la solicitud','Rechazo de solicitud');
+              },
+        () =>{
+
+              }
+
+
+      );
+  }
+}
 
 save() {
   const action = this.mdUpdate.action;
@@ -446,13 +506,13 @@ save() {
           this.mdUpdate.hide();
           this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
             updateGrid(this.gridOptions, data, this.gridColumnApi);
-            this.toastr.success('Realizado con exito','Prestamo de espacios');
+            this.toastr.success('Realizado con exito','Solicitud aceptada');
           });
             },
 
         (err) => {
 
-                  this.toastr.error('Ocurrio un problema en el prestamo del espacio','Prestamo de espacios');
+                  this.toastr.error('Ocurrio un problema con la aprobación de la solicitud','Aceptación de solicitud');
               },
         () =>{
 
@@ -465,14 +525,15 @@ save() {
 
 
 aprobar() {
-  const action = this.mdUpdate.action;
+  console.log("entro al aprobar");
+  const action = this.mdAprobar.action;
   switch (action) {
 
     case RESOURCE_ACTIONS.ACTUALIZACION:
 
       this.solicitudEspaciosFacade.aprobar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
         (data) => {
-          this.mdUpdate.hide();
+          this.mdAprobar.hide();
           this.solicitudEspaciosFacade.buscarTodos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
             updateGrid(this.gridOptions, data, this.gridColumnApi);
             this.toastr.success('Realizado con exito','Prestamo de espacios');
@@ -489,15 +550,8 @@ aprobar() {
 
 
       );
-
-
-
       break;
   }
-}
-
-hide(){
-  console.log("saliendo");
 }
 
 
@@ -526,6 +580,16 @@ hide(){
         field: 'estadoSolicitud',
         valueGetter: (params) => {
           return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.estadoSolicitud, params.data.descripcionEstadoSolicitud);
+        },
+        cellClass: 'ob-type-string',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Tipo Solicitud",
+        field: 'tipoSolicitud',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.tipoSolicitud, params.data.descripcionTipoSolicitud);
         },
         cellClass: 'ob-type-string',
         filter: 'agTextColumnFilter',
@@ -578,13 +642,17 @@ hide(){
         cellClass: 'text-center',
         cellRendererFramework: ButtonsCellRendererComponent,
         cellRendererParams: {
-          edit: {
+          /*edit: {
             visible: true,
             action: this.showMdUpdate.bind(this)
+          },*/
+          edit: {
+            visible: true,
+            action: this.showMdAprobar.bind(this)
           },
           delete: {
             visible: this.template.permisoEliminacion,
-            action: this.showMdAprobar.bind(this)
+            action: this.showMdCancelar.bind(this)
           }
         },
         filter: false,

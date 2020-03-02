@@ -14,7 +14,7 @@
         <fieldset class="well" style="background-color: #F5F5F5">
         <legend class="well-legend"> <i class="fa fa-file-text-o" aria-hidden="true"></i> Filtros </legend>
 
-    <div [formGroup]="formHorario">
+          <div [formGroup]="formHorario">
             <div class="row">
               <label class="col-sm-2 ob-custom-label-form">Espacios</label>
               <div class="form-group col-sm-4">
@@ -29,6 +29,7 @@
                 </ng-template>
                 </ng-select>
               </div>
+
               <label class="col-sm-2 ob-custom-label-form">Fecha</label>
               <div class="form-group col-sm-4">
                   <input type="text" class="form-control mb-3" placeholder=""
@@ -37,6 +38,7 @@
                 <bfv-messages></bfv-messages>
               </div>
             </div>
+
             <div class="row">
               <div class="form-group col-lg-12 text-center">
                 <button type="submit" class="btn btn-primary" [disabled]="buscando" (click)="onClickBuscarHorarioEspacio()">
@@ -86,6 +88,7 @@
               <bfv-messages></bfv-messages>
             </div>
           </div>
+
           <div class="form-group row">
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Solicitante</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
@@ -102,6 +105,7 @@
               <bfv-messages></bfv-messages>
             </div>
           </div>
+
           <div class="form-group row">
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Motivo</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
@@ -109,6 +113,7 @@
               <bfv-messages></bfv-messages>
             </div>
           </div>
+
           <div class="form-group row">
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Espacio</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
@@ -125,6 +130,7 @@
               <bfv-messages></bfv-messages>
             </div>
           </div>
+
           <div class="row">
             <label class="col-sm-2 ob-custom-label-form">Fecha Reserva</label>
             <div class="form-group col-sm-10 col-lg-10">
@@ -139,6 +145,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-group row">
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Inicio</label>
             <div class="form-group col-sm-10 col-md-10 col-lg-10">
@@ -146,6 +153,7 @@
               <bfv-messages></bfv-messages>
             </div>
           </div>
+
           <div class="form-group row">
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Fin</label>
             <div class="form-group col-sm-10 col-md-10 col-lg-10">
@@ -153,24 +161,24 @@
               <bfv-messages></bfv-messages>
             </div>
           </div>
+
           <div class="form-group row">
             <div class="col-sm-12 col-md-12 col-lg-12">
-        			<ngx-dropzone (change)="onSelect($event)"
+              <ngx-dropzone (change)="onSelect($event)"
         					[multiple]="configCarga.multiple"
         					[accept]="configCarga.accept"
         					[maxFileSize]="configCarga.maxFileSize"
         					[expandable]="configCarga.expandable">
         				<ngx-dropzone-label>Arrastre aquí el archivo</ngx-dropzone-label>
-        				<ngx-dropzone-preview *ngFor="let f of files"
+        				<ngx-dropzone-preview *ngFor="let f of files" 
         					[removable]="true"
         					(removed)="onRemove(f)">
         					<ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
         				</ngx-dropzone-preview>
         			</ngx-dropzone>
         		</div>
-
-
           </div>
+
           <div class="form-group row">
             <div class="col-lg-12 text-center">
               <button type="submit" class="btn btn-success" [disabled]="prestando" (click)="clickSolicitar()">
@@ -178,6 +186,7 @@
               </button>
             </div>
           </div>
+
         </fieldset>
       </div>
     </div>
@@ -306,7 +315,7 @@
   </div>
 </app-form-modal>
 
-<app-form-modal [options]="mdFormOpts" (onSubmit)="aprobar()" [form]="form" #mdAprobar>
+<app-form-modal [options]="mdFormOpts" (onSubmit)="aprobar()" (onSubmit2)="rechazar()"  [form]="form" #mdAprobar>
   <div [formGroup]="form">
 
     <div class="form-group row">
@@ -330,8 +339,11 @@
 
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Solicitante</label>
       <div class="col-sm-7 col-md-7 col-lg-7">
-        <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="ng-select-custom" bindLabel="label" bindValue="idSolicitante"
-        placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
+        <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="
+        ng-select-custom" bindLabel="label" 
+        bindValue="idSolicitante"
+        placeholder="TODOS" 
+        [notFoundText]="'No hay datos encontrados.'"
         formControlName="idSolicitante">
           <ng-template ng-option-tmp let-item="item">
         {{item.dni}} - {{item.nombres}} {{item.apellidoPaterno}} {{item.apellidoMaterno}}
@@ -440,3 +452,6 @@
     </div>
   </div>
 </app-form-modal>
+
+<app-confirm-modal [options]="mdConfirmOpts" (confirm)="cancelar()" #mdCancelar>
+</app-confirm-modal>

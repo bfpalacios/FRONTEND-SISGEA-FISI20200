@@ -44,13 +44,31 @@ export class SolicitudEspaciosEffects {
       ofType(fromSolicitudEspacios.actions.UPDATE),
       withLatestFrom(this.store$.select('globalData', 'messages')),
       switchMap(([action, messages]: [fromSolicitudEspacios.AprobarSolicitudEspacios, GlobalMessages]) => {
-        return this.SolicitudEspaciosService.aprobar(action.payload)
+        return this.asignacionEspaciosService.aprobar(action.payload)
           .pipe(
             map(res => {
               return new fromSolicitudEspacios.AprobarSolicitudEspaciosSuccess({ data: res, message: messages.UPDATE_SUCCESS });
             }),
             catchError(err => {
               return of(new fromSolicitudEspacios.AprobarSolicitudEspaciosFail(err))
+            })
+          )
+      })
+    );
+
+  @Effect()
+  CancelarSolicitud$ = this.actions$
+    .pipe(
+      ofType(fromSolicitudEspacios.actions.DELETE),
+      withLatestFrom(this.store$.select('globalData', 'messages')),
+      switchMap(([action, messages]: [fromSolicitudEspacios.CancelarSolicitudEspacios, GlobalMessages]) => {
+        return this.asignacionEspaciosService.cancelar(action.payload)
+          .pipe(
+            map(res => {
+              return new fromSolicitudEspacios.CancelarSolicitudEspaciosSuccess({ message: messages.DELETE_SUCCESS });
+            }),
+            catchError(err => {
+              return of(new fromSolicitudEspacios.CancelarSolicitudEspaciosFail(err))
             })
           )
       })
