@@ -26,8 +26,8 @@ export class AsignacionEspaciosEffects {
         return this.asignacionEspaciosService.buscarTodos()
           .pipe(
             map(res => {
-              sortByAttr(res, 'idAsignacionEspacios')
-              addLabelToObjsArr(res, 'label', false, 'idAsignacionEspacios', 'descripcionAsignacionEspacios');
+              sortByAttr(res, 'idAsignacion')
+              addLabelToObjsArr(res, 'label', false, 'idAsignacion', '');
               return new fromAsignacionEspacios.GetAllAsignacionEspaciosSuccess(res);
             }),
             catchError((err) => {
