@@ -291,7 +291,7 @@
     <div class="form-group row">
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Motivo</label>
       <div class="col-sm-11 col-md-11 col-lg-11">
-        <textarea  rows="5" class="form-control" formControlName="motivo"></textarea>
+        <input class="form-control" formControlName="motivo" bindLabel="descripcionMotivo">
         <bfv-messages></bfv-messages>
       </div>
     </div>
@@ -364,8 +364,20 @@
     <div class="form-group row">
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Motivo</label>
       <div class="col-sm-11 col-md-11 col-lg-11">
-        <textarea  rows="5" class="form-control" formControlName="motivo"></textarea>
+        <ng-select #pabellonSelect [items]="motivo" class="ng-select-custom"
+        bindLabel="descripcionItem"
+        bindValue="idMultitabDet"
+          placeholder="Seleccione tipo motivo" [notFoundText]="'No hay datos encontrados.'"
+          formControlName="motivo" >
+          <ng-template ng-option-tmp let-item="item">
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
+              </ng-template>
+              <ng-template ng-label-tmp let-item="item">
+            {{item.idMultitabDet}} - {{item.descripcionItem}}
+              </ng-template>
+        </ng-select>
         <bfv-messages></bfv-messages>
+
       </div>
     </div>
 
@@ -377,7 +389,7 @@
         <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom"
           bindLabel="descripcionItem"
           bindValue="idMultitabDet"
-          placeholder="TODOS"
+          placeholder="Selecciona un pabellón"
           [notFoundText]="'No hay datos encontrados.'"
           formControlName="pabellon" (change)="onChangeTipoSolicitante($event)">
           <ng-template ng-option-tmp let-item="item">

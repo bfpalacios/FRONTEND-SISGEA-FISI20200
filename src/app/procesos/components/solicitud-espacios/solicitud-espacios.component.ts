@@ -109,6 +109,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       'tipoSolicitud': new FormControl('', [Validators.required]),
       'idSolicitante': new FormControl('', [Validators.required]),
       'motivo': new FormControl('', [Validators.required, Validators.maxLength(200)]),
+      'descripcionMotivo': new FormControl('', []),
     //  'idsEspacioAcademico': new FormControl('', ),
       'idEspacioAcademico': new FormControl('', [Validators.required]),
       'fechaReserva': new FormControl('', [Validators.required]),
