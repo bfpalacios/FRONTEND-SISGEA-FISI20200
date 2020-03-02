@@ -138,12 +138,14 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
         params.api.sizeColumnsToFit();
       },
       getContextMenuItems: (params) => {
-        return getContextMenuItemsMantenimiento(params,this.type,this.template.permisoExportacion);
+        return getContextMenuItemsMantenimiento(params,this.type,true);
       }
     };
     this.gridOptionsHorario = {
       ...commonConfigTablaMantenimiento,
       rowData: [],
+      domLayout: "autoHeight", //El alto de la tabla se renderiza en funcion a la cantidad de filas
+      paginationPageSize: 25,
       getRowNodeId: (data) => {
         return data.horario;
       },
@@ -153,7 +155,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
         params.api.sizeColumnsToFit();
       },
       getContextMenuItems: (params) => {
-        return getContextMenuItemsMantenimiento(params,this.type,this.template.permisoExportacion);
+        return getContextMenuItemsMantenimiento(params,this.type,true);
       }
     };
   }
@@ -247,11 +249,13 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     this.solicitudEspaciosFacade.buscarEspaciosHorarios(criterio).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (data: any[]) => {
         this.buscando = false;
+        console.log(data);
         if(data.length == 0){
           return;
         }
         this.gridOptionsHorario.api.setColumnDefs(this.getInitColDefEspaciosDinamicos(data));
         updateGrid(this.gridOptionsHorario, this.getDataEspaciosDinamicos(data), this.gridColumnApiHorario, false, false);
+        this.gridApiHorario.sizeColumnsToFit();
       }
     );
   }
@@ -270,12 +274,14 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
       headerName: "Horario",
       field: "horario",
       cellClass: 'ob-type-string-center',
+      minWidth: 80
     })
     espacios.forEach(e => {
       columnResult.push({
         headerName: espaciosConDesc[e],
         field: "descripcion"+e,
         id: e,
+        minWidth: 150,
         cellClass: 'ob-type-string',
         cellStyle: function(params) {
           if(params.value!=0 && params.value!=null && params.value!=undefined) {
@@ -328,11 +334,11 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     dataResult.forEach(result => {
       data.forEach(d => {
         if(result.horario == d.horario){
-          let descripcion = '';
+          let descripcion = '', indicador = '';
           let curso = d.descripcionCurso == null ? '' :  d.descripcionCurso;
           let tipoHorario = d.tipoHorario == null ? '' : d.tipoHorario;
           let descTipoHorario = (tipoHorario == 'L' ? 'Laboratorio' : tipoHorario == 'T' ? 'Teoria' : tipoHorario == 'R' ? 'Reserva' : '');
-          let indicador = '';
+          console.log(curso,tipoHorario,descTipoHorario);
           switch(tipoHorario){
             case 'L':
               indicador = 'R';
@@ -346,10 +352,10 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
               indicador = 'G';
               descripcion = curso + " - (" + tipoHorario + ") " + descTipoHorario;
               break;
-            default:
+            /*default:
               indicador = 'V';
               descripcion = ''
-              break;
+              break;*/
           }
           result["descripcion"+d.idEspacioAcademico] = descripcion;
           result["indicador"+d.idEspacioAcademico] = indicador;
