@@ -1,4 +1,3 @@
-export * from './usuario-perfil.model';
 export * from './perfil.model';
 export * from './sistema.model';
 export * from './usuario-seg.model';

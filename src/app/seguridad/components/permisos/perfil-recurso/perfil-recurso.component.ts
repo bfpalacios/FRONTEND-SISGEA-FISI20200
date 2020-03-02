@@ -43,8 +43,7 @@ export class PerfilRecursoComponent implements OnInit, AfterViewInit, OnDestroy 
     private errorService: ErrorService,
     private toastr: ToastrService
   ) {
-    this.type = TYPES.PERFIL;
-    this.detailType = TYPES.ASIG_PERMIS;
+    this.type = TYPES.PERFIL_RECURSO;
   }
 
   ngOnInit() {
@@ -69,7 +68,6 @@ export class PerfilRecursoComponent implements OnInit, AfterViewInit, OnDestroy 
         params.api.sizeColumnsToFit();
       }
     }
-    this.perfilRecursoFacade.initData();
   }
 
   ngAfterViewInit() {
@@ -94,11 +92,11 @@ export class PerfilRecursoComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         });
     });
-    this.store.select('perfilesSeg').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      this.perfiles = state.data;
+    this.perfilRecursoFacade.buscarPerfiles().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.perfiles = data;
     });
-    this.store.select('recursos').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      this.recursos = state.data;
+    this.perfilRecursoFacade.buscarRecursos().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.recursos = data;
     });
   }
 

@@ -1,4 +1,3 @@
-export * from './usuario-perfil.service';
 export * from './perfil.service';
 export * from './sistema.service';
 export * from './usuario.service';

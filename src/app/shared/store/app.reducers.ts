@@ -25,7 +25,6 @@ import * as fromRecursoGrilla from './reducers/seguridad/menu-recurso.reducer';
 import * as fromPerfilSeg from './reducers/seguridad/perfil.reducer';
 import * as fromPerfilRecurso from './reducers/seguridad/perfil-recurso.reducer';
 import * as fromPerfilUsuario from './reducers/seguridad/perfil-usuario.reducer';
-import * as fromUsuarioPerfilSeg from './reducers/seguridad/usuario-perfil.reducer';
 import * as fromAsignacionPermisos from './reducers/seguridad/asignacion-permisos.reducer';
 import * as fromRecursoAsignacionGrilla from './reducers/seguridad/asignacion-permisos-grilla.reducer';
 /*Procesos*/
@@ -51,7 +50,6 @@ import {
   TipoMenu,
   MenuRecurso,
   Perfil,
-  UsuarioPerfil,
   PerfilMenuRecursoNodo
 } from '../../seguridad/models';
 import { TipoAutenticacion } from '../../seguridad/models/tipo-autenticacion.model';
@@ -85,7 +83,6 @@ export interface AppState {
   perfilesSeg: State<Perfil>,
   perfilRecurso: State<any>,
   perfilUsuario: State<any>,
-  usuariosPerfilesSeg: State<UsuarioPerfil>,
   asignacionPermisos: State<PerfilMenuRecursoNodo>,
   asignacionPermisosGrilla: fromRecursoAsignacionGrilla.RecursoAsignacionState,
   // Procesos
@@ -118,7 +115,6 @@ export const appReducers: ActionReducerMap<AppState> = {
   perfilesSeg: fromPerfilSeg.perfilSegReducer,
   perfilRecurso: fromPerfilRecurso.perfilRecursoReducer,
   perfilUsuario: fromPerfilUsuario.perfilUsuarioReducer,
-  usuariosPerfilesSeg: fromUsuarioPerfilSeg.usuarioPerfilReducer,
   asignacionPermisos: fromAsignacionPermisos.asignacionPermisosReducer,
   asignacionPermisosGrilla: fromRecursoAsignacionGrilla.asignacionPermisosGrillaReducer,
   asignacionEspacios: fromAsignacionEspacios.asignacionEspaciosReducer,
