@@ -46,7 +46,7 @@ export const TYPES = {
   MENU: { name: 'Menú', title: 'Menú', resource: 'MANT_MENU', fileNameExport:"Menu" , module: MODULE.SEGURIDAD},
   CTA_USUARIO: { name: 'Cuenta Usuario', title: 'Cuenta Usuario', resource: 'MANT_CTAUSU', fileNameExport:"CuentaUsuario", module: MODULE.SEGURIDAD},
   PERMISOS: { name: 'Asignación de permisos', title: 'Asignación de permisos', resource: 'ASIG_PERMIS', module: MODULE.SEGURIDAD },
-  ASIG_PERMIS: { name: 'Asignación de permisos', title: 'Asignación de permisos', resource: 'ASIG_PERMIS', module: MODULE.SEGURIDAD },
+  ASIG_PERMIS: { name: 'Asignación de permisos', otherTitle: 'Asignación de permisos', title: 'Asignación de permisos', resource: 'ASIG_PERMIS', module: MODULE.SEGURIDAD },
   MENU_RECURSO: { name: 'Aisgnación de recursos', title: 'Asignación de recursos', resource: 'MANT_MEN_REC', module: MODULE.SEGURIDAD },
   /*Procesos*/
   ASIG_ESPACIOS: { name: 'Aisgnación de espacios', otherTitle: 'Asignación de espacios', btnText:'Asignar', btnIcon:'fa-bolt', title: 'Asignación de espacios', resource: 'MANT_PERMISOS', module: MODULE.PROCESOS },

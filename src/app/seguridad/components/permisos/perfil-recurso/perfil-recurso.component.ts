@@ -33,6 +33,9 @@ export class PerfilRecursoComponent implements OnInit, AfterViewInit, OnDestroy 
   gridApi: GridApi;
   private gridColumnApi;
   templateHtmlMsg: string;
+  registrando: boolean = false;
+  perfiles: any[] = [];
+  recursos: any[] = [];
 
   constructor(
     private store: Store<AppState>,
@@ -91,15 +94,23 @@ export class PerfilRecursoComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         });
     });
+    this.store.select('perfilesSeg').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      this.perfiles = state.data;
+    });
+    this.store.select('recursos').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      this.recursos = state.data;
+    });
   }
 
   showMdRegister() {
+    this.registrando = false;
     this.mdFormOpts = this.mdRegisterOpts;
     enableControls(this.form, false, 'idPerfilRecurso');
     this.mdSave.show({}, RESOURCE_ACTIONS.REGISTRO);
   }
 
   showMdUpdate(params) {
+    this.registrando = true;
     let data: any = params.node.data;
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'idPerfilRecurso');

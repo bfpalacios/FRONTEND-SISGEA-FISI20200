@@ -5,16 +5,16 @@
 
 <app-form-modal [options]="mdFormOpts" (onSubmit)="save()" [form]="form" #mdSave>
   <div [formGroup]="form">
-    <div class="form-group row">
-      <label class="col-form-label col-sm-2">Id</label>
-      <div class="col-sm-10">
+    <div class="form-group row" *ngIf="registrando">
+      <label class="col-form-label col-sm-3">Id</label>
+      <div class="col-sm-9">
         <input type="number" class="form-control" formControlName="idPerfilRecurso">
         <bfv-messages></bfv-messages>
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-form-label col-sm-2">Perfil</label>
-      <div class="col-sm-10">
+      <label class="col-form-label col-sm-3">Perfil</label>
+      <div class="col-sm-9">
         <ng-select
             [items]="perfiles" 
             class="ng-select-custom" 
@@ -28,12 +28,12 @@
       </div>
     </div>
     <div class="form-group row">
-      <label class="col-form-label col-sm-2">Recurso</label>
-      <div class="col-sm-10">
+      <label class="col-form-label col-sm-3">Recurso</label>
+      <div class="col-sm-9">
         <ng-select
             [items]="recursos" 
             class="ng-select-custom" 
-            bindLabel="label" 
+            bindLabel="idRecurso" 
             bindValue="idRecurso" 
             placeholder="TODOS" 
             [notFoundText]="'No hay datos encontrados.'"

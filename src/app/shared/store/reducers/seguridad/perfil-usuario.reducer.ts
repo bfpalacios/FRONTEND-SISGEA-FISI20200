@@ -99,7 +99,7 @@ export function perfilUsuarioReducer(state = INITIAL_STATE, action: PerfilUsuari
       };
     }
     case actions.UPDATE_SUCCESS: {
-      const index = state.data.findIndex(e => (e.idUsuario === state.selected.idUsuario && e.idPerfil === state.selected.idPerfil) );
+      const index = state.data.findIndex(e => (e.idPerfilUsuario === state.selected.idPerfilUsuario) );
       if (index >= 0) {
         const data = [
           ...state.data.slice(0, index),
@@ -141,7 +141,7 @@ export function perfilUsuarioReducer(state = INITIAL_STATE, action: PerfilUsuari
       };
     }
     case actions.DELETE_SUCCESS: {
-      const data = state.data.filter(e => (e.idUsuario !== state.selected.idUsuario && e.idPerfil !== state.selected.idPerfil));
+      const data = state.data.filter(e => (e.idPerfilUsuario !== state.selected.idPerfilUsuario));
       return {
         ...state,
         data,

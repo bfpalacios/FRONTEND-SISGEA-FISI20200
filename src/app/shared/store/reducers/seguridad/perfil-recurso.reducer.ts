@@ -99,7 +99,7 @@ export function perfilRecursoReducer(state = INITIAL_STATE, action: PerfilRecurs
       };
     }
     case actions.UPDATE_SUCCESS: {
-      const index = state.data.findIndex(e => (e.idRecurso === state.selected.idRecurso && e.idPerfil === state.selected.idPerfil) );
+      const index = state.data.findIndex(e => (e.idPerfilRecurso === state.selected.idPerfilRecurso));
       if (index >= 0) {
         const data = [
           ...state.data.slice(0, index),
@@ -141,7 +141,7 @@ export function perfilRecursoReducer(state = INITIAL_STATE, action: PerfilRecurs
       };
     }
     case actions.DELETE_SUCCESS: {
-      const data = state.data.filter(e => (e.idRecurso !== state.selected.idRecurso && e.idPerfil !== state.selected.idPerfil));
+      const data = state.data.filter(e => (e.idPerfilRecurso !== state.selected.idPerfilRecurso));
       return {
         ...state,
         data,

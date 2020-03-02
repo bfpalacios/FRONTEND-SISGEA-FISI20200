@@ -33,6 +33,9 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
   gridApi: GridApi;
   private gridColumnApi;
   templateHtmlMsg: string;
+  registrando: boolean = false;
+  perfiles: any[] = [];
+  usuarios: any[] = [];
 
   constructor(
     private store: Store<AppState>,
@@ -52,7 +55,7 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
     this.form = new FormGroup({
       'idPerfilUsuario': new FormControl(''),
       'idPerfil': new FormControl('', [Validators.required]),
-      'idUsuario': new FormControl('', [Validators.required])
+      'usuario': new FormControl('', [Validators.required])
     })
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
@@ -91,15 +94,23 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         });
     });
+    this.store.select('perfilesSeg').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      this.perfiles = state.data;
+    });
+    this.store.select('usuariosSeg').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
+      this.usuarios = state.data;
+    });
   }
 
   showMdRegister() {
+    this.registrando = false;
     this.mdFormOpts = this.mdRegisterOpts;
     enableControls(this.form, false, 'idPerfilUsuario');
     this.mdSave.show({}, RESOURCE_ACTIONS.REGISTRO);
   }
 
   showMdUpdate(params) {
+    this.registrando = true;
     let data: any = params.node.data;
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'idPerfilUsuario');
@@ -154,10 +165,19 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
       },
       {
         headerName: "Usuario",
-        field: 'idUsuario',
-        valueGetter: (params) => {
-          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.idUsuario, params.data.descripcionUsuario);
-        },
+        field: 'usuario',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Nombre",
+        field: 'nombres',
+        filter: 'agTextColumnFilter',
+        filterParams: { newRowsAction: "keep" }
+      },
+      {
+        headerName: "Apellidos",
+        field: 'apellidos',
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },

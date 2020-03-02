@@ -14,7 +14,7 @@ export class PerfilRecursoService extends HttpService {
   constructor(injector: Injector, httpClient: HttpClient, store: Store<AppState>, @Inject(SEC_CONTEXT_PATH) context: string) {
     let path;
     store.select('globalData').subscribe(data => path = data.pathEndpoints.MANT_GENERAL);
-    super(injector, httpClient, 'perfilRecurso', context);
+    super(injector, httpClient, 'perfil-recurso', context);
   }
 
   buscarTodos(): Observable<any> {
