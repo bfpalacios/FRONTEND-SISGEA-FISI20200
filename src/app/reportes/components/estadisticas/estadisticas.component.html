@@ -51,10 +51,10 @@
             <ng-select #binSelect [items]="espacios" class="ng-select-custom" bindLabel="label" bindValue="idEspacioAcademico"
               placeholder="TODOS" [multiple]="true" [notFoundText]="'No hay datos encontrados.'" formControlName="espacios">
               <ng-template ng-option-tmp let-item="item">
-                {{item.idEspacioAcademico}} - {{item.descripcion}} 
+                {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}} 
                   </ng-template>
                   <ng-template ng-label-tmp let-item="item">
-                {{item.idEspacioAcademico}} - {{item.descripcion}} 
+                {{item.idEspacioAcademico}} - {{item.descripcionEspacioAcademico}} 
                   </ng-template>
             </ng-select>
             <bfv-messages></bfv-messages>

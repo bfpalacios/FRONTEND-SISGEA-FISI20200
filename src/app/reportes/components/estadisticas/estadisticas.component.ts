@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgSelectComponent } from '@ng-select/ng-select';
-import { MultitabDetFacade } from '../../../mantenimiento/facade';
+import { MultitabDetFacade, EspacioAcademicoFacade } from '../../../mantenimiento/facade';
 import "ag-grid-enterprise/chartsModule";
 
 @Component({
@@ -48,6 +48,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
     private store: Store<AppState>,
     private estadisticasFacade: EstadisticasFacade,
     private multitabDetFacade: MultitabDetFacade,
+    private espacioAcademicoFacade: EspacioAcademicoFacade
   ) {
     this.type = TYPES.ESTADISTICAS;
   }
@@ -97,24 +98,19 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
 
 
   manageState() {
-    this.store.select('espaciosAcademico').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      console.log(state.data)
-      this.espacios = state.data;
-    });
     this.store.select('solicitantes').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      console.log(state.data)
       this.solicitantes = state.data;
     });
+    this.espacioAcademicoFacade.buscarTodosSyn().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.espacios = data;
+    });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoEspacio).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
-      console.log(data)
       this.tiposEspacios = data;
     });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoSolicitud).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
-      console.log(data)
       this.tipoSolicitud = data;
     });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
-      console.log(data)
       this.pabellones = data;
     });
   }

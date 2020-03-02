@@ -12,18 +12,25 @@ import {
 import { EspacioAcademico } from '../models';
 import { GetByMultitabCab, GetByMultitabCabB } from '../../shared/store/actions/mantenimiento/multitab-det.actions';
 import { MULTITAB_IDS } from '../../shared/utils';
+import { EspacioAcademicoService } from '../../mantenimiento/services/espacio-academico.service';
 @Injectable()
 export class EspacioAcademicoFacade {
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private espacioAcademicoService: EspacioAcademicoService
   ){}
   initData() {
 
    this.store.dispatch(new GetByMultitabCab({ idMultitabCab : MULTITAB_IDS.base }));
   }
+  
   buscarTodos(){
     this.store.dispatch(new GetAllEspacioAcademico());
+  }
+
+  buscarTodosSyn(){
+      return this.espacioAcademicoService.buscarTodos();
   }
 
   registrar(espacioAcademico: EspacioAcademico){
