@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { FormModalComponent, ConfirmModalComponent, TemplateMantenimientoComponent, MdFormOpts, MdConfirmOpts, ButtonsCellRendererComponent } from '../../../shared';
-import { TYPES, Type, RESOURCE_ACTIONS, getContextMenuItemsMantenimiento, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
+import { TYPES, Type, RESOURCE_ACTIONS, MULTITAB_IDS,getContextMenuItemsMantenimiento, DEFAULT_SEPARATOR, joinWords, commonConfigTablaMantenimiento, enableControls, updateGrid, configFormMd, manageCrudState } from '../../../shared/utils';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GridOptions, GridApi, ColDef } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,8 @@ import { ErrorService } from '../../../shared/services/errors/error.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AsignacionEspaciosFacade } from '../../facade/asignacion-espacios.facade';
-
+import { MultitabDetFacade } from '../../../mantenimiento/facade';
+import { EspacioAcademicoFacade } from '../../../mantenimiento/facade';
 @Component({
   selector: 'app-asignacion-espacios',
   templateUrl: './asignacion-espacios.component.html',
@@ -36,6 +37,8 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
   templateHtmlMsg:string;
 
   espaciosAcademico: any[] = [];
+  espaciosAcademicoFiltrado: any[] = [];
+  pabellon: any[] = [];
 
   loading: boolean = false;
 
@@ -44,7 +47,9 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
     private toastr: ToastrService,
     private store: Store<AppState>,
     private errorService: ErrorService,
-    private cdRef : ChangeDetectorRef
+    private cdRef : ChangeDetectorRef,
+    private multitabDetFacade: MultitabDetFacade,
+    private espacioAcademicoFacade: EspacioAcademicoFacade,
   ) {
     this.type = TYPES.ASIG_ESPACIOS;
   }
@@ -60,12 +65,22 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       'matriculados': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'tipoHorario': new FormControl('', [Validators.required, Validators.maxLength(30)]),
       'espacio': new FormControl('', [Validators.required, Validators.maxLength(30)]),
+      'pabellon': new FormControl('', []),
+      'idCurso': new FormControl('', []),
+      'seccion': new FormControl('', []),
+      'idAsignacion': new FormControl('', []),
+      'idEspacioAcademico': new FormControl('', []),
+      'idHorario': new FormControl('', []),
+      'idHorarioDetalle': new FormControl('', []),
+      'horaInicio': new FormControl('', []),
+      'horaFin': new FormControl('', []),
     })
     this.mdFormOpts = this.mdRegisterOpts;
     this.gridOptions = {
       ...commonConfigTablaMantenimiento,
       getRowNodeId: (data) => {
-        return data.id;
+
+        return data.idAsignacion;
       },
       onGridReady: (params) => {
         this.gridApi = params.api;
@@ -75,12 +90,13 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       getContextMenuItems: (params) => {
         return getContextMenuItemsMantenimiento(params,this.type,this.template.permisoExportacion);
       }
+
     }
     this.asignacionEspaciosFacade.initCombo().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       (data) => {
-          this.espaciosAcademico = data;
-      }
-    );
+      this.espaciosAcademico = data;
+      this.espaciosAcademicoFiltrado = data;
+    });
   }
 
   ngAfterViewChecked() {
@@ -105,18 +121,23 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
 
   manageState() {
     this.store.select('asignacionEspacios').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts, this.mdDelete, this.toastr,
+      manageCrudState(state, this.form, this.template, this.mdFormOpts, this.mdSave, this.mdConfirmOpts,
+        this.mdDelete, this.toastr,
         this.errorService, () => {
           updateGrid(this.gridOptions, state.data, this.gridColumnApi);
         });
     });
-    this.store.select('espaciosAcademico').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      console.log(state);
+
+
+
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.pabellon).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.pabellon = data;
     });
   }
 
   showMdUpdate(params){
     let data: any = params.node.data;
+        console.log(data);
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'periodo');
     enableControls(this.form, false, 'ciclo');
@@ -149,12 +170,32 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
     switch (action) {
       case RESOURCE_ACTIONS.ACTUALIZACION:
         this.asignacionEspaciosFacade.actualizar(this.form.getRawValue());
+        console.log("facade update");
         break;
     }
   }
+  onChangePorPabellon(item){
+
+    if(item==undefined || item==null){
+      this.espaciosAcademico = [];
+      return;
+    }
+
+
+    this.espaciosAcademicoFiltrado = this.espaciosAcademico.filter(e=>e.pabellon == item.idMultitabDet);
+
+    console.log(this.espaciosAcademicoFiltrado);
+  }
 
   initColumnDefs(): ColDef[] {
-    return [
+    return [,
+    {
+      headerName: "Asignación",
+      field: 'idAsignacion',
+      cellClass: 'ob-type-string',
+      filter: 'agTextColumnFilter',
+      filterParams: { newRowsAction: "keep" }
+    },
       {
         headerName: "Periodo",
         field: "periodo",

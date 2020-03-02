@@ -5,9 +5,7 @@ import { SolicitanteEffects } from './mantenimiento/solicitante.effects';
 import { EspacioAcademicoEffects } from './mantenimiento/espacio-academico.effects';
 import { MultitabCabEffects } from './mantenimiento/multitab-cab.effects';
 import { MultitabDetEffects } from './mantenimiento/multitab-det.effects';
-
 // Consultas
-
 
 // Seguridad
 import { SistemaEffects } from './seguridad/sistema.effects';
@@ -20,7 +18,6 @@ import { RecursoEffects } from './seguridad/recurso.effects';
 import { MenuEffects } from './seguridad/menu.effects';
 import { TipoMenuEffects } from './seguridad/tipo-menu.effects';
 import { PerfilEffects } from './seguridad/perfil.effects';
-import { UsuarioPerfilEffects } from './seguridad/usuario-perfil-seg.effects';
 import { AsignacionPermisosEffects } from './seguridad/asignacion-permisos.effects';
 import { MenuRecursoEffects } from './seguridad/menu-recurso.effects';
 import { PerfilRecursoEffects } from './seguridad/perfil-recurso.effects';
@@ -50,7 +47,6 @@ export const effectsArr = [
   MenuEffects,
   TipoMenuEffects,
   PerfilEffects,
-  UsuarioPerfilEffects,
   AsignacionPermisosEffects,
   MenuRecursoEffects,
   PerfilRecursoEffects,
@@ -79,7 +75,6 @@ export * from './seguridad/recurso.effects';
 export * from './seguridad/menu.effects';
 export * from './seguridad/tipo-menu.effects';
 export * from './seguridad/perfil.effects';
-export * from './seguridad/usuario-perfil-seg.effects';
 export * from './seguridad/asignacion-permisos.effects';
 export * from './seguridad/menu-recurso.effects';
 export * from './seguridad/perfil-recurso.effects';

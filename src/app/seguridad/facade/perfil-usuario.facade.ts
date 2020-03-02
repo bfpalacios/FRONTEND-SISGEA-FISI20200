@@ -4,11 +4,19 @@ import { Store } from '@ngrx/store';
 import { GetAllPerfilUsuario, AddPerfilUsuario, UpdatePerfilUsuario, DeletePerfilUsuario } from '../../shared/store/actions/seguridad/perfil-usuario.actions';
 import { GetAllPerfil } from '../../shared/store/actions/seguridad/perfil.actions';
 import { GetAllUsuario } from '../../shared/store/actions/seguridad/usuario.actions';
+import { UsuarioService } from '../../seguridad/services/usuario.service';
+import { PerfilService } from '../../seguridad/services/perfil.service';
 
 @Injectable()
 export class PerfilUsuarioFacade {
 
-  constructor(private store: Store<AppState>){}
+  constructor(
+    private store: Store<AppState>,
+    private perfilService: PerfilService,
+    private usuarioService: UsuarioService
+  ){
+
+  }
 
   buscarTodos(){
     this.store.dispatch(new GetAllPerfilUsuario());
@@ -29,6 +37,14 @@ export class PerfilUsuarioFacade {
   initData(){
     this.store.dispatch(new GetAllPerfil());
     this.store.dispatch(new GetAllUsuario());
+  }
+
+  buscarPerfiles(){
+    return this.perfilService.buscarTodos();
+  }
+
+  buscarUsuarios(){
+    return this.usuarioService.buscarTodos();
   }
 
 }

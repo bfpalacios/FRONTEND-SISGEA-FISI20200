@@ -45,11 +45,34 @@
         </div>
       </div>
       <div class="form-group row">
+        <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Pabellón</label>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <ng-select #pabellonSelect [items]="pabellon" class="ng-select-custom"
+            bindLabel="descripcionItem"
+            bindValue="idMultitabDet"
+            placeholder="Seleccione un pabellón"
+            [notFoundText]="'No hay datos encontrados.'"
+            formControlName="pabellon" (change)="onChangePorPabellon($event)">
+            <ng-template ng-option-tmp let-item="item">
+              {{item.idMultitabDet}} - {{item.descripcionItem}}
+                </ng-template>
+                <ng-template ng-label-tmp let-item="item">
+              {{item.idMultitabDet}} - {{item.descripcionItem}}
+                </ng-template>
+          </ng-select>
+          <bfv-messages></bfv-messages>
+        </div>
+          </div>
+      <div class="form-group row">
         <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Espacio Académico</label>
         <div class="col-sm-10 col-md-10 col-lg-10">
-          <ng-select #pabellonSelect [items]="espaciosAcademico" class="ng-select-custom" bindLabel="descripcionEspacioAcademico"
-            bindValue="descripcionEspacioAcademico" placeholder="TODOS" [notFoundText]="'No hay datos encontrados.'"
-            formControlName="espacio">
+          <ng-select #pabellonSelect [items]="espaciosAcademicoFiltrado"
+          class="ng-select-custom"
+          bindLabel="descripcionEspacioAcademico"
+          bindValue="idEspacioAcademico"
+          placeholder="Seleccione un espacio"
+          [notFoundText]="'No hay datos encontrados.'"
+          formControlName="idEspacioAcademico">
           </ng-select>
         </div>
       </div>

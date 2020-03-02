@@ -30,6 +30,7 @@ export class AsignacionEspaciosFacade {
 
 
   actualizar(form: any){
+    console.log(form);
     this.store.dispatch(new UpdateAsignacionEspacios(form));
   }
 

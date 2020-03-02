@@ -43,8 +43,7 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
     private errorService: ErrorService,
     private toastr: ToastrService
   ) {
-    this.type = TYPES.PERFIL;
-    this.detailType = TYPES.ASIG_PERMIS;
+    this.type = TYPES.PERFIL_USUARIO;
   }
 
   ngOnInit() {
@@ -69,7 +68,6 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
         params.api.sizeColumnsToFit();
       }
     }
-    this.perfilUsuarioFacade.initData();
   }
 
   ngAfterViewInit() {
@@ -94,11 +92,11 @@ export class PerfilUsuarioComponent implements OnInit, AfterViewInit, OnDestroy 
           }
         });
     });
-    this.store.select('perfilesSeg').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      this.perfiles = state.data;
+    this.perfilUsuarioFacade.buscarPerfiles().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.perfiles = data;
     });
-    this.store.select('usuariosSeg').pipe(takeUntil(this.ngUnsubscribe)).subscribe((state) => {
-      this.usuarios = state.data;
+    this.perfilUsuarioFacade.buscarUsuarios().pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.usuarios = data;
     });
   }
 

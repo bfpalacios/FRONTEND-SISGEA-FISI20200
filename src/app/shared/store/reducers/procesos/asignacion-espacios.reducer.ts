@@ -58,8 +58,9 @@ export function asignacionEspaciosReducer(state = INITIAL_STATE, action: Asignac
         errors: null
       };
     case actions.UPDATE_SUCCESS: {
+      console.log(state);
       const index = state.data
-        .findIndex(b => b.idAsignacionEspacios === state.selected.idAsignacionEspacios);
+        .findIndex(b => b.idAsignacion === state.selected.idAsignacion);
       if (index >= 0) {
         const data = [
           ...state.data.slice(0, index),

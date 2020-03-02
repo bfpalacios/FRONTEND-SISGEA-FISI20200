@@ -1,4 +1,3 @@
-export * from './usuario-perfil.facade';
 export * from './perfil.facade';
 export * from './usuario.facade';
 export * from './tipo-autenticacion.facade';
