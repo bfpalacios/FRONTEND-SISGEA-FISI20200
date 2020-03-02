@@ -109,8 +109,12 @@
           <div class="form-group row">
             <label class="col-sm-2 col-md-2 col-lg-2 ob-custom-label-form">Motivo</label>
             <div class="col-sm-10 col-md-10 col-lg-10">
-              <textarea  rows="5" class="form-control" formControlName="motivo"></textarea>
+              <ng-select #pabellonSelect [items]="motivo" class="ng-select-custom" bindLabel="descripcionItem" bindValue="idMultitabDet"
+                placeholder="Seleccione tipo motivo" [notFoundText]="'No hay datos encontrados.'"
+                formControlName="motivo" >
+              </ng-select>
               <bfv-messages></bfv-messages>
+
             </div>
           </div>
 
@@ -170,7 +174,7 @@
         					[maxFileSize]="configCarga.maxFileSize"
         					[expandable]="configCarga.expandable">
         				<ngx-dropzone-label>Arrastre aquí el archivo</ngx-dropzone-label>
-        				<ngx-dropzone-preview *ngFor="let f of files" 
+        				<ngx-dropzone-preview *ngFor="let f of files"
         					[removable]="true"
         					(removed)="onRemove(f)">
         					<ngx-dropzone-label>{{ f.name }}</ngx-dropzone-label>
@@ -340,9 +344,9 @@
       <label class="col-sm-1 col-md-1 col-lg-1 ob-custom-label-form">Solicitante</label>
       <div class="col-sm-7 col-md-7 col-lg-7">
         <ng-select #pabellonSelect [items]="solicitantesFiltrado" class="
-        ng-select-custom" bindLabel="label" 
+        ng-select-custom" bindLabel="label"
         bindValue="idSolicitante"
-        placeholder="TODOS" 
+        placeholder="TODOS"
         [notFoundText]="'No hay datos encontrados.'"
         formControlName="idSolicitante">
           <ng-template ng-option-tmp let-item="item">

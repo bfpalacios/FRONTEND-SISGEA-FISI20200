@@ -60,7 +60,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   solicitantesFiltrado: any[] = [];
   estadoSolicitud: any[] = [];
   estadoAsistencia: any[] = [];
-  tipoMotivo: any[] = [];
+  motivo: any[] = [];
 
 
   configCarga: any ={
@@ -228,6 +228,9 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
     });
     this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.estadoAsistencia).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
       this.estadoAsistencia = data;
+    });
+    this.multitabDetFacade.buscarPorMultitabCabSync(MULTITAB_IDS.tipoMotivo).pipe(takeUntil(this.ngUnsubscribe)).subscribe((data) => {
+      this.motivo = data;
     });
 
   }
@@ -458,7 +461,7 @@ showMdCancelar(params) {
   this.mdConfirmOpts.htmlMsg = this.templateHtmlMsg.replace(/\[identificador\]/gi,
     joinWords(DEFAULT_SEPARATOR, data.dni, nombre))
   .replace(/\[aula\]/gi,joinWords(DEFAULT_SEPARATOR, data.idEspacioAcademico, data.descripcionEspacioAcademico));
-  
+
   this.mdCancelar.show(data);
 }
 
@@ -467,7 +470,7 @@ cancelar() {
   this.solicitudEspaciosFacade.cancelar(this.mdCancelar.data);
   this.mdConfirmOpts.buttons.ok.disabled = false;
   this.mdCancelar.hide();
-  
+
 }
 
 rechazar($event){
