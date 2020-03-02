@@ -129,6 +129,7 @@ export class EstadisticasComponent implements OnInit, AfterViewInit, OnDestroy  
     let rangoFechaRegistro = getDateRange(criterios.fechaRegistro);
     criterios.fechaRegistroInicio = getFormattedDateFromDDMMYYYYtoYYYYMMDD(rangoFechaRegistro.fechaInicio);
     criterios.fechaRegistroFin = getFormattedDateFromDDMMYYYYtoYYYYMMDD(rangoFechaRegistro.fechaFin);
+    updateGrid(this.gridOptions, [], this.gridColumnApi, true, true);
     this.estadisticasFacade.buscarPorCriterios(criterios).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       //OK
       (data) => {
