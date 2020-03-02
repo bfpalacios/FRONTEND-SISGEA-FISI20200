@@ -119,6 +119,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
   showMdRegister(): void {
     this.mdFormOpts = this.mdRegisterOpts;
     enableControls(this.form, true, 'usuario');
+    enableControls(this.form, true, 'contrasenia');
     this.mdSave.show(this.initUsuario, RESOURCE_ACTIONS.REGISTRO);
   }
 
@@ -126,7 +127,7 @@ export class UsuarioComponent implements OnInit, AfterViewInit, OnDestroy {
     let data: UsuarioSeg = params.node.data;
     this.mdFormOpts = this.mdUpdateOpts;
     enableControls(this.form, false, 'usuario');
-    enableControls(this.form, false, 'contrasenia');
+    enableControls(this.form, true, 'contrasenia');
     this.mdSave.show(data, RESOURCE_ACTIONS.ACTUALIZACION);
   }
 
