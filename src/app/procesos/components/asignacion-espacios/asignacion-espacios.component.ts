@@ -92,7 +92,7 @@ export class AsignacionEspaciosComponent implements OnInit, AfterViewInit, OnDes
       },
       getRowStyle: (params) => {
         if (params.data.espacio == 'SIN AULA') {
-          return { background: '#FFCABE',  'color': 'white' }
+          return { background: '#FFCABE' }
         }
       }
     }
