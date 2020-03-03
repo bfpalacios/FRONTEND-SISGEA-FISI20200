@@ -410,6 +410,7 @@ export class SolicitudEspaciosComponent implements OnInit, AfterViewInit, OnDest
   }
 
   abrirModalRegistrar(){
+    this.files = [];
     enableControls(this.form, true, 'tipoSolicitud');
     enableControls(this.form, true, 'idSolicitante');
     enableControls(this.form, true, 'motivo');
@@ -459,7 +460,7 @@ cancelar() {
   
 }
 
-rechazar($event){
+rechazar(){
   this.rechazando = true;
   this.solicitudEspaciosFacade.rechazar(this.form.getRawValue()).pipe(takeUntil(this.ngUnsubscribe)).subscribe(
     (data) => {
