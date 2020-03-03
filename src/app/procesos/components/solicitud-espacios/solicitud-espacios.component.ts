@@ -575,6 +575,9 @@ initColumnDefs(): ColDef[] {
         headerName: "Motivo",
         field: 'motivo',
         cellClass: 'ob-type-string',
+        valueGetter: (params) => {
+          return !params.data ? '' : joinWords(DEFAULT_SEPARATOR, params.data.motivo, params.data.descripcionMotivo);
+        },
         filter: 'agTextColumnFilter',
         filterParams: { newRowsAction: "keep" }
       },
