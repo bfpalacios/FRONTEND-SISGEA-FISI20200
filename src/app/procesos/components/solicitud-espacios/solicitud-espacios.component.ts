@@ -584,8 +584,14 @@ initColumnDefs(): ColDef[] {
         cellRendererFramework: ButtonsCellRendererComponent,
         cellRendererParams: {
           edit: {
-            visible: true,
-            action: this.showMdAprobar.bind(this)
+            action: this.showMdAprobar.bind(this),
+            visibleFn: function(params: any){
+              if(params.data.tipoSolicitud == 'S'){
+                return false;
+              }else{
+                return true;
+              }
+            }
           },
           delete: {
             visible: this.template.permisoEliminacion,
